@@ -368,8 +368,9 @@ TOOLS_BY_SLUG = {}
 
 
 def post_card(post, prefix):
+    thumb = post["image_url"].replace("w=1600&h=900", "w=640&h=360")
     return (f'<li class="post-card" data-accent="{post["accent"]}"><a href="{prefix}{post["path"]}">'
-            f'<span class="post-img"><img src="{post["image_url"]}" alt="" width="1200" height="630" loading="lazy"></span>'
+            f'<span class="post-img"><img src="{esc(thumb)}" alt="" width="1200" height="630" loading="lazy"></span>'
             f'<span class="post-body"><span class="post-cat">{esc(post["category_label"])}</span>'
             f'<span class="post-title">{esc(post["title"])}</span>'
             f'<span class="post-desc">{esc(post["description"])}</span>'

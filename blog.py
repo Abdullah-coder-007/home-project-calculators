@@ -11,8 +11,11 @@ structure). Each file starts with front matter:
     date: 2026-11-02
     updated: 2026-11-10            # optional
     author: Abdullah               # optional, defaults to site.json owner_name
-    image: paint-room.jpg          # optional, 1200x630+ file in content/blog/images/
+    image: paint-room.jpg          # optional, 1200x630+ file in content/blog/images/,
+                                   # or a full https:// address (e.g. an Unsplash photo)
     image_alt: A freshly painted blue bedroom   # required when image is set
+    image_credit: Jane Doe on Unsplash          # optional, shown under the photo
+    image_credit_url: https://unsplash.com/photos/...
     calculators: [paint-calculator, drywall-calculator]   # optional
     draft: true                    # optional, skips the post
     ---
@@ -81,7 +84,9 @@ def load_posts(cfg, base, accents_for_category):
             "author": meta.get("author") or cfg["owner_name"],
             "calculators": meta.get("calculators") or [],
             "image": image, "image_alt": meta.get("image_alt", ""),
-            "image_url": f"{base}/assets/blog/{image}" if image else f"{base}/assets/og/blog-{cat}.jpg",
+            "image_credit": meta.get("image_credit", ""), "image_credit_url": meta.get("image_credit_url", ""),
+            "image_url": (image if image and image.startswith("http") else
+                          f"{base}/assets/blog/{image}" if image else f"{base}/assets/og/blog-{cat}.jpg"),
             "accent": accents_for_category(cat),
             "minutes": max(1, math.ceil(words / 220)),
             "markdown": body_md,
@@ -116,8 +121,9 @@ def build(out_dir, tools, ctx):
 
     publisher = {"@type": "Organization", "name": cfg["name"], "url": base + "/",
                  "logo": {"@type": "ImageObject", "url": f"{base}/assets/og/home.jpg"}}
-    bio = cfg.get("owner_bio") or (f"{cfg['owner_name']} runs {cfg['name']} and checks every calculator "
-                                   "against worked examples before it goes live.")
+    default_bio = cfg.get("owner_bio") or (f"{cfg['owner_name']} runs {cfg['name']} and checks every calculator "
+                                           "against worked examples before it goes live.")
+    authors = cfg.get("authors") or {}
 
     def calc_cards(slugs, prefix):
         items = []
@@ -135,8 +141,16 @@ def build(out_dir, tools, ctx):
         cat_tools = [t["slug"] for t in tools if t.get("category") == p["category"]]
         calcs = p["calculators"] or cat_tools[:3]
         more = [q for q in posts if q["category"] == p["category"] and q is not p][:3]
-        hero = (f'<figure class="post-hero"><img src="{prefix}assets/blog/{esc(p["image"])}" alt="{esc(p["image_alt"])}" '
-                f'width="1200" height="630"></figure>') if p["image"] else ""
+        bio = (authors.get(p["author"]) or {}).get("bio") or default_bio
+        credit = ""
+        if p["image_credit"]:
+            who = esc(p["image_credit"])
+            if p["image_credit_url"]:
+                who = f'<a href="{esc(p["image_credit_url"])}" rel="noopener">{who}</a>'
+            credit = f'<figcaption>Photo: {who}</figcaption>'
+        src = p["image_url"] if (p["image"] or "").startswith("http") else f'{prefix}assets/blog/{esc(p["image"] or "")}'
+        hero = (f'<figure class="post-hero"><img src="{esc(src)}" alt="{esc(p["image_alt"])}" '
+                f'width="1600" height="900" fetchpriority="high">{credit}</figure>') if p["image"] else ""
         updated = (f' · Updated {p["updated_human"]}' if p["updated"] != p["date"] else "")
         first_tool = by_slug.get(cat_tools[0]) if cat_tools else None
         body = f"""<section class="tool-head post-head">

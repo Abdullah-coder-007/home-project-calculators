@@ -457,6 +457,8 @@ input::placeholder { color: var(--muted); font-weight: 500; }
 .post-meta { margin: 14px 0 0; font-weight: 600; font-size: 0.95rem; color: rgba(255, 255, 255, 0.95); }
 .post-meta a { color: #fff; }
 .post-hero { margin: 0 0 28px; }
+.post-hero figcaption { margin-top: 10px; font-size: 0.85rem; color: var(--muted); }
+.post-hero figcaption a { color: inherit; }
 .post-hero img { display: block; width: 100%; height: auto; border-radius: 24px; box-shadow: 0 8px 0 var(--edge), var(--lift); }
 .post-layout { display: grid; gap: 30px; align-items: start; }
 @media (min-width: 1000px) { .post-layout { grid-template-columns: minmax(0, 1fr) 320px; } .post-side { position: sticky; top: 96px; } .post-side .related-list { grid-template-columns: 1fr; } }
@@ -679,3 +681,8 @@ html.embed .embed-credit { display: block; font-size: 0.9rem; margin: 18px 0; co
 .cookie-actions .btn { flex: 1; }
 html.embed .cookie-bar { display: none; }
 @media print { .cookie-bar { display: none; } }
+
+/* Fun fact callout in guides */
+.guide blockquote.fun-fact, .post blockquote { border-left: 6px solid var(--accent); background: var(--accent-soft); border-radius: 0 18px 18px 0; padding: 14px 18px; margin: 24px 0; }
+.post blockquote p { margin: 0 0 8px; }
+.post blockquote p:last-child { margin-bottom: 0; }
