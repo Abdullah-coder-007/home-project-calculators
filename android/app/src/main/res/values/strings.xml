@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Calcupine Measure</string>
+    <string name="add_point">Add point</string>
+    <string name="undo">Undo</string>
+    <string name="units_imperial">ft &amp; in</string>
+    <string name="units_metric">m &amp; cm</string>
+    <string name="send">Send to calculator</string>
+    <string name="step_1">Move your phone slowly to find the floor, then aim the circle at a corner and tap Add point.</string>
+    <string name="step_2">Aim at the next corner along the wall and tap Add point to measure the length.</string>
+    <string name="step_3">Length %1$s. Now aim at the corner across the room and tap Add point for the width.</string>
+    <string name="step_4">Length %1$s · Width %2$s. Slide your finger up the screen until the line reaches the ceiling.</string>
+    <string name="step_5">Length %1$s · Width %2$s · Height %3$s. Tap Send to calculator, or slide again to adjust.</string>
+    <string name="aim_floor">Aim the circle at the floor until it turns solid white.</string>
+    <string name="ar_unavailable">This phone doesn\'t support Google Play Services for AR.</string>
+    <string name="camera_unavailable">The camera is busy. Close other camera apps and try again.</string>
+    <string name="camera_needed">Calcupine Measure needs the camera to measure.</string>
+</resources>
