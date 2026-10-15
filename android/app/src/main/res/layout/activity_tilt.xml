@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/tilt_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Aiming cross in the centre -->
+    <View
+        android:layout_width="56dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:background="#FFFFFF" />
+    <View
+        android:layout_width="3dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:background="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/tilt_live"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/panel"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="6dp"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_margin="16dp"
+        android:background="@drawable/panel"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tilt_prompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/tilt_note"
+            android:textColor="#CCFFFFFF"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="16dp"
+        android:background="@drawable/panel"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tilt_height_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <SeekBar
+            android:id="@+id/tilt_height"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/tilt_undo"
+                style="@style/SmallButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/undo" />
+
+            <Button
+                android:id="@+id/tilt_units"
+                style="@style/SmallButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/units_imperial" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/tilt_capture"
+            style="@style/BigButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tilt_capture" />
+
+        <Button
+            android:id="@+id/tilt_send"
+            style="@style/BigButton.Send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/send" />
+    </LinearLayout>
+</FrameLayout>

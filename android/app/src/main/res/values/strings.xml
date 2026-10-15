@@ -15,4 +15,14 @@
     <string name="ar_unavailable">This phone doesn\'t support Google Play Services for AR.</string>
     <string name="camera_unavailable">The camera is busy. Close other camera apps and try again.</string>
     <string name="camera_needed">Calcupine Measure needs the camera to measure.</string>
+    <string name="tilt_step_1">Stand with your back against a wall and hold the phone at the height below. Aim the cross at the line where the opposite wall meets the floor, then tap Capture.</string>
+    <string name="tilt_step_2">Length %1$s. Now stand with your back against a side wall and aim at the bottom of the wall opposite you. Tap Capture.</string>
+    <string name="tilt_step_3">Length %1$s · Width %2$s. Without moving, tilt up and aim at the top of that same wall, where it meets the ceiling. Tap Capture.</string>
+    <string name="tilt_done">Length %1$s · Width %2$s · Height %3$s. Tap Send to calculator.</string>
+    <string name="tilt_aim_lower">Aim lower, at the bottom of the wall</string>
+    <string name="tilt_aim_top">Aim at the top of the wall</string>
+    <string name="tilt_phone_height">Phone height from the floor: %1$s</string>
+    <string name="tilt_capture">Capture</string>
+    <string name="tilt_note">Tilt measuring: your phone doesn\'t support Google AR, so we measure from the phone\'s angle. Usually within about 5%.</string>
+    <string name="tilt_no_sensor">This phone has no rotation sensor, so tilt measuring won\'t work.</string>
 </resources>
