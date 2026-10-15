@@ -38,7 +38,7 @@ jobs:
               --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=lh.json || continue
             node -e "const r=require('./lh.json');const c=r.categories;const f=k=>Math.round(c[k].score*100);
               require('fs').appendFileSync('docs/lighthouse.txt','LH /$u '+[f('performance'),f('accessibility'),f('best-practices'),f('seo')].join(' ')+'\\n');console.log('LH /$u', f('performance'), f('accessibility'), f('best-practices'), f('seo'));
-              Object.values(r.audits).filter(a=>a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable').slice(0,12).forEach(a=>require('fs').appendFileSync('docs/lighthouse.txt','  FIX '+a.id+' - '+a.title+(a.displayValue?' ('+a.displayValue+')':'')+'\\n'));
+              Object.values(r.audits).filter(a=>a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable').slice(0,12).forEach(a=>{require('fs').appendFileSync('docs/lighthouse.txt','  FIX '+a.id+' - '+a.title+(a.displayValue?' ('+a.displayValue+')':'')+'\\n'); if(a.id==='color-contrast'||a.id==='layout-shifts'){((a.details&&a.details.items)||[]).slice(0,8).forEach(it=>{const n=it.node||(it.subItems&&it.subItems.items&&it.subItems.items[0]&&it.subItems.items[0].node)||{};require('fs').appendFileSync('docs/lighthouse.txt','      '+(n.selector||'')+' :: '+(n.snippet||'').slice(0,120)+' :: '+((n.explanation||'').split('\\n').pop()||'').slice(0,140)+'\\n');});}});
               require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, '| /$u | '+f('performance')+' | '+f('accessibility')+' | '+f('best-practices')+' | '+f('seo')+' |\\n');"
           done
       - name: Publish to gh-pages
