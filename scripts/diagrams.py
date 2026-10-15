@@ -72,18 +72,15 @@ def box(d, p, x0, y0, z0, x1, y1, z1, top="fa", left="fb", right="fc"):
 
 def room():
     d = D(420, 300, "Measure the room's length, width and wall height, and count doors and windows")
-    p = iso(200, 70, 18)
+    p = iso(190, 115, 18)
     L, W, H = 9, 7, 5.5
-    # floor
     d.poly([p(0, 0), p(L, 0), p(L, W), p(0, W)], "fb")
-    # back walls
     d.poly([p(0, 0), p(L, 0), p(L, 0, H), p(0, 0, H)], "fa")
     d.poly([p(0, 0), p(0, W), p(0, W, H), p(0, 0, H)], "fa")
-    # door on back-left wall, window on back-right wall
     d.poly([p(0, 2, 0), p(0, 4, 0), p(0, 4, 3.8), p(0, 2, 3.8)], "fc")
     d.poly([p(3.5, 0, 2), p(6.5, 0, 2), p(6.5, 0, 4), p(3.5, 0, 4)], "fc")
-    d.text(*p(0, 3, 1.6), "Door", "ts")
-    d.text(*p(5, 0, 2.7), "Window", "ts")
+    d.text(*p(0, 3, 4.5), "Door", "ts")
+    d.text(*p(5, 0, 4.6), "Window", "ts")
     d.dim(p(0, W + 0.8), p(L, W + 0.8), "Length", lx=p(L / 2, W + 0.8)[0] - 6, ly=p(L / 2, W + 0.8)[1] + 26)
     d.dim(p(L + 0.8, 0), p(L + 0.8, W), "Width", lx=p(L + 0.8, W / 2)[0] + 40, ly=p(L + 0.8, W / 2)[1] + 6)
     d.dim(p(L, 0, 0), p(L, 0, H), "Height", off=(14, 0), lx=p(L, 0, H / 2)[0] + 22, ly=p(L, 0, H / 2)[1], anchor="start")
@@ -91,24 +88,24 @@ def room():
 
 
 def slab():
-    d = D(420, 240, "Measure the slab's length, width and thickness")
-    p = iso(190, 60, 20)
+    d = D(420, 250, "Measure the slab's length, width and thickness")
+    p = iso(200, 60, 20)
     L, W, T = 9, 6, 0.8
     box(d, p, 0, 0, 0, L, W, T)
-    d.dim(p(0, W + 0.9), p(L, W + 0.9), "Length", lx=p(L / 2, W + 0.9)[0] - 8, ly=p(L / 2, W + 0.9)[1] + 26)
+    d.dim(p(0, W + 1.2), p(L, W + 1.2), "Length", lx=p(L / 2, W + 1.2)[0] - 8, ly=p(L / 2, W + 1.2)[1] + 26)
     d.dim(p(L + 0.9, 0), p(L + 0.9, W), "Width", lx=p(L + 0.9, W / 2)[0] + 40, ly=p(L + 0.9, W / 2)[1] + 6)
-    d.dim(p(L, W, 0), p(L, W, T), "Thickness", off=(-16, 0), lx=p(L, W, 0)[0] - 26, ly=p(L, W, 0)[1] + 4, anchor="end")
+    d.dim(p(0, W, 0), p(0, W, T), "Thickness", off=(-16, 0), lx=p(0, W, T / 2)[0] - 24, ly=p(0, W, T / 2)[1] + 5, anchor="end")
     return d.svg()
 
 
 def footing():
-    d = D(420, 220, "Measure the footing's total length, width and depth")
-    p = iso(120, 60, 20)
-    L, W, H = 12, 1.4, 2.2
+    d = D(420, 230, "Measure the footing's total length, width and depth")
+    p = iso(120, 90, 16)
+    L, W, H = 13, 1.6, 2.4
     box(d, p, 0, 0, 0, L, W, H)
-    d.dim(p(0, W + 0.9), p(L, W + 0.9), "Total length", lx=p(L / 2, W + 0.9)[0] - 10, ly=p(L / 2, W + 0.9)[1] + 26)
-    d.dim(p(L + 0.6, 0, H), p(L + 0.6, W, H), "Width", lx=p(L + 0.6, W, H)[0] + 18, ly=p(L + 0.6, W, H)[1] - 8, anchor="start")
-    d.dim(p(0, W, 0), p(0, W, H), "Depth", off=(-14, 0), lx=p(0, W, H / 2)[0] - 22, ly=p(0, W, H / 2)[1], anchor="end")
+    d.dim(p(0, W + 1.2), p(L, W + 1.2), "Total length", lx=p(L / 2, W + 1.2)[0] - 10, ly=p(L / 2, W + 1.2)[1] + 26)
+    d.dim(p(L + 0.8, 0), p(L + 0.8, W), "Width", lx=p(L + 0.8, W / 2)[0] + 16, ly=p(L + 0.8, W / 2)[1] + 5, anchor="start")
+    d.dim(p(0, W, 0), p(0, W, H), "Depth", off=(-14, 0), lx=p(0, W, H / 2)[0] - 22, ly=p(0, W, H / 2)[1] + 5, anchor="end")
     return d.svg()
 
 
@@ -125,17 +122,17 @@ def round_hole():
 
 def square_column():
     d = D(420, 280, "Measure the column's width and height, and count the columns")
-    p = iso(200, 40, 20)
+    p = iso(220, 212, 20)
     s, H = 2.2, 9
     box(d, p, 0, 0, 0, s, s, H)
-    d.dim(p(0, s + 0.6, H), p(s, s + 0.6, H), "Width", lx=p(0, s + 0.6, H)[0] - 18, ly=p(0, s + 0.6, H)[1] + 4, anchor="end")
-    d.dim(p(s, s, 0), p(s, s, H), "Height", off=(-30, 0), lx=p(s, s, H / 2)[0] - 40, ly=p(s, s, H / 2)[1], anchor="end")
+    d.dim(p(s + 0.5, 0, H), p(s + 0.5, s, H), "Width", lx=p(s + 0.5, s, H)[0] + 16, ly=p(s + 0.5, s, H)[1] - 4, anchor="start")
+    d.dim(p(0, s, 0), p(0, s, H), "Height", off=(-22, 0), lx=p(0, s, H / 2)[0] - 32, ly=p(0, s, H / 2)[1] + 5, anchor="end")
     return d.svg()
 
 
 def steps():
     d = D(420, 260, "Measure each step's rise and run, the top landing depth and the step width")
-    x0, y0, rise, run, n, land = 50, 210, 40, 50, 3, 110
+    x0, y0, rise, run, n, land = 90, 200, 40, 50, 3, 120
     pts = [(x0, y0)]
     x, y = x0, y0
     for i in range(n):
@@ -147,57 +144,56 @@ def steps():
     d.dim((x0, y0 - rise - 16), (x0 + run, y0 - rise - 16), "Run", lx=x0 + run / 2, ly=y0 - rise - 26)
     lx0 = x0 + run * (n - 1)
     d.dim((lx0, y0 - n * rise - 16), (lx0 + land, y0 - n * rise - 16), "Top step or landing", lx=lx0 + land / 2, ly=y0 - n * rise - 26)
-    d.text(x0 + 150, y0 + 30, "Side view · width runs into the page", "ts")
+    d.text(210, y0 + 34, "Side view \u00b7 the step width runs into the page", "ts")
     return d.svg()
 
 
 def curb():
-    d = D(420, 230, "Measure the curb width and height and the gutter width and thickness")
-    base, x0, cw, ch, gw, gt = 175, 230, 50, 120, 140, 34
-    pts = [(x0, base), (x0, base - ch), (x0 + cw, base - ch), (x0 + cw, base), (x0 - gw, base), (x0 - gw, base - gt), (x0, base - gt)]
+    d = D(420, 240, "Measure the curb width and height and the gutter width and thickness")
+    base, x0, cw, ch, gw, gt = 170, 250, 46, 116, 130, 32
     d.poly([(x0, base - ch), (x0 + cw, base - ch), (x0 + cw, base), (x0 - gw, base), (x0 - gw, base - gt), (x0, base - gt)], "fa")
     d.dim((x0, base - ch - 16), (x0 + cw, base - ch - 16), "Curb width", lx=x0 + cw / 2, ly=base - ch - 26)
     d.dim((x0 + cw + 22, base), (x0 + cw + 22, base - ch), "Curb height", lx=x0 + cw + 30, ly=base - ch / 2 + 5, anchor="start")
     d.dim((x0 - gw, base + 18), (x0, base + 18), "Gutter width", lx=x0 - gw / 2, ly=base + 40)
     d.dim((x0 - gw - 18, base), (x0 - gw - 18, base - gt), "Thickness", lx=x0 - gw - 26, ly=base - gt / 2 + 5, anchor="end")
-    d.text(210, 222, "Cross-section · length runs into the page", "ts")
+    d.text(210, 232, "Cross-section \u00b7 the length runs into the page", "ts")
     return d.svg()
 
 
 def stairs():
     d = D(420, 270, "Measure the total rise from floor to floor, then the tread run")
-    x0, y0, n = 70, 230, 6
-    rise, run = 30, 40
+    x0, y0, n = 80, 225, 6
+    rise, run = 30, 34
     pts = [(x0, y0)]
     x, y = x0, y0
     for i in range(n):
         y -= rise; pts.append((x, y)); x += run; pts.append((x, y))
     d.poly(pts + [(x, y0)], "fa")
-    d.line((x, y0 - n * rise), (x + 60, y0 - n * rise))
-    d.line((x0 - 40, y0), (x + 60, y0))
-    d.dim((x + 40, y0), (x + 40, y0 - n * rise), "Total rise", lx=x + 30, ly=y0 - n * rise / 2 + 5, anchor="end")
+    d.line((x, y0 - n * rise), (x + 50, y0 - n * rise))
+    d.line((x0 - 40, y0), (x + 50, y0))
+    d.dim((x + 36, y0), (x + 36, y0 - n * rise), "Total rise", lx=x + 46, ly=y0 - n * rise / 2 + 5, anchor="start")
     d.dim((x0 - 18, y0), (x0 - 18, y0 - rise), "Riser", lx=x0 - 26, ly=y0 - rise / 2 + 5, anchor="end")
     d.dim((x0, y0 - rise - 14), (x0 + run, y0 - rise - 14), "Tread", lx=x0 + run / 2, ly=y0 - rise - 24)
-    d.text(210, 258, "Floor to finished floor above", "ts")
+    d.text(210, 258, "Total rise: floor to the finished floor above", "ts")
     return d.svg()
 
 
 def roof():
-    d = D(420, 260, "Measure the house length and width, the overhang, and the roof pitch")
-    x0, base, w, peak = 80, 200, 260, 90
-    d.poly([(x0 - 20, base - 4), (x0 + w / 2, base - peak - 18), (x0 + w + 20, base - 4), (x0 + w, base), (x0 + w / 2, base - peak), (x0, base)], "fc")
-    d.poly([(x0, base), (x0 + w, base), (x0 + w, base + 40), (x0, base + 40)], "fb")
-    d.dim((x0, base + 54), (x0 + w, base + 54), "House width", lx=x0 + w / 2, ly=base + 50)
-    d.dim((x0 - 20, base - 30), (x0, base - 30), "", lx=0, ly=0)
-    d.text(x0 - 26, base - 38, "Overhang", "ts", "end")
-    # pitch triangle on the right slope
-    ax, ay = x0 + w / 2 + 40, base - peak + 28
-    bx, by = ax + 70, ay
-    cx, cy = ax, ay - 70 * peak / (w / 2)
-    d.line((ax, ay), (bx, by), "dm"); d.line((ax, ay), (cx, cy), "dm")
-    d.text((ax + bx) / 2, ay + 18, "12 in run", "ts")
-    d.text(ax - 6, (ay + cy) / 2 + 4, "Rise", "ts", "end")
-    d.text(210, 22, "Pitch = rise per 12 in of run · measure length along the eaves", "ts")
+    d = D(420, 280, "Measure the house length and width, the overhang, and the roof pitch")
+    x0, base, w, peak, ov = 110, 190, 220, 80, 22
+    top = (x0 + w / 2, base - peak - 16)
+    d.poly([(x0 - ov, base - 2), top, (x0 + w + ov, base - 2), (x0 + w, base), (x0 + w / 2, base - peak), (x0, base)], "fc")
+    d.poly([(x0, base), (x0 + w, base), (x0 + w, base + 44), (x0, base + 44)], "fb")
+    d.dim((x0, base + 60), (x0 + w, base + 60), "House width", lx=x0 + w / 2, ly=base + 82)
+    d.dim((x0 - ov, base + 12), (x0, base + 12), "", lx=0, ly=-20)
+    d.text(x0 - ov - 6, base + 17, "Overhang", "ts", "end")
+    slope = (base - 2 - top[1]) / (w / 2 + ov)
+    ax = top[0] + 34; ay = top[1] + 34 * slope
+    bx = ax + 64; cy = ay + 64 * slope
+    d.line((ax, ay), (bx, ay), "dm"); d.line((bx, ay), (bx, cy), "dm")
+    d.text((ax + bx) / 2, ay - 8, "12 in run", "ts")
+    d.text(bx + 8, (ay + cy) / 2 + 5, "Rise", "tx", "start")
+    d.text(210, 22, "Pitch = rise per 12 in of run", "ts")
     return d.svg()
 
 

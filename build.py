@@ -285,6 +285,7 @@ def tool_page(t, all_tools):
 <nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol>{toc_html}</ol></nav>
 {guide_html}
 <section class="faq"><h2 id="questions">Common questions</h2>{faq_html}</section>
+{author_box("../")}
 {guides_for(t["slug"], "../")}
 <section class="related"><h2>Related calculators</h2><ul class="related-list">{related_html}</ul></section>
 </article>
@@ -373,6 +374,17 @@ def plain_page(slug):
 
 
 TOOLS_BY_SLUG = {}
+
+
+def author_box(prefix):
+    """Who wrote the guide on a calculator page, and how the numbers are checked."""
+    name = CFG.get("guide_author") or CFG["owner_name"]
+    bio = ((CFG.get("authors") or {}).get(name) or {}).get("bio") or CFG.get("owner_bio") or ""
+    return (f'<section class="author-box"><span class="author-mark" aria-hidden="true"></span><div>'
+            f'<p class="author-name">Guide by {esc(name)} \u00b7 Updated {datetime.date.today().strftime("%B %-d, %Y")}</p>'
+            f'<p>{esc(bio)}</p>'
+            f'<p>Every formula on this page is tested against hand-worked examples before it goes live. '
+            f'<a href="{prefix}how-we-calculate/">How we calculate</a> \u00b7 <a href="{prefix}contact/">Report a mistake</a></p></div></section>')
 
 
 def with_diagrams(html_text):

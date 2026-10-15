@@ -131,7 +131,7 @@
   /* ---------- Tile ---------- */
   var PATTERN_WASTE = { straight: 10, diagonal: 15, herringbone: 20 };
   // Approximate thinset coverage (sq ft per 50 lb bag) by trowel notch.
-  var THINSET_COVERAGE = { '1/4x1/4': 95, '1/4x3/8': 70, '1/2x1/2': 45 };
+  var THINSET_COVERAGE = { '1/4x1/4': 95, '1/4x3/8': 63, '1/2x1/2': 45 }; // midpoints of Custom Building Products' VersaBond chart
   var GROUT_LB_PER_CU_IN = 0.065; // typical sanded/unsanded cementitious grout
 
   function tile(i) {

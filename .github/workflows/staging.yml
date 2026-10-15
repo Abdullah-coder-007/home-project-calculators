@@ -25,6 +25,22 @@ jobs:
       - run: pip install markdown pyyaml
       - run: node --test tests/*.test.js
       - run: STAGING=1 python3 build.py
+      - name: Speed and accessibility check (Lighthouse)
+        continue-on-error: true
+        run: |
+          npm i -g lighthouse@12 >/dev/null 2>&1
+          (cd docs && python3 -m http.server 8080 >/dev/null 2>&1 &)
+          sleep 2
+          echo "| Page | Performance | Accessibility | Best practices | SEO |" >> $GITHUB_STEP_SUMMARY
+          echo "| --- | --- | --- | --- | --- |" >> $GITHUB_STEP_SUMMARY
+          for u in "" paint-calculator/ concrete-calculator/ flooring-calculator/ blog/walls/celery-2027-color-of-the-year-paint/; do
+            lighthouse "http://localhost:8080/$u" --quiet --chrome-flags="--headless=new --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=lh.json || continue
+            node -e "const r=require('./lh.json');const c=r.categories;const f=k=>Math.round(c[k].score*100);
+              console.log('LH /$u', f('performance'), f('accessibility'), f('best-practices'), f('seo'));
+              Object.values(r.audits).filter(a=>a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable').slice(0,12).forEach(a=>console.log('  FIX', a.id, '-', a.title));
+              require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, '| /$u | '+f('performance')+' | '+f('accessibility')+' | '+f('best-practices')+' | '+f('seo')+' |\\n');"
+          done
       - name: Publish to gh-pages
         run: |
           cd docs
