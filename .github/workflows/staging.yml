@@ -1,14 +1,13 @@
-# Builds the staging branch as a private preview on GitHub Pages.
-# The live site (calcupine.com) is built from main by Cloudflare and is not affected.
+# Builds the staging branch as a private preview and publishes it to the gh-pages branch
+# (GitHub Pages serves that branch). The live site, calcupine.com, is built from main by
+# Cloudflare and is never touched by this workflow.
 name: Staging preview
 on:
   push:
     branches: [staging]
   workflow_dispatch:
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 concurrency:
   group: staging
   cancel-in-progress: true
@@ -26,15 +25,14 @@ jobs:
       - run: pip install markdown pyyaml
       - run: node --test tests/*.test.js
       - run: STAGING=1 python3 build.py
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish to gh-pages
+        run: |
+          cd docs
+          touch .nojekyll
+          rm -f CNAME
+          git init -q -b gh-pages
+          git config user.name "staging-bot"
+          git config user.email "staging-bot@users.noreply.github.com"
+          git add -A
+          git commit -qm "Staging preview of ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
