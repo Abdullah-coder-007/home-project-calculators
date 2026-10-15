@@ -3,9 +3,9 @@
   "short": "Concrete calculator",
   "what": "Bags or cubic yards for slabs, footings and post holes",
   "title": "Concrete Calculator: How Many Bags of Concrete Do I Need? | Calcupine",
-  "description": "Calculate bags of concrete (40, 60 or 80 lb) or cubic yards for a slab, patio, footing or fence post holes. Includes waste, ready-mix advice and a shopping list.",
+  "description": "Calculate bags or cubic yards of concrete for slabs, footings, post holes, round and square columns, steps and curbs, with waste included. Feet, inches or metric.",
   "h1": "Concrete calculator",
-  "lede": "Choose a slab, footing or round holes, enter the size, and get the number of bags or cubic yards to order. The example is a 10 by 10 foot patio, 4 inches thick.",
+  "lede": "Choose a slab, footing, post holes, columns, steps or a curb, enter the size, and get the number of bags or cubic yards to order. The example is a 10 by 10 foot patio, 4 inches thick.",
   "related": [
     "mulch-calculator",
     "paint-calculator"
@@ -30,6 +30,14 @@
     {
       "q": "How much extra concrete should I buy?",
       "a": "Plan for 5 to 10% extra. Ground is rarely perfectly flat, forms bow a little, and running short mid-pour leaves a weak joint. The calculator adds 10% unless you change it."
+    },
+    {
+      "q": "How much concrete do I need for steps?",
+      "a": "Pick Steps, then enter the number of steps, the rise and run of each one, the width and the depth of the top step or landing. The calculator stacks the steps as solid blocks, so 3 steps that are 4 ft wide, 7 in high and 11 in deep take about 12.8 cu ft before waste, or about 24 bags of 80 lb mix with 10% extra."
+    },
+    {
+      "q": "How do I work out concrete for a curb and gutter?",
+      "a": "Multiply the length by the curb's cross-section (width x height) and add the gutter pan (width x thickness). A 50 ft run of 6 x 18 in curb with a 24 x 6 in gutter is 87.5 cu ft, or about 3.2 cubic yards before waste."
     }
   ],
   "category": "concrete"

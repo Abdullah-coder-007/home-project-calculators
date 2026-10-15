@@ -96,3 +96,26 @@ test('new calculators never return NaN or negatives on empty input', () => {
     for (const [k, v] of Object.entries(o)) if (typeof v === 'number') assert.ok(Number.isFinite(v) && v >= 0, `${fn}.${k}=${v}`);
   }
 });
+
+/* Concrete: steps, square columns, curbs */
+test('concrete steps: 3 steps, 4 ft wide, 7 in rise, 11 in run', () => {
+  const F = require('../src/assets/js/formulas.js');
+  // 4 x (7/12) x (11/12) x (1+2+3) = 12.833 cu ft
+  const v = F.concreteVolume({ mode: 'steps', steps: 3, stepWidth: 4, riseIn: 7, runIn: 11, landingIn: 11 });
+  assert.ok(Math.abs(v - 4 * (7 / 12) * (11 / 12) * 6) < 1e-9);
+});
+test('concrete steps with a 36 in top landing', () => {
+  const F = require('../src/assets/js/formulas.js');
+  // 4 x 7/12 x (11/12 x 3 + 3 x 3) = 4 x 0.58333 x 11.75 = 27.4167
+  const v = F.concreteVolume({ mode: 'steps', steps: 3, stepWidth: 4, riseIn: 7, runIn: 11, landingIn: 36 });
+  assert.ok(Math.abs(v - 4 * (7 / 12) * ((11 / 12) * 3 + 3 * 3)) < 1e-9);
+});
+test('concrete square columns: 2 columns 12 x 12 in, 8 ft tall', () => {
+  const F = require('../src/assets/js/formulas.js');
+  assert.ok(Math.abs(F.concreteVolume({ mode: 'square', sideIn: 12, columnHeight: 8, columnCount: 2 }) - 16) < 1e-9);
+});
+test('concrete curb and gutter: 50 ft, 6 x 18 in curb, 24 x 6 in gutter', () => {
+  const F = require('../src/assets/js/formulas.js');
+  // 50 x (0.5 x 1.5 + 2 x 0.5) = 50 x 1.75 = 87.5 cu ft
+  assert.ok(Math.abs(F.concreteVolume({ mode: 'curb', curbLength: 50, curbWidthIn: 6, curbHeightIn: 18, gutterWidthIn: 24, gutterThickIn: 6 }) - 87.5) < 1e-9);
+});

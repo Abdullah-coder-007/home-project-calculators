@@ -1,4 +1,107 @@
 /*
+ * Units: visitors can type in feet + inches (default) or metres + centimetres.
+ * The calculators always work in US units; metric inputs are converted on read.
+ * Each convertible input is tagged by its unit label: ft -> m, in -> cm, sq ft -> m2.
+ */
+(function () {
+  'use strict';
+  var FT_M = 0.3048, IN_CM = 2.54, SQFT_M2 = 0.09290304;
+  var MET = { ft: 'm', 'in': 'cm', 'sq ft': 'm²' };
+  var mode = 'imperial';
+  try { if (localStorage.getItem('pm:units') === 'metric') mode = 'metric'; } catch (e) { /* storage off */ }
+
+  function n(v) { var x = parseFloat(v); return isFinite(x) ? x : 0; }
+  function r(x, dp) { var p = Math.pow(10, dp); return Math.round(x * p) / p; }
+  function unitSpan(input) { return input.parentNode ? input.parentNode.querySelector('.unit') : null; }
+  function kind(input) {
+    var u = unitSpan(input);
+    if (!u) return null;
+    if (!u.hasAttribute('data-imp')) {
+      var t = u.textContent.trim();
+      if (!MET[t]) return null;
+      u.setAttribute('data-imp', t);
+    }
+    return u.getAttribute('data-imp');
+  }
+  // Imperial value of an input as a string, whatever is on screen.
+  function value(input) {
+    if (input.getAttribute('data-shown') !== 'metric' || input.value === '') return input.value;
+    var k = kind(input), x = n(input.value);
+    if (k === 'ft') return String(x / FT_M);
+    if (k === 'in') return String(x / IN_CM);
+    if (k === 'sq ft') return String(x / SQFT_M2);
+    return input.value;
+  }
+  function label(input, m) {
+    var u = unitSpan(input);
+    if (u) u.textContent = m ? MET[kind(input)] : kind(input);
+    input.setAttribute('data-shown', m ? 'metric' : 'imperial');
+  }
+  // Show a feet + inches pair as metres + centimetres (or back).
+  function convertPair(pair, toMetric) {
+    var ins = pair.querySelectorAll('input');
+    if (ins.length < 2) return;
+    var wasMetric = ins[0].getAttribute('data-shown') === 'metric';
+    if (wasMetric === toMetric) { label(ins[0], toMetric); label(ins[1], toMetric); return; }
+    var empty = ins[0].value === '' && ins[1].value === '';
+    var feet = n(value(ins[0])) + n(value(ins[1])) / 12;
+    label(ins[0], toMetric); label(ins[1], toMetric);
+    if (empty) return;
+    setFeet(ins, feet);
+  }
+  function setFeet(ins, feet) {
+    if (ins[0].getAttribute('data-shown') === 'metric') {
+      var cmTotal = r(feet * FT_M * 100, 2), m = Math.floor(cmTotal / 100 + 1e-9), cm = r(cmTotal - m * 100, 2);
+      ins[0].value = m; ins[1].value = cm ? cm : '';
+    } else {
+      var inTotal = r(feet * 12, 2), ft = Math.floor(inTotal / 12 + 1e-9), inch = r(inTotal - ft * 12, 2);
+      ins[0].value = ft; ins[1].value = inch ? inch : '';
+    }
+  }
+  function convertSingle(input, toMetric) {
+    var k = kind(input);
+    if (!k) return;
+    var wasMetric = input.getAttribute('data-shown') === 'metric';
+    if (wasMetric === toMetric) { label(input, toMetric); return; }
+    var imp = value(input);
+    label(input, toMetric);
+    if (input.value === '') return;
+    var x = n(imp);
+    if (!toMetric) { input.value = r(x, 2); return; }
+    input.value = k === 'ft' ? r(x * FT_M, 2) : k === 'in' ? r(x * IN_CM, 2) : r(x * SQFT_M2, 2);
+  }
+  function apply(root, toMetric) {
+    Array.prototype.forEach.call(root.querySelectorAll('.ftin-pair'), function (p) { convertPair(p, toMetric); });
+    Array.prototype.forEach.call(root.querySelectorAll('input[type=number]'), function (i) {
+      if (!i.closest('.ftin-pair')) convertSingle(i, toMetric);
+    });
+  }
+  function describeFeet(feet) {
+    if (mode === 'metric') {
+      var cmTotal = r(feet * FT_M * 100, 1), m = Math.floor(cmTotal / 100 + 1e-9), cm = r(cmTotal - m * 100, 1);
+      return m + ' m' + (cm ? ' ' + cm + ' cm' : '');
+    }
+    var inTotal = r(feet * 12, 1), ft = Math.floor(inTotal / 12 + 1e-9), inch = r(inTotal - ft * 12, 1);
+    return ft + ' ft' + (inch ? ' ' + inch + ' in' : '');
+  }
+  // Adds metric equivalents to a result line in metric mode, e.g. "1,677 sq ft" -> "1,677 sq ft (155.8 m²)".
+  function annotate(text) {
+    if (mode !== 'metric' || !text) return text;
+    return text
+      .replace(/([\d,]+(?:\.\d+)?) sq ft\b(?! \/)/g, function (all, x) { return all + ' / ' + r(n(x.replace(/,/g, '')) * SQFT_M2, 1).toLocaleString('en-US') + ' m²'; })
+      .replace(/([\d,]+(?:\.\d+)?) (cubic yards?|cu yd)\b(?! \/)/g, function (all, x) { return all + ' / ' + r(n(x.replace(/,/g, '')) * 0.764555, 2).toLocaleString('en-US') + ' m³'; });
+  }
+  window.PMUnits = {
+    metric: function () { return mode === 'metric'; },
+    value: value, apply: apply, setFeet: setFeet, describeFeet: describeFeet, annotate: annotate,
+    set: function (m) {
+      mode = m === 'metric' ? 'metric' : 'imperial';
+      try { localStorage.setItem('pm:units', mode); } catch (e) { /* storage off */ }
+    }
+  };
+})();
+
+/*
  * Calcupine page engine.
  * Wires a calculator form to a tool definition in tools.js:
  *   - reads inputs (feet + inches pairs are combined into feet)
@@ -10,6 +113,7 @@
   'use strict';
   var F = window.PMF;
   var TOOLS = window.PMTools || {};
+  var U = window.PMUnits;
 
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
@@ -97,7 +201,8 @@
       });
     }
     drawDims(s.type, s);
-    sel.addEventListener('change', function () { drawDims(sel.value, {}); self.onChange(); });
+    if (U.metric()) U.apply(dimsWrap, true);
+    sel.addEventListener('change', function () { drawDims(sel.value, {}); if (U.metric()) U.apply(dimsWrap, true); self.onChange(); });
     row.addEventListener('input', function () { self.onChange(); });
     this.list.appendChild(row);
     this.renumber();
@@ -112,8 +217,8 @@
     return $all('.shape', this.list).map(function (r) {
       var s = { type: r.querySelector('[data-k=type]').value, subtract: r.querySelector('[data-k=subtract]').checked };
       SHAPES[s.type].dims.forEach(function (d) {
-        var ft = F.num(r.querySelector('[data-k=' + d[0] + '_ft]').value);
-        var inch = F.num(r.querySelector('[data-k=' + d[0] + '_in]').value);
+        var ft = F.num(U.value(r.querySelector('[data-k=' + d[0] + '_ft]')));
+        var inch = F.num(U.value(r.querySelector('[data-k=' + d[0] + '_in]')));
         s[d[0]] = ft + inch / 12;
       });
       return s;
@@ -139,7 +244,7 @@
     $all('input[name], select[name]', form).forEach(function (i) {
       if (i.type === 'checkbox') v[i.name] = i.checked;
       else if (i.type === 'radio') { if (i.checked) v[i.name] = i.value; }
-      else v[i.name] = i.value;
+      else v[i.name] = U.value(i);
     });
     // Combine name_ft + name_in into name (feet).
     Object.keys(v).forEach(function (k) {
@@ -174,7 +279,7 @@
     var h = out.headline || { value: 0, unit: '' };
     $('.result-value', band).textContent = h.value;
     $('.result-unit', band).textContent = h.unit;
-    $('.result-sub', panel).textContent = h.sub || '';
+    $('.result-sub', panel).textContent = U.annotate(h.sub || '');
     band.classList.toggle('is-empty', !out.ready);
 
     var list = $('.shop-list tbody', panel);
@@ -272,7 +377,7 @@
       if (builder) {
         v.shapes = builder.read();
         v.area = F.totalArea(v.shapes);
-        builder.totalEl.textContent = 'Total area: ' + fmt(v.area, 1) + ' sq ft';
+        builder.totalEl.textContent = U.annotate('Total area: ' + fmt(v.area, 1) + ' sq ft');
       }
       if (tool.prepare) tool.prepare(form, v);
       var out = tool.calc(v, F);
@@ -290,7 +395,21 @@
       $all('input[name], select[name]', form).forEach(function (i) {
         if (i.type === 'checkbox') raw[i.name] = i.checked;
         else if (i.type === 'radio') { if (i.checked) raw[i.name] = i.value; }
-        else raw[i.name] = i.value;
+        else raw[i.name] = U.value(i);
+      });
+      // Store feet + inches pairs tidily (whole feet, inches to 2 dp), whatever units are on screen.
+      Object.keys(raw).forEach(function (k) {
+        var m = k.match(/^(.*)_ft$/);
+        if (!m || !((m[1] + '_in') in raw)) return;
+        if (raw[k] === '' && raw[m[1] + '_in'] === '') return;
+        var inTotal = Math.round((F.num(raw[k]) * 12 + F.num(raw[m[1] + '_in'])) * 100) / 100;
+        var ft = Math.floor(inTotal / 12 + 1e-9), inch = Math.round((inTotal - ft * 12) * 100) / 100;
+        raw[k] = String(ft); raw[m[1] + '_in'] = inch ? String(inch) : '';
+      });
+      // Single unit fields: keep 2 dp in storage.
+      Object.keys(raw).forEach(function (k) {
+        var i = form.querySelector('[name="' + k + '"]');
+        if (i && i.getAttribute('data-shown') === 'metric' && raw[k] !== '' && !/_(ft|in)$/.test(k)) raw[k] = String(Math.round(F.num(raw[k]) * 100) / 100);
       });
       if (builder) raw.shapes = builder.read();
       return raw;
@@ -301,6 +420,7 @@
       builder.load(state && state.shapes ? state.shapes : (tool.defaultShapes || [{ type: 'rect' }]));
     }
     if (state) writeForm(form, state);
+    bootUnits(form, builderRoot, function () { recalc(true); });
 
     form.addEventListener('input', function () { recalc(); });
     form.addEventListener('change', function () { recalc(); });
@@ -344,6 +464,33 @@
 
     bootPeek(panel);
     recalc(true);
+  }
+
+  // "ft & in | m & cm" switch above the inputs, shown on calculators that take lengths.
+  function bootUnits(form, builderRoot, done) {
+    if (!form.querySelector('.ftin-pair, .unit')) return;
+    var any = Array.prototype.some.call(form.querySelectorAll('.unit'), function (u) { return u.hasAttribute('data-imp') || /^(ft|in|sq ft)$/.test(u.textContent.trim()); });
+    if (!any) return;
+    var box = el('div', { class: 'units-toggle', role: 'group', 'aria-label': 'Units' },
+      '<span class="units-label">Units</span>' +
+      '<button type="button" data-units="imperial">ft &amp; in</button>' +
+      '<button type="button" data-units="metric">m &amp; cm</button>');
+    form.insertBefore(box, form.firstChild);
+    function paint() {
+      $all('button', box).forEach(function (b) { b.setAttribute('aria-pressed', String((b.getAttribute('data-units') === 'metric') === U.metric())); });
+    }
+    if (U.metric()) U.apply(form, true);
+    paint();
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      var toMetric = b.getAttribute('data-units') === 'metric';
+      if (toMetric === U.metric()) return;
+      U.set(toMetric ? 'metric' : 'imperial');
+      U.apply(form, toMetric);
+      paint();
+      done();
+    });
   }
 
   function fallbackCopy(text) {

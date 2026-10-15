@@ -80,6 +80,9 @@
         notes.push('Volume: ' + fmt(r.cuFt, 2) + ' cu ft, plus ' + Math.round(r.waste * 100) + '% extra for spills and uneven ground.');
         if (r.suggestReadyMix) notes.push('At ' + fmt(r.cuYd, 2) + ' cubic yards, ready-mix delivery (about ' + r.readyMixYd + ' yd) is usually easier than mixing ' + r.bags + ' bags by hand. Ask suppliers about short-load fees.');
         if (r.bags > 20 && !r.suggestReadyMix) notes.push('Rent a small drum mixer for jobs over about 20 bags.');
+        if (v.mode === 'steps') notes.push('This is for solid steps. Big steps are often built over compacted gravel fill, which can cut the concrete needed by a third or more.');
+        if (v.mode === 'curb') notes.push('Curb and gutter usually needs forms or a slip-form machine; ask your supplier about a low-slump mix for curbs.');
+        if (v.mode === 'square') notes.push('Tall columns need reinforcing steel and sturdy forms. Check your local code or an engineer for structural columns.');
         notes.push('One 80 lb bag weighs as much as a large dog. Plan how you will move them.');
       }
       return {

@@ -223,7 +223,7 @@ def load_tool(slug):
     d = SRC / "tools" / slug
     meta = json.loads((d / "meta.json").read_text())
     meta["slug"] = slug
-    meta["form"] = (d / "form.html").read_text()
+    meta["form"] = with_diagrams((d / "form.html").read_text())
     meta["guide"] = fill((d / "guide.html").read_text())
     return meta
 
@@ -365,6 +365,18 @@ def plain_page(slug):
 
 
 TOOLS_BY_SLUG = {}
+
+
+def with_diagrams(html_text):
+    """Replace <!-- diagram: name --> with a "What to measure" drawing from src/diagrams/."""
+    def repl(m):
+        f = SRC / "diagrams" / f"{m.group(1)}.svg"
+        if not f.exists():
+            warnings.append(f"missing diagram {m.group(1)}")
+            return ""
+        return ('<details class="measure-diagram"><summary>What to measure</summary>'
+                f'<div class="diagram">{f.read_text().strip()}</div></details>')
+    return re.sub(r"<!--\s*diagram:\s*([\w-]+)\s*-->", repl, html_text)
 
 
 def post_card(post, prefix):

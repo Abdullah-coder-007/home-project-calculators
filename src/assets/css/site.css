@@ -686,3 +686,22 @@ html.embed .cookie-bar { display: none; }
 .guide blockquote.fun-fact, .post blockquote { border-left: 6px solid var(--accent); background: var(--accent-soft); border-radius: 0 18px 18px 0; padding: 14px 18px; margin: 24px 0; }
 .post blockquote p { margin: 0 0 8px; }
 .post blockquote p:last-child { margin-bottom: 0; }
+
+/* Units switch */
+.units-toggle { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 0 0 18px; }
+.units-label { font-weight: 700; font-size: 0.9rem; color: var(--muted); margin-right: 4px; }
+.units-toggle button {
+  font: inherit; font-weight: 700; font-size: 0.92rem; min-height: 40px; padding: 6px 14px; cursor: pointer;
+  border-radius: 999px; border: 2px solid var(--line); background: var(--surface); color: var(--ink);
+}
+.units-toggle button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.units-toggle button:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 2px; }
+
+/* What to measure diagrams */
+.measure-diagram { margin: 0 0 16px; border: 1px dashed var(--line); border-radius: 16px; background: var(--surface); }
+.measure-diagram summary { cursor: pointer; padding: 10px 14px; font-weight: 700; color: var(--ink); list-style: none; display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.measure-diagram summary::-webkit-details-marker { display: none; }
+.measure-diagram summary::before { content: "+"; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--accent-soft); color: var(--accent-deep); font-weight: 800; }
+.measure-diagram[open] summary::before { content: "\2212"; }
+.measure-diagram .diagram { padding: 0 12px 12px; }
+.diagram-svg { display: block; width: 100%; max-width: 460px; height: auto; margin: 0 auto; }

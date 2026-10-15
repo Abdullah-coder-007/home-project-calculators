@@ -91,6 +91,23 @@
       var r = pos(i.diameterIn) / 2 / 12;
       return Math.PI * r * r * (pos(i.depthIn) / 12) * Math.max(0, Math.round(num(i.count, 1)));
     }
+    if (i.mode === 'square') {
+      var side = pos(i.sideIn) / 12;
+      return side * side * pos(i.columnHeight) * Math.max(0, Math.round(num(i.columnCount, 1)));
+    }
+    if (i.mode === 'steps') {
+      // Solid steps: step k (from the bottom) is k risers tall. The top step can be a
+      // deeper landing. Volume = width x rise x (run x (n-1)n/2 + n x landing).
+      var n = Math.max(0, Math.round(num(i.steps, 0)));
+      var rise = pos(i.riseIn) / 12, run = pos(i.runIn) / 12;
+      var landing = Math.max(run, pos(i.landingIn) / 12);
+      return pos(i.stepWidth) * rise * (run * (n - 1) * n / 2 + n * landing);
+    }
+    if (i.mode === 'curb') {
+      // Curb (width x height) plus an optional gutter pan (width x thickness) along its length.
+      return pos(i.curbLength) * ((pos(i.curbWidthIn) / 12) * (pos(i.curbHeightIn) / 12) +
+        (pos(i.gutterWidthIn) / 12) * (pos(i.gutterThickIn) / 12));
+    }
     // slab
     return pos(i.length) * pos(i.width) * (pos(i.thicknessIn) / 12);
   }
@@ -399,7 +416,7 @@
     deck: deck, roofing: roofing, pavers: pavers, stairs: stairs, lawn: lawn, evenLength: evenLength,
     shapeArea: shapeArea, totalArea: totalArea,
     paint: paint, paintPurchase: paintPurchase,
-    concrete: concrete, BAG_YIELD: BAG_YIELD,
+    concrete: concrete, concreteVolume: concreteVolume, BAG_YIELD: BAG_YIELD,
     tile: tile, PATTERN_WASTE: PATTERN_WASTE, THINSET_COVERAGE: THINSET_COVERAGE,
     bulk: bulk, MATERIALS: MATERIALS,
     flooring: flooring, FLOOR_WASTE: FLOOR_WASTE,

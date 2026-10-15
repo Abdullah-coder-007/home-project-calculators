@@ -50,10 +50,11 @@
   function fill(field, ft, inch) {
     var inputs = field.querySelectorAll('input[type=number]');
     if (inputs.length < 2) return;
-    inputs[0].value = ft;
-    inputs[1].value = inch ? inch : '';
+    var U = window.PMUnits;
+    if (U) U.setFeet(inputs, ft + (inch || 0) / 12);
+    else { inputs[0].value = ft; inputs[1].value = inch ? inch : ''; }
     inputs[0].dispatchEvent(new Event('input', { bubbles: true }));
-    toast('Filled ' + fieldLabel(field).toLowerCase() + ': ' + ft + ' ft' + (inch ? ' ' + inch + ' in' : ''));
+    toast('Filled ' + fieldLabel(field).toLowerCase() + ': ' + (U ? U.describeFeet(ft + (inch || 0) / 12) : ft + ' ft' + (inch ? ' ' + inch + ' in' : '')));
   }
   function describe(r) { return r.ft + ' ft' + (r.inch ? ' ' + r.inch + ' in' : ''); }
 
