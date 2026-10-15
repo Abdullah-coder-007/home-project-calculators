@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Builds the Calcupine static site from src/ into docs/ (served by GitHub Pages).
+Builds the Calcupine static site from src/ into docs/ (served by Cloudflare).
 
   python3 build.py
 
@@ -9,6 +9,7 @@ Settings live in site.json:
   custom_domain   e.g. "projectmath.com" once bought (writes docs/CNAME)
   contact_email   shown on the contact, privacy and terms pages
   adsense_client  e.g. "ca-pub-1234567890123456" once AdSense approves you
+  ga4_id          Google Analytics 4 measurement ID, e.g. "G-XXXXXXXXXX"
   *_verification  Google Search Console / Bing Webmaster meta tags
 
 Each calculator is a folder in src/tools/<slug>/ with:
@@ -75,6 +76,32 @@ def nav_html(prefix, current):
     return "".join(out)
 
 
+# Countries where visitors must opt in before analytics or ad cookies are set
+# (EEA, UK, Switzerland). Google applies these defaults by the visitor's location.
+CONSENT_REGIONS = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+                   "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"]
+
+
+def ga4_head():
+    """Google Analytics 4 with Consent Mode v2. Off on embedded calculators."""
+    gid = CFG.get("ga4_id")
+    if not gid:
+        return ""
+    gid = esc(gid)
+    regions = json.dumps(CONSENT_REGIONS)
+    return ("<script>(function(){if(document.documentElement.classList.contains('embed'))return;"
+            "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;"
+            "var no={ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};"
+            f"gtag('consent','default',Object.assign({{region:{regions},wait_for_update:500}},no));"
+            "gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});"
+            "var c=null;try{c=localStorage.getItem('pm:consent');}catch(e){}"
+            "if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});"
+            "else if(c==='denied')gtag('consent','update',no);"
+            f"gtag('js',new Date());gtag('config','{gid}');"
+            f"var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id={gid}';"
+            "document.head.appendChild(s);})();</script>\n")
+
+
 def page(*, path, title, description, body, schema=None, current=None, noindex=False, prefix=None, accent="violet",
          image="home", og_type="website", extra_head=""):
     depth = path.count("/")  # "" -> 0, "paint-calculator/" -> 1
@@ -98,6 +125,8 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
                f"s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={client}';"
                "s.crossOrigin='anonymous';document.head.appendChild(s);}</script>\n")
 
+    analytics = ga4_head()
+
     ld = ""
     for block in schema or []:
         ld += '<script type="application/ld+json">' + json.dumps(block, ensure_ascii=False) + "</script>\n"
@@ -110,7 +139,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
         f'<a href="{prefix}{p}/">{label}</a>'
         for p, label in [("about", "About"), ("contact", "Contact"), ("how-we-calculate", "How we calculate"),
                          ("privacy-policy", "Privacy policy"), ("terms", "Terms of use")]
-    )
+    ) + ('<button type="button" class="cookie-link" data-cookie-settings>Cookie choices</button>' if CFG.get("ga4_id") else "")
     return f"""<!doctype html>
 <html lang="en-US">
 <head>
@@ -138,7 +167,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{prefix}assets/css/site.css?v={css_v}">
 <link rel="stylesheet" href="{prefix}assets/css/accents.css?v={css_v}">
-{verif}{ads}{ld}</head>
+{verif}{analytics}{ads}{ld}</head>
 <body data-accent="{accent}">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">

@@ -665,3 +665,17 @@ html.embed .embed-credit { display: block; font-size: 0.9rem; margin: 18px 0; co
   .note { padding: 18px; }
   .site-foot { margin-top: 56px; }
 }
+
+/* Cookie choices */
+.cookie-link { font: inherit; font-weight: 600; color: #fff; background: none; border: 0; padding: 0; text-decoration: underline; cursor: pointer; }
+.cookie-bar {
+  position: fixed; z-index: 60; left: 16px; right: 16px; bottom: 16px; max-width: 640px; margin: 0 auto;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: 16px 18px;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 20px;
+  box-shadow: 0 24px 48px -20px rgba(27, 22, 64, 0.55);
+}
+.cookie-bar p { margin: 0; flex: 1 1 260px; font-size: 0.95rem; }
+.cookie-actions { display: flex; gap: 10px; flex: 1 1 200px; }
+.cookie-actions .btn { flex: 1; }
+html.embed .cookie-bar { display: none; }
+@media print { .cookie-bar { display: none; } }

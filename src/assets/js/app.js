@@ -405,3 +405,51 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+/* Cookie choices. Visitors in Europe (judged by time zone) are asked once; anyone can
+   change their mind from the "Cookie choices" link in the footer. Google applies the
+   matching consent defaults by location, so nothing is stored before a choice there. */
+(function () {
+  'use strict';
+  var KEY = 'pm:consent';
+  function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function inEurope() {
+    try {
+      var tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      return /^Europe\//.test(tz) || /^Atlantic\/(Reykjavik|Canary|Madeira|Azores|Faroe)$/.test(tz);
+    } catch (e) { return false; }
+  }
+  function apply(choice) {
+    try { localStorage.setItem(KEY, choice); } catch (e) {}
+    if (typeof window.gtag === 'function') {
+      var v = choice === 'granted' ? 'granted' : 'denied';
+      window.gtag('consent', 'update', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+    }
+  }
+  function show() {
+    if (document.querySelector('.cookie-bar')) return;
+    var pl = document.querySelector('.site-foot a[href$="privacy-policy/"]');
+    var prefix = pl ? pl.getAttribute('href') : '/privacy-policy/';
+    var bar = document.createElement('div');
+    bar.className = 'cookie-bar';
+    bar.setAttribute('role', 'region');
+    bar.setAttribute('aria-label', 'Cookie choices');
+    bar.innerHTML = '<p>We use cookies from Google Analytics to see which calculators people use, and later for ads that keep the site free. <a href="' + prefix + '">Privacy policy</a></p>' +
+      '<div class="cookie-actions"><button type="button" class="btn" data-choice="denied">Reject</button>' +
+      '<button type="button" class="btn" data-choice="granted">Accept</button></div>';
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-choice]');
+      if (!b) return;
+      apply(b.getAttribute('data-choice'));
+      bar.remove();
+    });
+    document.body.appendChild(bar);
+  }
+  function init() {
+    if (document.documentElement.classList.contains('embed') || typeof window.gtag !== 'function') return;
+    var link = document.querySelector('[data-cookie-settings]');
+    if (link) link.addEventListener('click', show);
+    if (!stored() && inEurope()) show();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
