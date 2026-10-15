@@ -1,5 +1,5 @@
 """
-Blog ("Guides") for ProjectMath.
+Blog ("Guides") for Calcupine.
 
 Posts are Markdown files in content/blog/<category>/<slug>.md, where <category>
 is one of the keys in site.json "categories" (walls, floors, concrete, outdoor,

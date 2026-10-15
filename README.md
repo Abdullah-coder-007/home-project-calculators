@@ -1,8 +1,8 @@
-# ProjectMath — home project calculators
+# Calcupine — home project calculators
 
 15 free calculators that tell homeowners exactly what to buy: paint, drywall, wallpaper, flooring, tile, square footage, concrete, pavers, cubic yards, mulch/soil/gravel, sod and seed, fences, decks, roofing and stairs. Each page gives quantities, a printable shopping list with editable prices, a how-to guide and an embeddable version for other sites.
 
-Live site (once GitHub Pages is on): https://abdullah-coder-007.github.io/home-project-calculators/
+Live site: https://calcupine.com (hosted on Cloudflare Pages from the `docs/` folder)
 
 ## How the project is laid out
 

@@ -1,5 +1,5 @@
 /*
- * ProjectMath formulas.
+ * Calcupine formulas.
  * Pure functions only: no DOM access. Shared by the browser pages and the
  * Node test suite (tests/formulas.test.js). All inputs are US units:
  * feet for lengths, inches where noted, square feet for areas.

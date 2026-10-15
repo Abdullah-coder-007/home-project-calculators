@@ -1,5 +1,5 @@
 /*
- * ProjectMath page engine.
+ * Calcupine page engine.
  * Wires a calculator form to a tool definition in tools.js:
  *   - reads inputs (feet + inches pairs are combined into feet)
  *   - runs the "area builder" (rooms made of rectangles, triangles, circles)

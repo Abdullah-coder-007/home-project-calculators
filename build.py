@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Builds the ProjectMath static site from src/ into docs/ (served by GitHub Pages).
+Builds the Calcupine static site from src/ into docs/ (served by GitHub Pages).
 
   python3 build.py
 
@@ -310,7 +310,7 @@ def home_page(tools):
 {groups}
 {latest_guides_html("")}
 <section class="why">
-<h2 class="section-title">Why ProjectMath</h2>
+<h2 class="section-title">Why Calcupine</h2>
 <p class="lede why-lede">Built to fix what people dislike about big calculator sites: clutter, confusing results and answers you can't check.</p>
 <div class="home-notes">{why_html}</div>
 </section>"""
