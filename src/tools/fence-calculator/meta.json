@@ -1,0 +1,33 @@
+{
+  "tool": "fence",
+  "category": "outdoor",
+  "short": "Fence calculator",
+  "what": "Posts, rails, pickets and concrete for a wood fence",
+  "title": "Fence Calculator: Posts, Rails, Pickets and Concrete | ProjectMath",
+  "description": "Free wood fence calculator. Enter the fence length and spacing to get posts, rails, pickets, screws and bags of concrete for setting posts.",
+  "h1": "Fence calculator",
+  "lede": "Enter the total fence length, post spacing and picket size. Get posts, rails, pickets, screws and the concrete to set the posts. The example is a 100 foot, 6 foot tall picket fence.",
+  "related": [
+    "concrete-calculator",
+    "deck-calculator",
+    "paint-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many fence posts do I need?",
+      "a": "Divide the fence length by the post spacing, round up, and add 1 for the end post. 100 feet with posts every 8 feet needs 14 posts. Add posts for gates and corners."
+    },
+    {
+      "q": "How far apart should fence posts be?",
+      "a": "6 to 8 feet is typical for wood fences; 8 feet matches standard rail length. Use closer spacing in windy areas or for heavy privacy fences."
+    },
+    {
+      "q": "How deep should fence posts be?",
+      "a": "A common rule is about one third of the post's height above ground, and below your local frost line. Many 6 foot fences use holes 24 to 36 inches deep. Check local requirements."
+    },
+    {
+      "q": "How many pickets do I need for 100 feet?",
+      "a": "With 5.5 inch pickets and a 1/2 inch gap, each picket covers 6 inches, so 100 feet (1,200 in) needs 200 pickets. A privacy fence with no gaps needs about 219."
+    }
+  ]
+}

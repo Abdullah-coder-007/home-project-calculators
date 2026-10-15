@@ -1,0 +1,41 @@
+<div class="group">
+  <p class="group-title">Room size</p>
+  <div class="row">
+    <div class="field ftin"><span>Length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="14"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="12"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+    <div class="field ftin"><span>Wall height</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="height_ft" value="8"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="height_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+</div>
+<div class="group">
+  <p class="group-title">Doors and windows</p>
+  <div class="row">
+    <label class="field"><span>Doors</span><input type="number" inputmode="numeric" min="0" step="1" name="doors" value="1"><span class="hint">Counted as 3 by 7 ft</span></label>
+    <label class="field"><span>Windows</span><input type="number" inputmode="numeric" min="0" step="1" name="windows" value="2"><span class="hint">Counted as 3 by 5 ft</span></label>
+    <label class="field"><span>Outside corners</span><input type="number" inputmode="numeric" min="0" step="1" name="corners" value="0"><span class="hint">For corner bead</span></label>
+  </div>
+</div>
+<div class="group">
+  <p class="group-title">Sheets</p>
+  <div class="row">
+    <label class="field"><span>Sheet size</span><select name="sheet"><option value="4x8" selected>4 x 8 ft (32 sq ft)</option><option value="4x10">4 x 10 ft (40 sq ft)</option><option value="4x12">4 x 12 ft (48 sq ft)</option></select></label>
+    <label class="field"><span>Extra for cuts</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="wastePct" value="10"><span class="unit">%</span></span></label>
+  </div>
+</div>
+<div class="group">
+  <label class="check"><input type="checkbox" name="ceiling" checked> <span>Include the ceiling</span></label>
+</div>

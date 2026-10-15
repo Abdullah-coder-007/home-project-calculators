@@ -127,6 +127,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{prefix}assets/css/site.css?v={css_v}">
+<link rel="stylesheet" href="{prefix}assets/css/accents.css?v={css_v}">
 {verif}{ads}{ld}</head>
 <body data-accent="{accent}">
 <a class="skip" href="#main">Skip to content</a>
@@ -261,31 +262,50 @@ def tool_page(t, all_tools):
 
 
 def home_page(tools):
-    cards = "".join(
-        f'<li class="tool-card" data-accent="{t["tool"]}"><a href="{t["slug"]}/">'
-        f'<span class="card-art">{iso.tool_icon(t["tool"])}</span>'
-        f'<span class="card-body"><span class="t-name">{esc(t["short"])}</span>'
-        f'<span class="t-what">{esc(t["what"])}</span>'
-        f'<span class="card-go">Open calculator</span></span></a></li>' for t in tools)
+    def card(t):
+        return (f'<li class="tool-card" data-accent="{t["tool"]}"><a href="{t["slug"]}/">'
+                f'<span class="card-art">{iso.tool_icon(t["tool"])}</span>'
+                f'<span class="card-body"><span class="t-name">{esc(t["short"])}</span>'
+                f'<span class="t-what">{esc(t["what"])}</span>'
+                f'<span class="card-go">Open calculator</span></span></a></li>')
+    groups = ""
+    for key, label in CFG["categories"]:
+        members = [t for t in tools if t.get("category") == key]
+        if members:
+            groups += f'<section class="tool-group"><h2 class="section-title" id="{key}">{esc(label)}</h2><ul class="tool-cards">{"".join(card(t) for t in members)}</ul></section>'
+    jump = "".join(f'<a href="#{k}">{esc(l)}</a>' for k, l in CFG["categories"])
+    why = [
+        ("paint", "Calculator first, no clutter", "The calculator is the first thing on every page. No pop-ups, no autoplay video, no sign-up."),
+        ("concrete", "Answers in store units", "Gallons and quarts, bags, boxes, sheets and bundles: the units you actually buy, not just square feet."),
+        ("tile", "Real rooms, not just rectangles", "Add L-shapes, circles and triangles, and subtract islands or built-ins. Feet and inches, no converting."),
+        ("flooring", "Waste is built in", "Each result adds the extra the trades plan for, and rounds up after the waste, so you don't run short."),
+        ("mulch", "A shopping list you can print", "Quantities, editable prices and a total. Print it, copy it to your phone, or share a link to your exact result."),
+        ("roofing", "Every formula is public", "We show how each number is worked out, test each calculator against worked examples, and link our sources."),
+    ]
+    why_html = "".join(
+        f'<div class="note" data-accent="{a}"><span class="note-dot" aria-hidden="true"></span><h3>{esc(h)}</h3><p>{esc(p)}</p></div>'
+        for a, h, p in why)
     body = f"""<section class="home-hero">
 <div class="hero-text">
 <h1>Know how much to buy before you drive to the store.</h1>
-<p class="lede">Free calculators for paint, concrete, tile, flooring and mulch. Enter your measurements and get exact quantities, a shopping list and a cost estimate you can print.</p>
-<div class="hero-actions"><a class="btn" href="paint-calculator/">Start with paint</a><a class="btn btn-ghost" href="#tools">See all calculators</a></div>
+<p class="lede">{len(tools)} free calculators for paint, drywall, flooring, concrete, decks, fences, roofs and more. Enter your measurements and get exact quantities, a shopping list and a cost estimate you can print.</p>
+<div class="hero-actions"><a class="btn" href="paint-calculator/">Start with paint</a><a class="btn btn-ghost" href="#walls">See all calculators</a></div>
 </div>
 <div class="hero-art-wrap">{iso.hero_scene()}</div>
 </section>
-<h2 class="section-title" id="tools">Pick your project</h2>
-<ul class="tool-cards">{cards}</ul>
-<section class="home-notes">
-<div class="note" data-accent="tile"><span class="note-dot" aria-hidden="true"></span><h2>Odd-shaped rooms work</h2><p>Add L-shapes, triangles and circles, and subtract islands or built-ins. Most calculators only handle simple rectangles.</p></div>
-<div class="note" data-accent="flooring"><span class="note-dot" aria-hidden="true"></span><h2>Waste is built in</h2><p>Every result includes extra for cuts, spills and breakage, using the allowances pros use. You can change it.</p></div>
-<div class="note" data-accent="paint"><span class="note-dot" aria-hidden="true"></span><h2>Every formula is public</h2><p>See exactly how each number is worked out on our <a href="how-we-calculate/">How we calculate</a> page.</p></div>
+<nav class="jump" aria-label="Calculator groups">{jump}</nav>
+{groups}
+<section class="why">
+<h2 class="section-title">Why ProjectMath</h2>
+<p class="lede why-lede">Built to fix what people dislike about big calculator sites: clutter, confusing results and answers you can't check.</p>
+<div class="home-notes">{why_html}</div>
 </section>"""
     schema = [{"@context": "https://schema.org", "@type": "WebSite", "name": CFG["name"], "url": BASE + "/",
-               "description": CFG["tagline"]}]
-    return page(path="", title=f"{CFG['name']}: Home Project Material Calculators",
-                description="Free paint, concrete, tile, flooring and mulch calculators. Get exact quantities, a shopping list and a cost estimate for your home project.",
+               "description": CFG["tagline"]},
+              {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
+                  {"@type": "ListItem", "position": n + 1, "name": t["short"], "url": f"{BASE}/{t['slug']}/"} for n, t in enumerate(tools)]}]
+    return page(path="", title=f"{CFG['name']}: Free Home Project Calculators",
+                description=f"{len(tools)} free calculators for paint, drywall, flooring, tile, concrete, pavers, fences, decks, roofing, stairs and lawns. Exact quantities, shopping lists and costs.",
                 body=body, schema=schema, current="")
 
 
@@ -308,6 +328,7 @@ def main():
         shutil.rmtree(OUT)
     OUT.mkdir()
     shutil.copytree(SRC / "assets", OUT / "assets")
+    (OUT / "assets/css/accents.css").write_text(iso.accents_css())
 
     (OUT / "index.html").write_text(home_page(tools))
     urls = [("", "1.0")]

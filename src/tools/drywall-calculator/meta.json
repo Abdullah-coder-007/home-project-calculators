@@ -1,0 +1,37 @@
+{
+  "tool": "drywall",
+  "category": "walls",
+  "short": "Drywall calculator",
+  "what": "Sheets, joint compound, tape and screws for a room",
+  "title": "Drywall Calculator: How Many Sheets of Drywall Do I Need? | ProjectMath",
+  "description": "Calculate drywall sheets (4x8, 4x10 or 4x12) for walls and ceiling, plus joint compound, tape, screws and corner bead. Free, with a printable shopping list.",
+  "h1": "Drywall calculator",
+  "lede": "Enter the room size to see how many drywall sheets to buy, after doors and windows, plus joint compound, tape and screws. The example is a 14 by 12 foot room.",
+  "related": [
+    "paint-calculator",
+    "wallpaper-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many sheets of drywall do I need for a 12x12 room?",
+      "a": "A 12 by 12 room with 8 foot walls has 384 sq ft of wall. Take off one door and one window (36 sq ft), add 10% waste, and you need about 12 sheets of 4 by 8 drywall for the walls, plus 5 more if you hang the ceiling."
+    },
+    {
+      "q": "Should I use 4x8 or 4x12 sheets?",
+      "a": "Longer sheets cover more with fewer joints, so there is less taping. 4 by 8 sheets are lighter and easier to carry and hang alone. Many pros use 4 by 12 on long walls and ceilings."
+    },
+    {
+      "q": "How much joint compound do I need?",
+      "a": "Rules of thumb range widely. This calculator uses about 9 gallons of ready-mixed compound per 1,000 sq ft for taping and two finish coats, which is about one 4.5 gallon bucket per 500 sq ft. Buy one extra if you are learning."
+    },
+    {
+      "q": "How many screws per sheet of drywall?",
+      "a": "About 1 screw per square foot, so roughly 32 for a 4 by 8 sheet. Ceilings and local code may require closer spacing."
+    },
+    {
+      "q": "What thickness of drywall should I use?",
+      "a": "1/2 inch is standard for walls. Ceilings often use 1/2 inch sag-resistant or 5/8 inch board, and 5/8 inch Type X is used where fire-rated walls are required, such as between a garage and the house."
+    }
+  ]
+}

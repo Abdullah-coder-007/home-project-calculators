@@ -1,6 +1,6 @@
 # ProjectMath — home project calculators
 
-Free calculators that tell homeowners exactly what to buy: paint, concrete, tile, flooring, and mulch/soil/gravel. Each page gives quantities, a printable shopping list with editable prices, a how-to guide and an embeddable version for other sites.
+15 free calculators that tell homeowners exactly what to buy: paint, drywall, wallpaper, flooring, tile, square footage, concrete, pavers, cubic yards, mulch/soil/gravel, sod and seed, fences, decks, roofing and stairs. Each page gives quantities, a printable shopping list with editable prices, a how-to guide and an embeddable version for other sites.
 
 Live site (once GitHub Pages is on): https://abdullah-coder-007.github.io/home-project-calculators/
 
@@ -8,7 +8,8 @@ Live site (once GitHub Pages is on): https://abdullah-coder-007.github.io/home-p
 
 | Path | What it is |
 | --- | --- |
-| `site.json` | Site settings: name, web address, contact email, AdSense ID, verification codes, list of calculators |
+| `site.json` | Site settings: name, web address, contact email, AdSense ID, verification codes, calculator list and homepage groups |
+| `iso.py` | Draws the 3D artwork and sets each calculator's colors |
 | `src/tools/<name>/` | One folder per calculator: `meta.json` (title, description, FAQ), `form.html` (inputs), `guide.html` (article) |
 | `src/pages/` | About, contact, privacy, terms and "How we calculate" pages |
 | `src/assets/js/formulas.js` | All the maths, in one place |

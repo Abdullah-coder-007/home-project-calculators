@@ -1,0 +1,33 @@
+{
+  "tool": "volume",
+  "category": "concrete",
+  "short": "Cubic yard calculator",
+  "what": "Cubic yards, cubic feet and m³ for any fill or dig",
+  "title": "Cubic Yard Calculator: Convert Area and Depth to Cubic Yards | ProjectMath",
+  "description": "Free cubic yard calculator. Enter length, width and depth to get cubic yards, cubic feet and cubic meters for soil, gravel, mulch, concrete or excavation.",
+  "h1": "Cubic yard calculator",
+  "lede": "Enter the area and depth of what you are filling or digging out. Get cubic yards for ordering bulk material, plus cubic feet and cubic meters.",
+  "related": [
+    "concrete-calculator",
+    "mulch-calculator",
+    "paver-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate cubic yards?",
+      "a": "Multiply length × width × depth in feet to get cubic feet, then divide by 27. A 10 by 10 foot area 6 inches deep is 10 × 10 × 0.5 = 50 cubic feet, or 1.85 cubic yards."
+    },
+    {
+      "q": "How many cubic feet are in a cubic yard?",
+      "a": "27, because a yard is 3 feet and 3 × 3 × 3 = 27."
+    },
+    {
+      "q": "How much area does a cubic yard cover?",
+      "a": "At 3 inches deep, one cubic yard covers 108 sq ft. At 2 inches it covers 162 sq ft, and at 4 inches 81 sq ft."
+    },
+    {
+      "q": "How do I convert cubic yards to tons?",
+      "a": "Multiply by the material's weight per cubic yard. Gravel is roughly 1.4 tons per yard and topsoil about 1.1, but it varies with moisture and stone type, so ask your supplier."
+    }
+  ]
+}

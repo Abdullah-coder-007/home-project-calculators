@@ -6,12 +6,31 @@
   "description": "Calculate bags of concrete (40, 60 or 80 lb) or cubic yards for a slab, patio, footing or fence post holes. Includes waste, ready-mix advice and a shopping list.",
   "h1": "Concrete calculator",
   "lede": "Choose a slab, footing or round holes, enter the size, and get the number of bags or cubic yards to order. The example is a 10 by 10 foot patio, 4 inches thick.",
-  "related": ["mulch-calculator", "paint-calculator"],
+  "related": [
+    "mulch-calculator",
+    "paint-calculator"
+  ],
   "faq": [
-    {"q": "How many 80 lb bags of concrete make a yard?", "a": "One cubic yard is 27 cubic feet, and an 80 lb bag yields about 0.60 cubic feet, so it takes 45 bags. With 60 lb bags (0.45 cu ft) it takes 60, and with 40 lb bags (0.30 cu ft) it takes 90."},
-    {"q": "How many bags for a 10x10 slab 4 inches thick?", "a": "A 10 by 10 foot slab at 4 inches is 33.3 cubic feet. With 10% extra that is 36.7 cubic feet, or 62 bags of 80 lb mix. At about 1.4 cubic yards, ready-mix delivery is usually the easier choice."},
-    {"q": "When should I order ready-mix instead of bags?", "a": "Around 1 cubic yard (45 bags of 80 lb mix) is where most people switch. Mixing that many bags by hand is slow, and the first part of a slab can start setting before you finish. Some suppliers charge a short-load fee for small orders, so ask."},
-    {"q": "How thick should a concrete slab be?", "a": "4 inches is typical for patios, walkways and shed floors. Driveways and areas that carry vehicles are usually 5 to 6 inches. Local codes and soil conditions can require more, so check with your building department."},
-    {"q": "How much extra concrete should I buy?", "a": "Plan for 5 to 10% extra. Ground is rarely perfectly flat, forms bow a little, and running short mid-pour leaves a weak joint. The calculator adds 10% unless you change it."}
-  ]
+    {
+      "q": "How many 80 lb bags of concrete make a yard?",
+      "a": "One cubic yard is 27 cubic feet, and an 80 lb bag yields about 0.60 cubic feet, so it takes 45 bags. With 60 lb bags (0.45 cu ft) it takes 60, and with 40 lb bags (0.30 cu ft) it takes 90."
+    },
+    {
+      "q": "How many bags for a 10x10 slab 4 inches thick?",
+      "a": "A 10 by 10 foot slab at 4 inches is 33.3 cubic feet. With 10% extra that is 36.7 cubic feet, or 62 bags of 80 lb mix. At about 1.4 cubic yards, ready-mix delivery is usually the easier choice."
+    },
+    {
+      "q": "When should I order ready-mix instead of bags?",
+      "a": "Around 1 cubic yard (45 bags of 80 lb mix) is where most people switch. Mixing that many bags by hand is slow, and the first part of a slab can start setting before you finish. Some suppliers charge a short-load fee for small orders, so ask."
+    },
+    {
+      "q": "How thick should a concrete slab be?",
+      "a": "4 inches is typical for patios, walkways and shed floors. Driveways and areas that carry vehicles are usually 5 to 6 inches. Local codes and soil conditions can require more, so check with your building department."
+    },
+    {
+      "q": "How much extra concrete should I buy?",
+      "a": "Plan for 5 to 10% extra. Ground is rarely perfectly flat, forms bow a little, and running short mid-pour leaves a weak joint. The calculator adds 10% unless you change it."
+    }
+  ],
+  "category": "concrete"
 }

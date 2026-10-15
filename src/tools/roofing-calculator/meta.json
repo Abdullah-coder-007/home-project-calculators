@@ -1,0 +1,37 @@
+{
+  "tool": "roofing",
+  "category": "structure",
+  "short": "Roofing calculator",
+  "what": "Roof area, squares, shingle bundles and underlayment",
+  "title": "Roofing Calculator: How Many Bundles of Shingles Do I Need? | ProjectMath",
+  "description": "Estimate roof area from your house size and pitch, then get squares, shingle bundles, underlayment, nails and drip edge. Free roofing calculator.",
+  "h1": "Roofing calculator",
+  "lede": "Enter the house length and width, the overhang and the roof pitch. The calculator works out the real roof area and the shingles, underlayment and nails to order.",
+  "related": [
+    "deck-calculator",
+    "paint-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "What is a roofing square?",
+      "a": "100 square feet of roof. A 1,500 sq ft roof is 15 squares."
+    },
+    {
+      "q": "How many bundles of shingles are in a square?",
+      "a": "Three bundles per square is standard for three-tab and most architectural shingles. Some heavier designer shingles use four or five; check the wrapper."
+    },
+    {
+      "q": "How do I find my roof pitch?",
+      "a": "Pitch is how many inches the roof rises for every 12 inches across. Hold a level horizontally against the roof underside or rafter, measure 12 inches along it, and measure straight up to the roof. A 6 inch rise is a 6/12 pitch."
+    },
+    {
+      "q": "How much waste should I add for roofing?",
+      "a": "About 10% for a simple gable roof and 15% for hip roofs or roofs with valleys and dormers, which need more cutting."
+    },
+    {
+      "q": "How many nails per square of shingles?",
+      "a": "About 320 for three-tab shingles: 80 shingles per square with 4 nails each. High-wind areas often require 6 nails per shingle (480 per square)."
+    }
+  ]
+}

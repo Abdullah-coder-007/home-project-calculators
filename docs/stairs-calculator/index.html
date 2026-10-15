@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed');</script>
+<title>Stair Calculator: Risers, Treads and Stringer Length | ProjectMath</title>
+<meta name="description" content="Free stair calculator. Enter the total rise to get the number of steps, riser height, total run and stringer length, checked against US residential code limits.">
+<link rel="canonical" href="https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ProjectMath">
+<meta property="og:title" content="Stair Calculator: Risers, Treads and Stringer Length | ProjectMath">
+<meta property="og:description" content="Free stair calculator. Enter the total rise to get the number of steps, riser height, total run and stringer length, checked against US residential code limits.">
+<meta property="og:url" content="https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#6c4cf5">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css?v=9f1b6c9374">
+<link rel="stylesheet" href="../assets/css/accents.css?v=9f1b6c9374">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Stairs calculator", "url": "https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/", "description": "Free stair calculator. Enter the total rise to get the number of steps, riser height, total run and stringer length, checked against US residential code limits.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": "https://abdullah-coder-007.github.io/home-project-calculators/"}, {"@type": "ListItem", "position": 2, "name": "Stairs calculator", "item": "https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How do I calculate the number of stairs?", "acceptedAnswer": {"@type": "Answer", "text": "Divide the total rise in inches by the maximum riser height and round up. For a 108 inch rise with a 7 3/4 inch maximum, 108 ÷ 7.75 = 13.9, so 14 risers of 7.71 inches each."}}, {"@type": "Question", "name": "What is the maximum riser height?", "acceptedAnswer": {"@type": "Answer", "text": "The International Residential Code (IRC R311.7.5.1) allows a maximum of 7 3/4 inches. Your local code may differ, so check before building."}}, {"@type": "Question", "name": "What is the minimum tread depth?", "acceptedAnswer": {"@type": "Answer", "text": "10 inches under IRC R311.7.5.2, measured from the edge of one nosing to the next."}}, {"@type": "Question", "name": "Why is there one less tread than risers?", "acceptedAnswer": {"@type": "Answer", "text": "The top step is the upper floor or deck itself, so it does not need a tread board."}}, {"@type": "Question", "name": "How many stringers do I need?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the tread material and stair width. A common approach is stringers no more than 16 inches apart, so a 36 inch wide stair needs 4. Check your tread maker's and local code's requirements."}}]}</script>
+</head>
+<body data-accent="stairs">
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>ProjectMath</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu"><span class="menu-icon" aria-hidden="true"></span>Menu</button>
+<nav id="site-menu" class="site-nav" aria-label="Main"><a href=".././">All calculators</a><a href="../how-we-calculate/">How we calculate</a><a href="../about/">About</a><span class="menu-tools"><a href="../paint-calculator/" data-accent="paint"><span class="menu-dot" aria-hidden="true"></span>Paint calculator</a><a href="../drywall-calculator/" data-accent="drywall"><span class="menu-dot" aria-hidden="true"></span>Drywall calculator</a><a href="../wallpaper-calculator/" data-accent="wallpaper"><span class="menu-dot" aria-hidden="true"></span>Wallpaper calculator</a><a href="../flooring-calculator/" data-accent="flooring"><span class="menu-dot" aria-hidden="true"></span>Flooring calculator</a><a href="../tile-calculator/" data-accent="tile"><span class="menu-dot" aria-hidden="true"></span>Tile calculator</a><a href="../square-footage-calculator/" data-accent="area"><span class="menu-dot" aria-hidden="true"></span>Square footage calculator</a><a href="../concrete-calculator/" data-accent="concrete"><span class="menu-dot" aria-hidden="true"></span>Concrete calculator</a><a href="../paver-calculator/" data-accent="pavers"><span class="menu-dot" aria-hidden="true"></span>Paver calculator</a><a href="../cubic-yard-calculator/" data-accent="volume"><span class="menu-dot" aria-hidden="true"></span>Cubic yard calculator</a><a href="../mulch-calculator/" data-accent="mulch"><span class="menu-dot" aria-hidden="true"></span>Mulch, soil and gravel calculator</a><a href="../sod-calculator/" data-accent="lawn"><span class="menu-dot" aria-hidden="true"></span>Sod and grass seed calculator</a><a href="../fence-calculator/" data-accent="fence"><span class="menu-dot" aria-hidden="true"></span>Fence calculator</a><a href="../deck-calculator/" data-accent="deck"><span class="menu-dot" aria-hidden="true"></span>Deck calculator</a><a href="../roofing-calculator/" data-accent="roofing"><span class="menu-dot" aria-hidden="true"></span>Roofing calculator</a><a href="../stairs-calculator/" data-accent="stairs"><span class="menu-dot" aria-hidden="true"></span>Stairs calculator</a></span></nav>
+</div></header>
+<main id="main" class="wrap">
+<section class="tool-head">
+<div class="tool-head-text">
+<p class="crumbs"><a href="../">All calculators</a> / Stairs calculator</p>
+<h1>Stairs calculator</h1>
+<p class="lede">Measure the total height from the lower floor to the top surface. The calculator works out how many steps you need, each riser height, the total run and the stringer length, and checks them against code limits.</p>
+</div>
+<div class="tool-head-art"><svg class="iso-icon" viewBox="0 0 96 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><polygon points="15.3,56.5 24.6,61.9 24.6,22.3 15.3,16.9" fill="#77b61b"/><polygon points="54.2,44.8 24.6,61.9 24.6,22.3 54.2,5.2" fill="#629223"/><polygon points="44.9,-0.2 54.2,5.2 24.6,22.3 15.3,16.9" fill="#a6da57"/><polyline points="15.3,16.9 24.6,22.3 54.2,5.2" fill="none" stroke="#ceeba2" stroke-width="1" stroke-opacity=".7"/><polygon points="24.6,61.9 34.0,67.3 34.0,37.6 24.6,32.2" fill="#80ba2c"/><polygon points="63.6,50.2 34.0,67.3 34.0,37.6 63.6,20.5" fill="#699430"/><polygon points="54.2,15.1 63.6,20.5 34.0,37.6 24.6,32.2" fill="#aedd65"/><polyline points="24.6,32.2 34.0,37.6 63.6,20.5" fill="none" stroke="#d2eca9" stroke-width="1" stroke-opacity=".7"/><polygon points="34.0,67.3 43.3,72.7 43.3,52.9 34.0,47.5" fill="#77b61b"/><polygon points="72.9,55.6 43.3,72.7 43.3,52.9 72.9,35.8" fill="#629223"/><polygon points="63.6,30.4 72.9,35.8 43.3,52.9 34.0,47.5" fill="#a6da57"/><polyline points="34.0,47.5 43.3,52.9 72.9,35.8" fill="none" stroke="#ceeba2" stroke-width="1" stroke-opacity=".7"/><polygon points="43.3,72.7 52.7,78.1 52.7,68.2 43.3,62.8" fill="#80ba2c"/><polygon points="82.3,61.0 52.7,78.1 52.7,68.2 82.3,51.1" fill="#699430"/><polygon points="72.9,45.7 82.3,51.1 52.7,68.2 43.3,62.8" fill="#aedd65"/><polyline points="43.3,62.8 52.7,68.2 82.3,51.1" fill="none" stroke="#d2eca9" stroke-width="1" stroke-opacity=".7"/></svg></div>
+</section>
+<div class="tool-grid">
+<form id="calc" class="calc" data-tool="stairs" novalidate>
+<h2>Your project</h2>
+<div class="group">
+  <p class="group-title">Height</p>
+  <div class="row">
+    <label class="field"><span>Total rise</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="totalRiseIn" value="108"><span class="unit">in</span></span><span class="hint">From the lower floor to the top surface</span></label>
+    <label class="field"><span>Max riser</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="maxRiserIn" value="7.75"><span class="unit">in</span></span><span class="hint">7 3/4 in under the IRC</span></label>
+  </div>
+</div>
+<div class="group">
+  <p class="group-title">Steps</p>
+  <div class="row">
+    <label class="field"><span>Tread depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="treadIn" value="10"><span class="unit">in</span></span><span class="hint">At least 10 in under the IRC</span></label>
+    <label class="field"><span>Stair width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="widthIn" value="36"><span class="unit">in</span></span></label>
+    <label class="field"><span>Stringer spacing</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="stringerSpacingIn" value="16"><span class="unit">in</span></span></label>
+  </div>
+</div>
+
+</form>
+<a class="result-peek" href="#result" hidden><span class="peek-value">0</span> <span class="peek-unit"></span><span class="peek-go">See shopping list</span></a>
+<aside class="result" id="result" aria-label="Result">
+<div class="result-figure is-empty" aria-live="polite">
+<p class="result-label">You need</p>
+<div class="result-line"><span class="result-value">0</span><span class="result-unit"></span></div>
+<p class="result-sub"></p>
+</div>
+<div class="result-body">
+<div class="shop" hidden>
+<h3>Shopping list</h3>
+<table class="shop-list">
+<thead><tr><th scope="col">Item</th><th scope="col">Qty</th><th scope="col">Price each</th><th scope="col" class="sub">Cost</th></tr></thead>
+<tbody></tbody>
+<tfoot><tr><th scope="row" colspan="3">Estimated total</th><td class="shop-total">$0.00</td></tr></tfoot>
+</table>
+<p class="price-hint">Prices are rough US starting points. Type your store's prices to update the total; this device remembers them.</p>
+<div class="actions">
+<button type="button" class="btn" data-action="print">Print list</button>
+<button type="button" class="btn btn-quiet" data-action="copy">Copy list</button>
+<button type="button" class="btn btn-quiet" data-action="share">Share this result</button>
+</div>
+</div>
+<ul class="result-notes" hidden></ul>
+</div>
+</aside>
+</div>
+<p class="embed-credit"><a href="https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/" target="_blank" rel="noopener">Stairs calculator</a> by ProjectMath</p>
+<article class="guide">
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#how-the-stairs-calculator-works">How the stairs calculator works</a></li><li><a href="#us-residential-code-limits">US residential code limits</a></li><li><a href="#comfortable-stairs">Comfortable stairs</a></li><li><a href="#measuring-the-total-rise">Measuring the total rise</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
+<h2 id="how-the-stairs-calculator-works">How the stairs calculator works</h2>
+<p class="formula">Risers = total rise &divide; maximum riser height, rounded up<br>
+Riser height = total rise &divide; risers<br>
+Treads = risers &minus; 1<br>
+Total run = treads &times; tread depth<br>
+Stringer length = &radic;(total rise&sup2; + total run&sup2;)</p>
+<h3>Worked example</h3>
+<p>A 108 inch total rise with a 7 3/4 inch maximum needs <strong>14 risers</strong> of 7.71 inches. That gives 13 treads; at 10 inches each the total run is 130 inches. The stringer is &radic;(108&sup2; + 130&sup2;) = 169 inches, or 14.1 feet, so buy 16 foot 2x12 boards.</p>
+<h2 id="us-residential-code-limits">US residential code limits</h2>
+<table>
+<thead><tr><th>Rule</th><th>Limit</th><th>IRC section</th></tr></thead>
+<tbody>
+<tr><td>Riser height</td><td>7 3/4 in maximum</td><td>R311.7.5.1</td></tr>
+<tr><td>Tread depth</td><td>10 in minimum</td><td>R311.7.5.2</td></tr>
+<tr><td>Variation in a flight</td><td>3/8 in maximum between steps</td><td>R311.7.5</td></tr>
+<tr><td>Nosing</td><td>3/4 to 1 1/4 in when treads are under 11 in</td><td>R311.7.5.3</td></tr>
+</tbody>
+</table>
+<p>Limits summarized from <a href="https://resources.viewrail.com/code-compliance/stair-code/tread-depth-and-risers" rel="noopener">Viewrail's IRC stair code guide</a>. Many cities adopt the IRC with changes, so check with your building department.</p>
+<h2 id="comfortable-stairs">Comfortable stairs</h2>
+<p>A common comfort rule is 2 risers + 1 tread = 24 to 25 inches. A 7.5 inch riser with a 10 inch tread gives 25 inches. The calculator shows this check under the result.</p>
+<h2 id="measuring-the-total-rise">Measuring the total rise</h2>
+<ol>
+<li>Measure from the finished lower floor or ground to the finished top surface.</li>
+<li>If the ground slopes, measure where the bottom step will land.</li>
+<li>Include the thickness of any flooring still to be added.</li>
+</ol>
+
+<section class="faq"><h2 id="questions">Common questions</h2><details><summary>How do I calculate the number of stairs?</summary><p>Divide the total rise in inches by the maximum riser height and round up. For a 108 inch rise with a 7 3/4 inch maximum, 108 ÷ 7.75 = 13.9, so 14 risers of 7.71 inches each.</p></details><details><summary>What is the maximum riser height?</summary><p>The International Residential Code (IRC R311.7.5.1) allows a maximum of 7 3/4 inches. Your local code may differ, so check before building.</p></details><details><summary>What is the minimum tread depth?</summary><p>10 inches under IRC R311.7.5.2, measured from the edge of one nosing to the next.</p></details><details><summary>Why is there one less tread than risers?</summary><p>The top step is the upper floor or deck itself, so it does not need a tread board.</p></details><details><summary>How many stringers do I need?</summary><p>It depends on the tread material and stair width. A common approach is stringers no more than 16 inches apart, so a 36 inch wide stair needs 4. Check your tread maker's and local code's requirements.</p></details></section>
+<section class="related"><h2>Related calculators</h2><ul class="related-list"><li data-accent="concrete"><a href="../concrete-calculator/"><span class="mini-art"><svg class="iso-icon" viewBox="0 0 96 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><polygon points="21.5,54.7 54.2,73.6 54.2,61.9 21.5,43.0" fill="#396fe8"/><polygon points="77.6,60.1 54.2,73.6 54.2,61.9 77.6,48.4" fill="#325bc2"/><polygon points="44.9,29.5 77.6,48.4 54.2,61.9 21.5,43.0" fill="#73a0ff"/><polyline points="21.5,43.0 54.2,61.9 77.6,48.4" fill="none" stroke="#b1caff" stroke-width="1" stroke-opacity=".7"/><polygon points="25.4,43.5 55.0,60.5 55.0,48.8 25.4,31.8" fill="#4d7de8"/><polygon points="75.3,48.8 55.0,60.5 55.0,48.8 75.3,37.1" fill="#4266c2"/><polygon points="45.7,20.1 75.3,37.1 55.0,48.8 25.4,31.8" fill="#84abff"/><polyline points="25.4,31.8 55.0,48.8 75.3,37.1" fill="none" stroke="#bbd1ff" stroke-width="1" stroke-opacity=".7"/><polygon points="29.3,32.2 55.8,47.5 55.8,36.7 29.3,21.4" fill="#5f88e8"/><polygon points="72.9,37.6 55.8,47.5 55.8,36.7 72.9,26.8" fill="#4f6ec2"/><polygon points="46.4,11.5 72.9,26.8 55.8,36.7 29.3,21.4" fill="#92b5ff"/><polyline points="29.3,21.4 55.8,36.7 72.9,26.8" fill="none" stroke="#c3d6ff" stroke-width="1" stroke-opacity=".7"/></svg></span><span><strong>Concrete calculator</strong><span class="t-what">Bags or cubic yards for slabs, footings and post holes</span></span></a></li><li data-accent="deck"><a href="../deck-calculator/"><span class="mini-art"><svg class="iso-icon" viewBox="0 0 96 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><polygon points="44.1,38.0 48.0,40.3 48.0,25.9 44.1,23.6" fill="#95723c"/><polygon points="51.9,38.0 48.0,40.3 48.0,25.9 51.9,23.6" fill="#7a5d3d"/><polygon points="48.0,21.4 51.9,23.6 48.0,25.9 44.1,23.6" fill="#bfa272"/><polyline points="44.1,23.6 48.0,25.9 51.9,23.6" fill="none" stroke="#dbcbb1" stroke-width="1" stroke-opacity=".7"/><polygon points="44.1,77.7 48.0,79.9 48.0,65.5 44.1,63.3" fill="#95723c"/><polygon points="51.9,77.7 48.0,79.9 48.0,65.5 51.9,63.3" fill="#7a5d3d"/><polygon points="48.0,61.0 51.9,63.3 48.0,65.5 44.1,63.3" fill="#bfa272"/><polyline points="44.1,63.3 48.0,65.5 51.9,63.3" fill="none" stroke="#dbcbb1" stroke-width="1" stroke-opacity=".7"/><polygon points="1.2,43.9 7.9,47.7 7.9,44.6 1.2,40.8" fill="#be8f3a"/><polygon points="54.6,20.7 7.9,47.7 7.9,44.6 54.6,17.6" fill="#99743b"/><polygon points="48.0,13.8 54.6,17.6 7.9,44.6 1.2,40.8" fill="#e0bb70"/><polyline points="1.2,40.8 7.9,44.6 54.6,17.6" fill="none" stroke="#eed9b0" stroke-width="1" stroke-opacity=".7"/><polygon points="8.6,48.2 15.3,52.0 15.3,48.9 8.6,45.0" fill="#c09648"/><polygon points="62.0,25.0 15.3,52.0 15.3,48.9 62.0,21.8" fill="#9b7946"/><polygon points="55.4,18.0 62.0,21.8 15.3,48.9 8.6,45.0" fill="#e2c07c"/><polyline points="8.6,45.0 15.3,48.9 62.0,21.8" fill="none" stroke="#efdcb6" stroke-width="1" stroke-opacity=".7"/><polygon points="16.0,52.4 22.7,56.3 22.7,53.1 16.0,49.3" fill="#be8f3a"/><polygon points="69.4,29.3 22.7,56.3 22.7,53.1 69.4,26.1" fill="#99743b"/><polygon points="62.8,22.3 69.4,26.1 22.7,53.1 16.0,49.3" fill="#e0bb70"/><polyline points="16.0,49.3 22.7,53.1 69.4,26.1" fill="none" stroke="#eed9b0" stroke-width="1" stroke-opacity=".7"/><polygon points="23.4,56.7 30.1,60.5 30.1,57.4 23.4,53.6" fill="#c09648"/><polygon points="76.8,33.6 30.1,60.5 30.1,57.4 76.8,30.4" fill="#9b7946"/><polygon points="70.2,26.6 76.8,30.4 30.1,57.4 23.4,53.6" fill="#e2c07c"/><polyline points="23.4,53.6 30.1,57.4 76.8,30.4" fill="none" stroke="#efdcb6" stroke-width="1" stroke-opacity=".7"/><polygon points="30.9,61.0 37.5,64.8 37.5,61.7 30.9,57.9" fill="#be8f3a"/><polygon points="84.2,37.8 37.5,64.8 37.5,61.7 84.2,34.7" fill="#99743b"/><polygon points="77.6,30.8 84.2,34.7 37.5,61.7 30.9,57.9" fill="#e0bb70"/><polyline points="30.9,57.9 37.5,61.7 84.2,34.7" fill="none" stroke="#eed9b0" stroke-width="1" stroke-opacity=".7"/><polygon points="38.3,65.3 44.9,69.1 44.9,66.0 38.3,62.1" fill="#c09648"/><polygon points="91.6,42.1 44.9,69.1 44.9,66.0 91.6,39.0" fill="#9b7946"/><polygon points="85.0,35.1 91.6,39.0 44.9,66.0 38.3,62.1" fill="#e2c07c"/><polyline points="38.3,62.1 44.9,66.0 91.6,39.0" fill="none" stroke="#efdcb6" stroke-width="1" stroke-opacity=".7"/></svg></span><span><strong>Deck calculator</strong><span class="t-what">Deck boards, joists and screws for a rectangular deck</span></span></a></li><li data-accent="roofing"><a href="../roofing-calculator/"><span class="mini-art"><svg class="iso-icon" viewBox="0 0 96 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><polygon points="16.8,57.4 52.7,78.1 52.7,58.3 16.8,37.6" fill="#d7d8e2"/><polygon points="79.2,62.8 52.7,78.1 52.7,58.3 79.2,43.0" fill="#adacbd"/><polygon points="43.3,22.3 79.2,43.0 52.7,58.3 16.8,37.6" fill="#f5f6fa"/><polyline points="16.8,37.6 52.7,58.3 79.2,43.0" fill="none" stroke="#f9fafc" stroke-width="1" stroke-opacity=".7"/><polygon points="10.6,37.6 52.7,61.9 69.0,32.6 27.0,8.4" fill="#e44244"/><polygon points="85.4,43.0 52.7,61.9 69.0,32.6" fill="#a53443"/><line x1="14.7" y1="30.3" x2="56.8" y2="54.6" stroke="#af3643" stroke-width="1.2"/><line x1="18.8" y1="23.0" x2="60.9" y2="47.3" stroke="#af3643" stroke-width="1.2"/><line x1="22.9" y1="15.7" x2="65.0" y2="40.0" stroke="#af3643" stroke-width="1.2"/></svg></span><span><strong>Roofing calculator</strong><span class="t-what">Roof area, squares, shingle bundles and underlayment</span></span></a></li></ul></section>
+</article>
+<section class="embed-box">
+<h2>Add this calculator to your site</h2>
+<p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
+<label class="field"><span>Embed code</span><textarea id="embed-code" readonly>&lt;iframe src=&quot;https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/?embed=1&quot; title=&quot;Stairs calculator&quot; width=&quot;100%&quot; height=&quot;900&quot; style=&quot;border:0;max-width:720px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://abdullah-coder-007.github.io/home-project-calculators/stairs-calculator/&quot;&gt;Stairs calculator&lt;/a&gt; by ProjectMath&lt;/p&gt;</textarea></label>
+<button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
+</section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a></nav>
+<p>Estimates only. Always check quantities with your supplier and the product label before you buy.</p>
+<p>&copy; 2026 ProjectMath</p>
+</div></footer>
+<script src="../assets/js/formulas.js?v=ff6505c87a" defer></script>
+<script src="../assets/js/tools.js?v=ff6505c87a" defer></script>
+<script src="../assets/js/app.js?v=ff6505c87a" defer></script>
+</body>
+</html>

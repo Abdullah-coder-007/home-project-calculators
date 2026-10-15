@@ -95,7 +95,37 @@ class Scene:
 COLORS = {
     "paint": "#ff4d8d", "concrete": "#3d7bff", "tile": "#12b8a6",
     "flooring": "#ff9f1c", "mulch": "#3bb54a", "violet": "#6c4cf5", "tape": "#ffc93c",
+    "area": "#8b5cf6", "volume": "#06b6d4", "drywall": "#6366f1", "wallpaper": "#d946ef",
+    "fence": "#f97316", "deck": "#d4a039", "roofing": "#ef4444", "pavers": "#a8a29e",
+    "stairs": "#84cc16", "lawn": "#10b981",
 }
+
+# Per-calculator page colors: accent, second gradient color, deep edge, soft tint.
+ACCENTS = {
+    "violet":    ("#6c4cf5", "#a46bff", "#4a2fc4", "#ece7ff"),
+    "paint":     ("#f2367c", "#ff7a59", "#b81d58", "#ffe5ef"),
+    "concrete":  ("#2f6bff", "#24b4ff", "#1c46b8", "#e3ecff"),
+    "tile":      ("#0fa596", "#3ad6a0", "#08776c", "#dcf7f2"),
+    "flooring":  ("#f2830d", "#ffc23c", "#b55d00", "#fff0dc"),
+    "mulch":     ("#2fa43f", "#9ad13b", "#1d7a2b", "#e2f6e1"),
+    "area":      ("#7c3aed", "#c084fc", "#5521b5", "#f1e8ff"),
+    "volume":    ("#0891b2", "#22d3ee", "#0e6680", "#dff7fc"),
+    "drywall":   ("#4f46e5", "#818cf8", "#3730a3", "#e8e8ff"),
+    "wallpaper": ("#c026d3", "#f472b6", "#86198f", "#fbe6fd"),
+    "fence":     ("#ea580c", "#fb923c", "#9a3412", "#ffeadb"),
+    "deck":      ("#b7791f", "#f2c14e", "#7c4f0e", "#fbf0d9"),
+    "roofing":   ("#dc2626", "#f97316", "#991b1b", "#fde4e4"),
+    "pavers":    ("#78716c", "#f59e0b", "#44403c", "#f3efe9"),
+    "stairs":    ("#65a30d", "#a3e635", "#3f6212", "#eef8dc"),
+    "lawn":      ("#059669", "#84cc16", "#065f46", "#dcfce7"),
+}
+
+
+def accents_css():
+    out = []
+    for k, (a, a2, deep, soft) in ACCENTS.items():
+        out.append(f'[data-accent="{k}"] {{ --accent: {a}; --accent-2: {a2}; --accent-deep: {deep}; --accent-soft: {soft}; }}')
+    return "\n".join(out) + "\n"
 
 
 def tool_icon(kind, size=96):
@@ -118,6 +148,63 @@ def tool_icon(kind, size=96):
         sc.box(-0.4, 2.2, 0, 6.2, 1.5, 0.7, shade(c, -0.08), depth=5)
     elif kind == "mulch":
         sc.mound(2.6, 2.6, 0, 3.0, 3.6, c)
+    elif kind == "area":
+        # A floor of alternating squares with a corner measuring block
+        for gx in range(3):
+            for gy in range(3):
+                sc.box(gx * 1.7, gy * 1.7, 0, 1.6, 1.6, 0.35, shade(c, 0.1 if (gx + gy) % 2 else -0.1), depth=gx + gy)
+        sc.box(4.3, -0.6, 0.35, 1.0, 1.0, 1.6, COLORS["tape"], depth=9)
+    elif kind == "volume":
+        # Eight cubes stacked into one big cube
+        for z in range(2):
+            for gx in range(2):
+                for gy in range(2):
+                    sc.box(0.6 + gx * 2.2, 0.6 + gy * 2.2, z * 2.2, 2.1, 2.1, 2.1, shade(c, 0.12 * ((gx + gy + z) % 2)), depth=gx + gy + z * 10)
+    elif kind == "drywall":
+        # Sheets stacked on edge
+        for k in range(4):
+            sc.box(0.6 + k * 0.7, 1.8, 0, 0.45, 3.8, 4.0, "#f1f2f8" if k % 2 else "#e3e6f3", depth=k)
+        sc.box(3.4, 0.6, 0, 2.2, 2.2, 1.1, c, depth=9)
+    elif kind == "wallpaper":
+        sc.cylinder(1.6, 3.6, 0, 1.15, 4.2, c, lid=shade(c, 0.35), drip=shade(c, 0.45), depth=1)
+        sc.cylinder(4.0, 1.6, 0, 1.15, 4.2, shade(c, -0.15), lid=shade(c, 0.2), drip=shade(c, 0.5), depth=2)
+    elif kind == "fence":
+        for k in range(5):
+            sc.box(0.2 + k * 1.2, 2.6, 0, 0.7, 0.3, 3.8 if k % 2 == 0 else 3.4, shade(c, 0.12 * (k % 2)), depth=k)
+        sc.box(0.0, 2.95, 0.9, 6.0, 0.3, 0.45, shade(c, -0.2), depth=10)
+        sc.box(0.0, 2.95, 2.5, 6.0, 0.3, 0.45, shade(c, -0.2), depth=10.1)
+    elif kind == "deck":
+        sc.box(0.2, 0.2, 0, 0.5, 0.5, 1.6, shade(c, -0.25), depth=0)
+        sc.box(4.6, 4.6, 0, 0.5, 0.5, 1.6, shade(c, -0.25), depth=0.5)
+        for k in range(6):
+            sc.box(-0.3 + k * 0.95, -0.3, 1.6, 0.85, 6.0, 0.35, shade(c, 0.08 * (k % 2)), depth=1 + k)
+    elif kind == "roofing":
+        # House box with a gable roof drawn from polygons
+        sc.box(0.6, 1.2, 0, 4.6, 3.4, 2.2, "#f1f2f8", depth=0)
+        P = sc.p
+        x0, x1, y0, y1, z0, ridge = 0.2, 5.6, 0.8, 5.0, 2.2, 4.4
+        ym = (y0 + y1) / 2
+        front = [P(x1, y0, z0), P(x1, y1, z0), P(x1, ym, ridge)]
+        slope_l = [P(x0, y1, z0), P(x1, y1, z0), P(x1, ym, ridge), P(x0, ym, ridge)]
+        sc.items.append((5, sc._poly(slope_l, shade(c, -0.05)) + sc._poly(front, shade(c, -0.35))))
+        for k in range(1, 4):
+            t = k / 4
+            a1 = P(x0, y1 + (ym - y1) * t, z0 + (ridge - z0) * t); a2 = P(x1, y1 + (ym - y1) * t, z0 + (ridge - z0) * t)
+            sc.items.append((5.1, f'<line x1="{a1[0]:.1f}" y1="{a1[1]:.1f}" x2="{a2[0]:.1f}" y2="{a2[1]:.1f}" stroke="{shade(c, -0.3)}" stroke-width="1.2"/>'))
+    elif kind == "pavers":
+        for gx in range(3):
+            for gy in range(4):
+                off = 0.55 if gy % 2 else 0
+                sc.box(gx * 1.75 + off - 0.4, gy * 1.25, 0, 1.6, 1.1, 0.55,
+                       COLORS["fence"] if (gx + gy) % 3 == 0 else shade(c, 0.1 * ((gx + gy) % 2)), depth=gx + gy)
+    elif kind == "stairs":
+        for k in range(4):
+            sc.box(0.4 + k * 1.2, 0.8, 0, 1.2, 3.8, 1.1 * (4 - k), shade(c, 0.08 * (k % 2)), depth=k)
+    elif kind == "lawn":
+        sc.box(0.2, 0.2, 0, 5.2, 5.2, 0.7, "#8b5e34", depth=0)
+        sc.box(0.2, 0.2, 0.7, 5.2, 2.5, 0.35, c, depth=1)
+        sc.box(0.2, 2.75, 0.7, 5.2, 2.5, 0.35, shade(c, 0.12), depth=2)
+        sc.cylinder(1.4, 4.6, 1.05, 0.55, 0.9, COLORS["lawn"], lid=shade(COLORS["lawn"], 0.4), depth=3)
     return sc.svg(size, size, cls="iso-icon")
 
 

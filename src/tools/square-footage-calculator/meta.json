@@ -1,0 +1,37 @@
+{
+  "tool": "area",
+  "category": "floors",
+  "short": "Square footage calculator",
+  "what": "Area of any room or yard in sq ft, sq yd and m²",
+  "title": "Square Footage Calculator: Area of Rooms, Floors and Yards | ProjectMath",
+  "description": "Free square footage calculator for rooms, L-shaped floors, circles and triangles. Get square feet, square yards, square meters and acres, plus a cost estimate.",
+  "h1": "Square footage calculator",
+  "lede": "Add each part of the room or yard as a section, using feet and inches. Get square feet, square yards and square meters instantly, and a cost if you know the price per square foot.",
+  "related": [
+    "flooring-calculator",
+    "tile-calculator",
+    "paint-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate square footage?",
+      "a": "Multiply length by width in feet. A 12 by 15 foot room is 180 sq ft. For odd shapes, split the space into rectangles, triangles and circles, work out each one and add them up."
+    },
+    {
+      "q": "How do I calculate square footage of an L-shaped room?",
+      "a": "Split it into two rectangles that do not overlap. Measure each, multiply length by width, and add the two areas. Use <em>Add a section</em> above to do this automatically."
+    },
+    {
+      "q": "How many square feet are in a square yard?",
+      "a": "9 square feet make 1 square yard, because a yard is 3 feet and 3 × 3 = 9. Carpet is often priced per square yard."
+    },
+    {
+      "q": "How do I convert inches to feet for area?",
+      "a": "Divide inches by 12 before multiplying. 10 feet 6 inches is 10.5 feet. This calculator has separate feet and inch boxes so you do not have to convert."
+    },
+    {
+      "q": "How many square feet in an acre?",
+      "a": "One acre is 43,560 square feet."
+    }
+  ]
+}

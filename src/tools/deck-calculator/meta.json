@@ -1,0 +1,33 @@
+{
+  "tool": "deck",
+  "category": "outdoor",
+  "short": "Deck calculator",
+  "what": "Deck boards, joists and screws for a rectangular deck",
+  "title": "Deck Calculator: How Many Deck Boards Do I Need? | ProjectMath",
+  "description": "Calculate deck boards, joists and screws for a rectangular deck. Works with any board width, gap and length. Free with a printable shopping list.",
+  "h1": "Deck calculator",
+  "lede": "Enter your deck size and board details. Get the number of deck boards, joists at your spacing, and screws. The example is a 16 by 12 foot deck with 16 foot boards.",
+  "related": [
+    "fence-calculator",
+    "stairs-calculator",
+    "concrete-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many deck boards do I need for a 12x16 deck?",
+      "a": "With 5.5 inch boards and 1/8 inch gaps, 12 feet of width needs 26 rows. Running 16 foot boards along the 16 foot side, that is 26 boards, or 29 with 10% extra."
+    },
+    {
+      "q": "How far apart should deck joists be?",
+      "a": "16 inches on center is standard for wood decking laid straight. Diagonal decking and many composite boards need 12 inches. Always check the board maker's instructions."
+    },
+    {
+      "q": "How many screws do I need for a deck?",
+      "a": "Two screws per board at every joist. A 16 by 12 deck with 13 joists and 26 rows needs about 676 screws."
+    },
+    {
+      "q": "What gap should I leave between deck boards?",
+      "a": "About 1/8 inch for dry or composite boards. Wet pressure-treated boards shrink, so they are often laid tight. Follow the product's guide."
+    }
+  ]
+}

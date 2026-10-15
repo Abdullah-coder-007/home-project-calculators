@@ -1,0 +1,30 @@
+<div class="group">
+  <p class="group-title">Deck size</p>
+  <div class="row">
+    <div class="field ftin"><span>Length (along the boards)</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="16"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width (across the boards)</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="12"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="group">
+  <p class="group-title">Boards</p>
+  <div class="row">
+    <label class="field"><span>Board width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="boardWidthIn" value="5.5"><span class="unit">in</span></span><span class="hint">5/4x6 and 2x6 boards are 5.5 in</span></label>
+    <label class="field"><span>Gap</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="gapIn" value="0.125"><span class="unit">in</span></span></label>
+    <label class="field"><span>Board length</span><select name="boardLengthFt"><option value="12">12 ft</option><option value="16" selected>16 ft</option><option value="20">20 ft</option></select></label>
+    <label class="field"><span>Extra for cuts</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="wastePct" value="10"><span class="unit">%</span></span></label>
+  </div>
+</div>
+<div class="group">
+  <p class="group-title">Framing</p>
+    <label class="field"><span>Joist spacing</span><select name="joistSpacingIn"><option value="12">12 in (diagonal or composite)</option><option value="16" selected>16 in on center</option></select></label>
+</div>

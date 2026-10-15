@@ -264,7 +264,8 @@
     var builder = null;
 
     var params = new URLSearchParams(location.search);
-    var state = params.get('s') ? decodeState(params.get('s')) : null;
+    // A shared link wins; otherwise bring back this visitor's last inputs.
+    var state = params.get('s') ? decodeState(params.get('s')) : store.get('last:' + toolName);
 
     function recalc(skipUrl) {
       var v = readForm(form);
@@ -278,6 +279,7 @@
       renderResult(panel, toolName, out);
       if (!skipUrl && out.ready) {
         var raw = readRaw();
+        store.set('last:' + toolName, raw);
         var url = new URL(location.href);
         url.searchParams.set('s', encodeState(raw));
         try { history.replaceState(null, '', url); } catch (e) { /* file:// */ }

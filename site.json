@@ -8,6 +8,50 @@
   "adsense_client": "",
   "google_site_verification": "",
   "bing_site_verification": "",
-  "tools": ["paint-calculator", "concrete-calculator", "tile-calculator", "flooring-calculator", "mulch-calculator"],
-  "pages": ["about", "contact", "how-we-calculate", "privacy-policy", "terms"]
+  "tools": [
+    "paint-calculator",
+    "drywall-calculator",
+    "wallpaper-calculator",
+    "flooring-calculator",
+    "tile-calculator",
+    "square-footage-calculator",
+    "concrete-calculator",
+    "paver-calculator",
+    "cubic-yard-calculator",
+    "mulch-calculator",
+    "sod-calculator",
+    "fence-calculator",
+    "deck-calculator",
+    "roofing-calculator",
+    "stairs-calculator"
+  ],
+  "pages": [
+    "about",
+    "contact",
+    "how-we-calculate",
+    "privacy-policy",
+    "terms"
+  ],
+  "categories": [
+    [
+      "walls",
+      "Walls and ceilings"
+    ],
+    [
+      "floors",
+      "Floors"
+    ],
+    [
+      "concrete",
+      "Concrete, pavers and fill"
+    ],
+    [
+      "outdoor",
+      "Yard, garden and outdoor"
+    ],
+    [
+      "structure",
+      "Roofs and stairs"
+    ]
+  ]
 }

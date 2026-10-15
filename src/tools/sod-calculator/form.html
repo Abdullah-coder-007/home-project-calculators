@@ -1,0 +1,21 @@
+<div class="group">
+  <fieldset class="choices"><legend>What are you buying?</legend><label><input type="radio" name="mode" value="sod" checked><span>Sod</span></label><label><input type="radio" name="mode" value="seed"><span>Grass seed</span></label></fieldset>
+</div>
+<div class="group">
+  <p class="group-title">Lawn area</p>
+  <div data-area-builder></div>
+</div>
+<div class="group" data-mode="sod">
+  <p class="group-title">Sod</p>
+  <div class="row">
+    <label class="field"><span>Piece size</span><select name="pieceSqFt"><option value="2.6667" selected>Slab, 16 x 24 in (2.67 sq ft)</option><option value="5">Mini roll (about 5 sq ft)</option><option value="10">Large roll (about 10 sq ft)</option></select></label>
+    <label class="field"><span>Square feet per pallet</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="palletSqFt" value="450"><span class="unit">sq ft</span></span><span class="hint">Ask your supplier: 400 to 700</span></label>
+  </div>
+</div>
+<div class="group" data-mode="seed" hidden>
+  <p class="group-title">Seed</p>
+  <div class="row">
+    <label class="field"><span>Seeding rate</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="seedRate" value="6"><span class="unit">lb per 1,000 sq ft</span></span><span class="hint">On the bag. Tall fescue, new lawn: 5 to 6</span></label>
+    <label class="field"><span>Bag size</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="bagLb" value="25"><span class="unit">lb</span></span></label>
+  </div>
+</div>

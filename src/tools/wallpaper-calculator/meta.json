@@ -1,0 +1,33 @@
+{
+  "tool": "wallpaper",
+  "category": "walls",
+  "short": "Wallpaper calculator",
+  "what": "Rolls of wallpaper with pattern repeat built in",
+  "title": "Wallpaper Calculator: How Many Rolls of Wallpaper Do I Need? | ProjectMath",
+  "description": "Work out how many rolls of wallpaper to buy, counting full strips and the pattern repeat. Works with US double rolls and European rolls. Free and printable.",
+  "h1": "Wallpaper calculator",
+  "lede": "Enter the room size, roll size and pattern repeat. The calculator counts full strips the way installers do, so the pattern lines up and you do not run short.",
+  "related": [
+    "paint-calculator",
+    "drywall-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many square feet does a roll of wallpaper cover?",
+      "a": "A US double roll is usually 20.5 inches wide and 33 feet long, about 56 sq ft. A European roll is about 21 inches by 33 feet, roughly 57 sq ft. You can use less than that because of trimming and pattern matching."
+    },
+    {
+      "q": "Why can't I just divide wall area by roll area?",
+      "a": "Wallpaper is hung in full-height strips, and each strip has to line up with the pattern. The leftover piece at the end of each roll is usually too short to use, so dividing area by area often leaves you short."
+    },
+    {
+      "q": "What is a pattern repeat?",
+      "a": "The distance before the design repeats down the roll, printed on the label. Each strip may need up to one extra repeat so the pattern matches the strip beside it."
+    },
+    {
+      "q": "How many extra rolls should I buy?",
+      "a": "Buy at least one extra roll from the same batch number. Rolls from a different batch can be a slightly different shade."
+    }
+  ]
+}

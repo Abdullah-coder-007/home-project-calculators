@@ -1,0 +1,33 @@
+{
+  "tool": "pavers",
+  "category": "concrete",
+  "short": "Paver calculator",
+  "what": "Pavers, base gravel, sand and edging for a patio or path",
+  "title": "Paver Calculator: Pavers, Base Gravel and Sand for a Patio | ProjectMath",
+  "description": "Free paver calculator. Get the number of pavers, tons of base gravel, bags of bedding sand and edge restraint for a patio, walkway or fire pit area.",
+  "h1": "Paver calculator",
+  "lede": "Enter your patio or path area and paver size. Get the pavers, base gravel, bedding sand and edging you need. Curved and L-shaped patios work too.",
+  "related": [
+    "concrete-calculator",
+    "mulch-calculator",
+    "cubic-yard-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many pavers do I need for a 12x12 patio?",
+      "a": "A 12 by 12 patio is 144 sq ft. Standard 4 by 8 inch pavers cover 0.22 sq ft each, so you need 648, or 713 with 10% extra for cuts."
+    },
+    {
+      "q": "How deep should the base be for pavers?",
+      "a": "About 4 to 6 inches of compacted crushed stone for patios and walkways, and 8 to 12 inches for driveways, according to paver maker Unilock. Clay soils may need more."
+    },
+    {
+      "q": "How much sand do I need under pavers?",
+      "a": "A bedding layer about 1 inch deep is common. 144 sq ft at 1 inch is 12 cubic feet, or 24 bags of 0.5 cubic feet."
+    },
+    {
+      "q": "How much extra should I order for cuts?",
+      "a": "About 5 to 10% for straight patterns and 15% for herringbone or curved edges."
+    }
+  ]
+}

@@ -208,5 +208,210 @@
     }
   };
 
+
+  function ready0(n) { return n > 0; }
+
+  /* ---------- Square footage ---------- */
+  T.area = {
+    defaultShapes: [{ type: 'rect', l: 15, w: 12 }],
+    calc: function (v, F) {
+      var r = F.area(v), ready = r.sqft > 0;
+      var notes = ready ? [
+        fmt(r.sqyd, 2) + ' square yards (carpet is often priced this way)',
+        fmt(r.sqm, 2) + ' square meters',
+        r.acres >= 0.01 ? fmt(r.acres, 3) + ' acres' : fmt(r.acres, 5) + ' acres'
+      ] : [];
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.sqft, 1) : '0', unit: ready ? 'square feet' : 'Enter your measurements',
+          sub: ready ? fmt(r.sqyd, 2) + ' sq yd · ' + fmt(r.sqm, 2) + ' m²' : '' },
+        items: [{ key: 'material', name: 'Material at your price per sq ft', qty: Math.round(r.sqft * 10) / 10, dp: 1, unit: 'sq ft', unitSingle: 'sq ft', price: F.num(v.pricePerSqFt, 0) || 0 }],
+        notes: notes
+      };
+    }
+  };
+
+  /* ---------- Cubic yards ---------- */
+  T.volume = {
+    defaultShapes: [{ type: 'rect', l: 10, w: 10 }],
+    calc: function (v, F) {
+      var r = F.volume(v), ready = r.cuFt > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.cuYd, 2) : '0', unit: ready ? 'cubic yards' : 'Enter area and depth',
+          sub: ready ? fmt(r.cuFt, 1) + ' cu ft · ' + fmt(r.cuM, 2) + ' m³' : '' },
+        items: [{ key: 'yd', name: 'Bulk material, by the yard', qty: Math.ceil(r.cuYd * 4) / 4, dp: 2, unit: 'cu yd', unitSingle: 'cubic yard', price: 40, note: 'Rounded up to the next 1/4 yard' }],
+        notes: ready ? ['Suppliers usually sell in 1/4 or 1/2 yard steps and may charge a delivery fee.', 'For concrete, mulch or gravel use the dedicated calculators: they add bags, weight and waste.'] : []
+      };
+    }
+  };
+
+  /* ---------- Drywall ---------- */
+  var SHEET_PRICE = { '4x8': 15, '4x10': 19, '4x12': 23 };
+  T.drywall = {
+    calc: function (v, F) {
+      var r = F.drywall(v), ready = r.sheets > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.sheets) : '0', unit: ready ? plural(r.sheets, 'sheet', 'sheets') + ' of ' + r.sheet.replace('x', ' x ') + ' drywall' : 'Enter your room size',
+          sub: ready ? fmt(r.area) + ' sq ft of board' + (r.ceiling ? ' including the ceiling' : '') : '' },
+        items: [
+          { key: 'sheet-' + r.sheet, name: 'Drywall sheets, ' + r.sheet.replace('x', ' x ') + ' ft', qty: r.sheets, unit: plural(r.sheets, 'sheet', 'sheets'), unitSingle: 'sheet', price: SHEET_PRICE[r.sheet] },
+          { key: 'compound', name: 'Joint compound, 4.5 gal bucket', qty: r.buckets, unit: plural(r.buckets, 'bucket', 'buckets'), unitSingle: 'bucket', price: 21, note: 'About ' + fmt(r.compoundGal, 1) + ' gal for three coats' },
+          { key: 'tape', name: 'Paper joint tape, 250 ft roll', qty: r.tapeRolls, unit: plural(r.tapeRolls, 'roll', 'rolls'), unitSingle: 'roll', price: 6 },
+          { key: 'screws', name: 'Drywall screws, 1-1/4 in', qty: r.screws, unit: 'screws', unitSingle: 'screw', price: 0.03, note: 'About 1 per sq ft of board' },
+          { key: 'bead', name: 'Corner bead, 8 ft', qty: r.cornerBead, unit: 'pieces', unitSingle: 'piece', price: 5 }
+        ],
+        notes: ready ? ['Use 1/2 in board for walls; ceilings often use 1/2 in sag-resistant or 5/8 in board.', 'Longer sheets mean fewer seams to tape, but they are heavier and harder to carry.'] : []
+      };
+    }
+  };
+
+  /* ---------- Wallpaper ---------- */
+  T.wallpaper = {
+    calc: function (v, F) {
+      var r = F.wallpaper(v), ready = r.rolls > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.rolls) : '0', unit: ready ? plural(r.rolls, 'roll of wallpaper', 'rolls of wallpaper') : (r.tooTall ? 'Walls are taller than one roll' : 'Enter your room size'),
+          sub: ready ? fmt(r.strips) + ' strips, ' + r.perRoll + ' per roll' : '' },
+        items: [
+          { key: 'roll', name: 'Wallpaper rolls', qty: r.rolls, unit: plural(r.rolls, 'roll', 'rolls'), unitSingle: 'roll', price: 60, note: 'Each strip ' + fmt(r.stripIn) + ' in long' },
+          { key: 'kit', name: 'Smoothing tool, knife and seam roller', qty: ready ? 1 : 0, unit: 'kit', price: 14 },
+          { key: 'paste', name: 'Wallpaper paste (skip if prepasted)', qty: ready ? Math.ceil(r.rolls / 4) : 0, unit: 'tubs', unitSingle: 'tub', price: 16, note: 'Roughly 1 tub per 4 rolls' }
+        ],
+        notes: ready ? ['Buy one extra roll from the same batch (lot) number; a later batch may not match.', 'Strips that land over doors are not counted; windows still need full strips above and below.'] : []
+      };
+    }
+  };
+
+  /* ---------- Fence ---------- */
+  T.fence = {
+    calc: function (v, F) {
+      var r = F.fence(v), ready = r.posts > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.pickets) : '0', unit: ready ? 'pickets' : 'Enter your fence length',
+          sub: ready ? fmt(r.posts) + ' posts, ' + fmt(r.rails) + ' rails, ' + fmt(r.bags) + ' bags of concrete' : '' },
+        items: [
+          { key: 'post', name: '4x4 posts, ' + r.postLength + ' ft', qty: r.posts, unit: 'posts', unitSingle: 'post', price: 16 },
+          { key: 'rail', name: '2x4 rails, 8 ft', qty: r.rails, unit: 'rails', unitSingle: 'rail', price: 6 },
+          { key: 'picket', name: 'Pickets', qty: r.pickets, unit: 'pickets', unitSingle: 'picket', price: 3.5 },
+          { key: 'concrete', name: '80 lb bags of concrete mix', qty: r.bags, unit: 'bags', unitSingle: 'bag', price: 6.5, note: 'For setting posts' },
+          { key: 'screws', name: 'Exterior screws for pickets', qty: r.fasteners, unit: 'screws', unitSingle: 'screw', price: 0.05, note: '2 per picket at each rail' }
+        ],
+        notes: ready ? ['Call 811 before digging so buried lines are marked.', 'Check your HOA and local rules on fence height and how far back from the property line it must sit.', 'Gates need their own posts; add one extra post per gate.'] : []
+      };
+    }
+  };
+
+  /* ---------- Deck ---------- */
+  T.deck = {
+    calc: function (v, F) {
+      var r = F.deck(v), ready = r.boards > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.boards) : '0', unit: ready ? 'deck boards, ' + F.num(v.boardLengthFt, 16) + ' ft' : 'Enter your deck size',
+          sub: ready ? fmt(r.rows) + ' rows of boards over ' + fmt(r.joists) + ' joists' : '' },
+        items: [
+          { key: 'board', name: 'Deck boards, ' + F.num(v.boardLengthFt, 16) + ' ft', qty: r.boards, unit: 'boards', unitSingle: 'board', price: 18, note: fmt(r.linearFt) + ' linear ft plus waste' },
+          { key: 'joist', name: 'Joists, 2x8, ' + r.joistLength + ' ft', qty: r.joists, unit: 'joists', unitSingle: 'joist', price: 16, note: 'Check span tables for your size' },
+          { key: 'screw', name: 'Deck screws', qty: r.screws, unit: 'screws', unitSingle: 'screw', price: 0.06, note: '2 per board at each joist' }
+        ],
+        notes: ready ? ['This covers the decking surface and joists. Beams, posts, footings and ledger must follow your local code; most areas need a permit.', 'Composite boards often need hidden fasteners and specific gaps; follow the maker\'s guide.'] : []
+      };
+    }
+  };
+
+  /* ---------- Roofing ---------- */
+  T.roofing = {
+    calc: function (v, F) {
+      var r = F.roofing(v), ready = r.bundles > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.bundles) : '0', unit: ready ? 'bundles of shingles' : 'Enter your house size',
+          sub: ready ? fmt(r.squares, 1) + ' squares of roof (' + fmt(r.area) + ' sq ft) plus ' + Math.round(r.waste * 100) + '% waste' : '' },
+        items: [
+          { key: 'bundle', name: 'Shingle bundles (3 per square)', qty: r.bundles, unit: 'bundles', unitSingle: 'bundle', price: 42 },
+          { key: 'underlay', name: 'Synthetic underlayment roll', qty: r.underlaymentRolls, unit: 'rolls', unitSingle: 'roll', price: 95 },
+          { key: 'nails', name: 'Coil roofing nails, box of 7,200', qty: Math.ceil(r.nails / 7200), unit: 'boxes', unitSingle: 'box', price: 55, note: fmt(r.nails) + ' nails at 320 per square' },
+          { key: 'drip', name: 'Drip edge, 10 ft', qty: r.dripEdgePieces, unit: 'pieces', unitSingle: 'piece', price: 9 }
+        ],
+        notes: ready ? ['Roof area is the house footprint with overhang times the pitch factor ' + fmt(r.factor, 3) + '.', 'Ridge length is about ' + fmt(r.ridgeFt) + ' ft; buy ridge cap and starter strip by length from the product label.', 'Roof work is dangerous. Use fall protection or hire a licensed roofer.'] : []
+      };
+    }
+  };
+
+  /* ---------- Pavers ---------- */
+  T.pavers = {
+    defaultShapes: [{ type: 'rect', l: 12, w: 12 }],
+    calc: function (v, F) {
+      var r = F.pavers(v), ready = r.pavers > 0;
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.pavers) : '0', unit: ready ? 'pavers' : 'Enter area and paver size',
+          sub: ready ? fmt(r.baseTons, 1) + ' tons of base gravel and ' + fmt(r.sandBags) + ' bags of sand' : '' },
+        items: [
+          { key: 'paver', name: 'Pavers, ' + F.num(v.paverL) + ' x ' + F.num(v.paverW) + ' in', qty: r.pavers, unit: 'pavers', unitSingle: 'paver', price: 0.8 },
+          { key: 'base', name: 'Crushed stone base, bulk', qty: Math.ceil(r.baseTons * 2) / 2, dp: 1, unit: 'tons', unitSingle: 'ton', price: 50, note: fmt(r.baseCuYd, 2) + ' cu yd' },
+          { key: 'sand', name: 'Bedding sand, 0.5 cu ft bag', qty: r.sandBags, unit: 'bags', unitSingle: 'bag', price: 5.5 },
+          { key: 'edge', name: 'Paver edge restraint, 8 ft', qty: r.edgePieces, unit: 'pieces', unitSingle: 'piece', price: 11 }
+        ],
+        notes: ready ? ['Walkways and patios usually need a 4 to 6 in compacted base; driveways need 8 to 12 in.', 'Spread polymeric sand in the joints after the pavers are set; follow the bag for coverage.'] : []
+      };
+    }
+  };
+
+  /* ---------- Stairs ---------- */
+  T.stairs = {
+    calc: function (v, F) {
+      var r = F.stairs(v), ready = r.risers > 0;
+      var notes = [];
+      if (ready) {
+        notes.push('Each riser is ' + fmt(r.riser, 2) + ' in and the stairs climb at ' + fmt(r.angle, 1) + '°.');
+        notes.push(r.riserOk ? 'Riser height is within the 7 3/4 in limit in the US residential code (IRC R311.7.5.1).' : 'Riser is over 7 3/4 in: add a step.');
+        notes.push(r.treadOk ? 'Tread depth meets the 10 in minimum (IRC R311.7.5.2).' : 'Tread is under the 10 in minimum (IRC R311.7.5.2).');
+        notes.push('Comfort check (2 risers + 1 tread): ' + fmt(r.comfort, 1) + ' in. Many builders aim for 24 to 25 in.');
+      }
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.risers) : '0', unit: ready ? 'risers of ' + fmt(r.riser, 2) + ' in' : 'Enter the total rise',
+          sub: ready ? fmt(r.treads) + ' treads, total run ' + fmt(r.run, 1) + ' in (' + fmt(r.run / 12, 2) + ' ft)' : '' },
+        items: [
+          { key: 'stringer', name: '2x12 stringers, ' + r.stringerBoard + ' ft', qty: r.stringers, unit: 'boards', unitSingle: 'board', price: 34, note: 'Each stringer is ' + fmt(r.stringerFt, 2) + ' ft long' },
+          { key: 'tread', name: 'Tread boards', qty: r.treads * Math.ceil(F.num(v.treadIn) / 11.25 || 1), unit: 'boards', unitSingle: 'board', price: 22, note: 'Cut to the stair width' }
+        ],
+        notes: notes
+      };
+    }
+  };
+
+  /* ---------- Sod and grass seed ---------- */
+  T.lawn = {
+    defaultShapes: [{ type: 'rect', l: 40, w: 25 }],
+    prepare: function (form) {
+      var mode = (form.querySelector('[name=mode]:checked') || {}).value || 'sod';
+      Array.prototype.forEach.call(form.querySelectorAll('[data-mode]'), function (g) { g.hidden = g.getAttribute('data-mode') !== mode; });
+    },
+    calc: function (v, F) {
+      var r = F.lawn(v), seed = v.mode === 'seed', ready = r.area > 0;
+      if (seed) return {
+        ready: ready && r.seedLb > 0,
+        headline: { value: fmt(r.seedLb, 1), unit: 'lb of grass seed', sub: fmt(r.area) + ' sq ft at ' + F.num(v.seedRate) + ' lb per 1,000 sq ft' },
+        items: [{ key: 'seedbag', name: 'Grass seed, ' + F.num(v.bagLb, 25) + ' lb bag', qty: r.seedBags, unit: 'bags', unitSingle: 'bag', price: 65 }],
+        notes: ['Use the rate on your seed bag; it varies a lot by grass type.', 'Keep new seed moist with light, frequent watering until it is established.']
+      };
+      return {
+        ready: ready,
+        headline: { value: fmt(r.pieces), unit: 'pieces of sod', sub: fmt(r.area) + ' sq ft plus 5% for cuts, about ' + fmt(r.palletsExact, 2) + ' pallets' },
+        items: [
+          { key: 'pallet', name: 'Sod pallets', qty: r.pallets, unit: 'pallets', unitSingle: 'pallet', price: 280, note: 'Ask if partial pallets are sold' },
+          { key: 'starter', name: 'Starter fertilizer bag', qty: ready ? 1 : 0, unit: 'bag', price: 25 }
+        ],
+        notes: ready ? ['Lay sod within a day of delivery and water it well the same day.', 'Pallet sizes vary by farm from about 400 to 700 sq ft; enter your supplier\'s figure.'] : []
+      };
+    }
+  };
+
   window.PMTools = T;
 })();

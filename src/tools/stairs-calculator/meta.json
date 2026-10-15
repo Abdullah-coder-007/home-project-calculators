@@ -1,0 +1,37 @@
+{
+  "tool": "stairs",
+  "category": "structure",
+  "short": "Stairs calculator",
+  "what": "Risers, treads and stringer length that meet code",
+  "title": "Stair Calculator: Risers, Treads and Stringer Length | ProjectMath",
+  "description": "Free stair calculator. Enter the total rise to get the number of steps, riser height, total run and stringer length, checked against US residential code limits.",
+  "h1": "Stairs calculator",
+  "lede": "Measure the total height from the lower floor to the top surface. The calculator works out how many steps you need, each riser height, the total run and the stringer length, and checks them against code limits.",
+  "related": [
+    "deck-calculator",
+    "concrete-calculator",
+    "roofing-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate the number of stairs?",
+      "a": "Divide the total rise in inches by the maximum riser height and round up. For a 108 inch rise with a 7 3/4 inch maximum, 108 ÷ 7.75 = 13.9, so 14 risers of 7.71 inches each."
+    },
+    {
+      "q": "What is the maximum riser height?",
+      "a": "The International Residential Code (IRC R311.7.5.1) allows a maximum of 7 3/4 inches. Your local code may differ, so check before building."
+    },
+    {
+      "q": "What is the minimum tread depth?",
+      "a": "10 inches under IRC R311.7.5.2, measured from the edge of one nosing to the next."
+    },
+    {
+      "q": "Why is there one less tread than risers?",
+      "a": "The top step is the upper floor or deck itself, so it does not need a tread board."
+    },
+    {
+      "q": "How many stringers do I need?",
+      "a": "It depends on the tread material and stair width. A common approach is stringers no more than 16 inches apart, so a 36 inch wide stair needs 4. Check your tread maker's and local code's requirements."
+    }
+  ]
+}

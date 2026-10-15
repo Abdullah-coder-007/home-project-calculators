@@ -1,0 +1,33 @@
+{
+  "tool": "lawn",
+  "category": "outdoor",
+  "short": "Sod and grass seed calculator",
+  "what": "Sod pieces and pallets, or pounds of grass seed",
+  "title": "Sod Calculator: How Much Sod or Grass Seed Do I Need? | ProjectMath",
+  "description": "Calculate sod pieces and pallets, or pounds of grass seed, for any lawn shape. Includes pallet sizes and seeding rates.",
+  "h1": "Sod and grass seed calculator",
+  "lede": "Choose sod or seed, then add the lawn's sections. Get the number of sod pieces and pallets, or how much seed to buy at your seeding rate.",
+  "related": [
+    "mulch-calculator",
+    "fence-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many square feet is a pallet of sod?",
+      "a": "Usually 400 to 700 sq ft, depending on the farm and whether it comes in slabs or rolls. 450 sq ft is common for 16 by 24 inch slabs, according to Sod Solutions. Ask your supplier."
+    },
+    {
+      "q": "How big is a piece of sod?",
+      "a": "A standard slab is 16 by 24 inches, about 2.67 sq ft. Mini rolls are often about 5 sq ft and large rolls about 10 sq ft."
+    },
+    {
+      "q": "How much grass seed do I need per 1,000 sq ft?",
+      "a": "It depends on the grass. University of Georgia Extension recommends 5 to 6 lb of tall fescue per 1,000 sq ft for a new lawn and 2 to 6 lb for overseeding. Always follow the rate on your seed bag."
+    },
+    {
+      "q": "How much extra sod should I order?",
+      "a": "About 5% for straight edges and more for curved beds, which the calculator adds automatically."
+    }
+  ]
+}
