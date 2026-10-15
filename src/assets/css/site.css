@@ -705,3 +705,5 @@ html.embed .cookie-bar { display: none; }
 .measure-diagram[open] summary::before { content: "\2212"; }
 .measure-diagram .diagram { padding: 0 12px 12px; }
 .diagram-svg { display: block; width: 100%; max-width: 460px; height: auto; margin: 0 auto; }
+
+.staging-bar { background: #ffd54f; color: #1b1640; text-align: center; font-weight: 800; font-size: 0.85rem; padding: 6px 12px; }

@@ -100,6 +100,8 @@ def _render_md(text, prefix):
                             extension_configs={"toc": {"permalink": False}})
     # images/foo.jpg in posts -> the published assets/blog/ folder
     out = re.sub(r'src="images/', f'src="{prefix}assets/blog/', out)
+    # Site links written as /paint-calculator/ work at any address (live site or staging).
+    out = re.sub(r'href="/(?!/)', f'href="{prefix}', out)
     out = re.sub(r"<img ", '<img loading="lazy" ', out)
     out = out.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
     return out

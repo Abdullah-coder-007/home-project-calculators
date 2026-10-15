@@ -19,6 +19,7 @@ Each calculator is a folder in src/tools/<slug>/ with:
 """
 import datetime
 import hashlib
+import os
 import html
 import json
 import re
@@ -39,6 +40,13 @@ if CFG.get("custom_domain"):
     BASE = "https://" + CFG["custom_domain"].strip().rstrip("/")
 
 warnings = []
+
+# STAGING=1 python3 build.py -> a private preview: hidden from search engines,
+# no analytics or ads, and a banner on every page.
+STAGING = os.environ.get("STAGING") == "1"
+if STAGING:
+    CFG["ga4_id"] = ""
+    CFG["adsense_client"] = ""
 
 
 def esc(s):
@@ -132,7 +140,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
         ld += '<script type="application/ld+json">' + json.dumps(block, ensure_ascii=False) + "</script>\n"
 
     # max-image-preview:large lets Google Discover show the big share image.
-    robots = ('<meta name="robots" content="noindex">\n' if noindex
+    robots = ('<meta name="robots" content="noindex">\n' if (noindex or STAGING)
               else '<meta name="robots" content="index, follow, max-image-preview:large">\n')
     og_image = image if image.startswith("http") else f"{BASE}/assets/og/{image}.jpg"
     footer_links = "".join(
@@ -169,7 +177,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <link rel="stylesheet" href="{prefix}assets/css/accents.css?v={css_v}">
 {verif}{analytics}{ads}{ld}</head>
 <body data-accent="{accent}">
-<a class="skip" href="#main">Skip to content</a>
+{'<div class="staging-bar">Staging preview: not the live site</div>' if STAGING else ''}<a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="{prefix or './'}"><span class="brand-mark" aria-hidden="true"></span>{esc(CFG['name'])}</a>
 <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu"><span class="menu-icon" aria-hidden="true"></span>Menu</button>
@@ -450,7 +458,8 @@ def main():
         sm.append(f"<url><loc>{BASE}/{u}</loc><lastmod>{lastmod}</lastmod><priority>{pr}</priority></url>")
     sm.append("</urlset>")
     (OUT / "sitemap.xml").write_text("\n".join(sm) + "\n")
-    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n")
+    (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n" if STAGING else
+                                    f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n")
     (OUT / ".nojekyll").write_text("")
 
     if CFG.get("custom_domain"):
