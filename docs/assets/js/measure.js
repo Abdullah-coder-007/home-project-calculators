@@ -15,6 +15,13 @@
   'use strict';
   var F = window.PMF;
   var MEASURE_APP = 'https://apps.apple.com/app/id1383426740';
+  var IS_ANDROID = /Android/i.test(navigator.userAgent);
+  var IS_SAMSUNG = /SAMSUNG|SM-[A-Z]\d/i.test(navigator.userAgent);
+  // Google retired its own Measure app in 2021. Samsung phones ship with Quick
+  // Measure (free); on other Android phones AR Ruler is a widely used choice.
+  var ANDROID_APP = IS_SAMSUNG
+    ? { name: 'Quick Measure', by: 'Samsung', url: 'https://play.google.com/store/apps/details?id=com.samsung.android.ruler' }
+    : { name: 'AR Ruler', by: 'Grymala', url: 'https://play.google.com/store/apps/details?id=com.grymala.aruler' };
   var IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var arSupported = null; // null = not checked yet
@@ -79,9 +86,20 @@
         '<div class="pm-sheet-actions"><a class="btn" href="' + MEASURE_APP + '" target="_blank" rel="noopener">Open Measure app</a>' +
         '<button type="button" class="btn btn-quiet" data-pm="paste">Paste measurement</button></div>' +
         '<p class="pm-note">Tip: you can also ask Siri to “open Measure”. Your other inputs stay as they are while you’re away.</p>';
+    } else if (IS_ANDROID) {
+      body = '<h2>Measure ' + label.toLowerCase() + ' with an app</h2>' +
+        (arSupported ? '' : '<p>Your phone or browser can’t measure inside this page, so use a free measuring app.</p>') +
+        '<ol class="pm-steps">' +
+        '<li>Open <strong>' + ANDROID_APP.name + '</strong> by ' + ANDROID_APP.by + '. The button below opens it in Google Play; tap <strong>Install</strong> or <strong>Open</strong>.</li>' +
+        '<li>Point at one end, add a point, move to the other end, add a second point.</li>' +
+        '<li>Come back here and type the number into the boxes, or copy it and tap <strong>Paste measurement</strong>.</li>' +
+        '</ol>' +
+        '<div class="pm-sheet-actions"><a class="btn" href="' + ANDROID_APP.url + '" target="_blank" rel="noopener">Open ' + ANDROID_APP.name + '</a>' +
+        '<button type="button" class="btn btn-quiet" data-pm="paste">Paste measurement</button></div>' +
+        '<p class="pm-note">We don’t make or get paid for this app. Free versions may show ads.</p>';
     } else {
       body = '<h2>Measure ' + label.toLowerCase() + '</h2>' +
-        '<p>Camera measuring needs an Android phone with Chrome and Google Play Services for AR. This browser doesn’t support it.</p>' +
+        '<p>Camera measuring needs an Android phone with Chrome and Google Play Services for AR, or an iPhone with Apple’s Measure app.</p>' +
         '<p>Measured with another app or tool? Copy the result and paste it here.</p>' +
         '<div class="pm-sheet-actions"><button type="button" class="btn" data-pm="paste">Paste measurement</button></div>' +
         '<p class="pm-note">Tape measure tip: hook the end on one wall, read where it meets the other wall, and round up to the next inch.</p>';
@@ -131,7 +149,8 @@
       '<div class="pm-ar-top"><p class="pm-ar-help">Move your phone slowly until the target turns yellow on the floor or wall.</p>' +
       '<p class="pm-ar-reading" aria-live="polite"></p></div>' +
       '<div class="pm-ar-bottom"><button type="button" class="btn" data-ar="mark" disabled>Set start</button>' +
-      '<button type="button" class="btn btn-quiet" data-ar="close">Cancel</button></div>';
+      '<button type="button" class="btn btn-quiet" data-ar="close">Cancel</button>' +
+      '<button type="button" class="pm-ar-app" data-ar="app">Use an app instead</button></div>';
     document.body.appendChild(ui);
     var cross = ui.querySelector('.pm-ar-cross'), help = ui.querySelector('.pm-ar-help'), reading = ui.querySelector('.pm-ar-reading');
     var mark = ui.querySelector('[data-ar=mark]'), line = ui.querySelector('line'), dot = ui.querySelector('circle');
@@ -149,6 +168,7 @@
       if (!b) return;
       var a = b.getAttribute('data-ar');
       if (a === 'close') return finish();
+      if (a === 'app') { finish(); return sheet(field); }
       if (a === 'mark') {
         if (!start && current) { start = current.slice(); mark.textContent = 'Set end'; help.textContent = 'Now point at the other end of the ' + label + ' and tap Set end.'; return; }
         if (start && !end && current) {

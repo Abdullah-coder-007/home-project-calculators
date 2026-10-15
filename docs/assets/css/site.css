@@ -579,6 +579,7 @@ html.embed .embed-credit { display: block; font-size: 0.9rem; margin: 18px 0; co
 .pm-ar-bottom { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; gap: 10px; padding: 16px 16px calc(18px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, rgba(0, 0, 0, 0.6)); }
 .pm-ar-bottom .btn { flex: 1 1 140px; margin: 0; }
 .pm-ar-bottom .btn[disabled] { opacity: 0.5; }
+.pm-ar-app { flex: 1 1 100%; font: inherit; font-weight: 700; font-size: 0.9rem; color: #fff; background: none; border: 0; text-decoration: underline; padding: 6px; cursor: pointer; }
 @media print { .measure-btn { display: none !important; } }
 
 /* ---------- Phones ---------- */
