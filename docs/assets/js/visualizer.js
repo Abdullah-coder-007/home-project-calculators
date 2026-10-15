@@ -23,7 +23,7 @@
   var MAX = 1280;                       // longest side we work at (keeps phones fast)
 
   var canvas = $('[data-viz=canvas]'), ctx = canvas.getContext('2d', { willReadFrequently: true });
-  var W = 0, H = 0, src = null, lab = null, mask = null, history = [];
+  var W = 0, H = 0, src = null, lab = null, edge = null, mask = null, history = [];
   var tool = 'pick', color = TREND[0][1], kept = [], drawing = false;
 
   /* ---------- color math ---------- */
@@ -81,6 +81,24 @@
       var c = rgbToLab(src.data[p], src.data[p + 1], src.data[p + 2]);
       lab[i * 3] = c[0]; lab[i * 3 + 1] = c[1]; lab[i * 3 + 2] = c[2];
     }
+    // Edge strength (Sobel on smoothed lightness): selection stops at door frames,
+    // furniture outlines and wall corners instead of flowing across them.
+    var Ls = new Float32Array(W * H);
+    for (var y = 0; y < H; y++) for (var x = 0; x < W; x++) {
+      var s2 = 0, c2 = 0;
+      for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) {
+        var xx = x + dx, yy = y + dy;
+        if (xx >= 0 && yy >= 0 && xx < W && yy < H) { s2 += lab[(yy * W + xx) * 3]; c2++; }
+      }
+      Ls[y * W + x] = s2 / c2;
+    }
+    edge = new Float32Array(W * H);
+    for (var y2 = 1; y2 < H - 1; y2++) for (var x2 = 1; x2 < W - 1; x2++) {
+      var i2 = y2 * W + x2;
+      var gx = Ls[i2 - W + 1] + 2 * Ls[i2 + 1] + Ls[i2 + W + 1] - Ls[i2 - W - 1] - 2 * Ls[i2 - 1] - Ls[i2 + W - 1];
+      var gy = Ls[i2 + W - 1] + 2 * Ls[i2 + W] + Ls[i2 + W + 1] - Ls[i2 - W - 1] - 2 * Ls[i2 - W] - Ls[i2 - W + 1];
+      edge[i2] = Math.sqrt(gx * gx + gy * gy);
+    }
     mask = new Uint8Array(W * H); history = [];
     $('.viz-work').hidden = false;
     $('[data-viz=hint]').hidden = false;
@@ -110,21 +128,32 @@
 
   /* ---------- selecting the wall ---------- */
   function saveUndo() { history.push(mask.slice()); if (history.length > 20) history.shift(); }
-  function grow(x, y) {
-    var tol = +$('[data-viz=tolerance]').value, start = y * W + x;
+  // Grow the selection from the tapped point over similar colors, stopping at strong edges.
+  // If it still swallows most of the photo, tighten automatically and try again.
+  function region(start, tol) {
     var L0 = lab[start * 3], a0 = lab[start * 3 + 1], b0 = lab[start * 3 + 2];
-    var seen = new Uint8Array(W * H), stack = [start];
-    saveUndo();
+    var edgeStop = 6 + tol * 0.9;
+    var out = new Uint8Array(W * H), seen = new Uint8Array(W * H), stack = [start], n = 0;
     while (stack.length) {
       var i = stack.pop();
       if (seen[i]) continue; seen[i] = 1;
-      var dL = (lab[i * 3] - L0) * 0.5, da = lab[i * 3 + 1] - a0, db = lab[i * 3 + 2] - b0; // lightness counts less: shadows stay in
+      var dL = (lab[i * 3] - L0) * 0.6, da = lab[i * 3 + 1] - a0, db = lab[i * 3 + 2] - b0;
       if (dL * dL + da * da + db * db > tol * tol) continue;
-      mask[i] = 1;
+      out[i] = 1; n++;
+      if (edge[i] > edgeStop && i !== start) continue;          // on an edge: include it, don't cross it
       var px = i % W, py = (i - px) / W;
       if (px > 0) stack.push(i - 1); if (px < W - 1) stack.push(i + 1);
       if (py > 0) stack.push(i - W); if (py < H - 1) stack.push(i + W);
     }
+    return { mask: out, n: n };
+  }
+  function grow(x, y) {
+    var tol = +$('[data-viz=tolerance]').value, start = y * W + x, r = region(start, tol);
+    while (r.n > W * H * 0.6 && tol > 4) { tol = Math.max(4, Math.round(tol * 0.7)); r = region(start, tol); }
+    saveUndo();
+    for (var i = 0; i < W * H; i++) if (r.mask[i]) mask[i] = 1;
+    var msg = $('[data-viz=msg]');
+    if (msg) msg.textContent = r.n > W * H * 0.6 ? 'That picked up a lot of the photo. Use the Eraser on anything that isn\'t wall, or lower the edge sensitivity and tap again.' : '';
     render();
   }
   function brush(x, y, on) {

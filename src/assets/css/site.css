@@ -758,3 +758,18 @@ input::placeholder { color: var(--muted); opacity: 0.75; font-weight: 500; }
 .viz-note { color: var(--muted); font-size: 0.85rem; margin-top: 12px; }
 html.embed .viz { display: none; }
 @media print { .viz { display: none; } }
+
+/* What to measure: three short lines */
+.measure-tips { list-style: none; margin: 0 0 14px; padding: 0; display: grid; gap: 4px; font-size: 0.9rem; color: var(--muted); }
+.measure-tips li { display: flex; align-items: baseline; gap: 8px; }
+.measure-tips strong { color: var(--ink); }
+.mt-ico { display: inline-grid; place-items: center; width: 22px; height: 22px; flex: none; border-radius: 6px; background: var(--accent-soft); color: var(--accent-deep); font-weight: 800; font-size: 0.85rem; }
+
+/* Header slides away while scrolling down and comes back on scroll up */
+.site-head { transition: transform 0.28s ease; will-change: transform; }
+.site-head.is-hidden { transform: translateY(calc(-100% - 24px)); }
+@media (prefers-reduced-motion: reduce) { .site-head { transition: none; } }
+.beta-tag { display: inline-block; vertical-align: middle; margin-left: 6px; padding: 3px 10px; border-radius: 999px; background: var(--accent-deep); color: #fff; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.viz-beta-note { font-size: 0.9rem; color: var(--muted); }
+.viz-msg { margin: 8px 0 0; font-weight: 600; font-size: 0.9rem; color: var(--accent-deep); }
+.viz-msg:empty { display: none; }

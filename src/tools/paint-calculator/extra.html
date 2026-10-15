@@ -1,7 +1,8 @@
 <section class="viz" id="visualizer" aria-labelledby="viz-title">
 <div class="viz-head">
-<h2 id="viz-title">See the color on your wall</h2>
+<h2 id="viz-title">See the color on your wall <span class="beta-tag">Beta</span></h2>
 <p>Add a photo of your room, tap a wall, then try colors. The new color keeps your room's real light and shadows. Your photo stays on your device; nothing is uploaded.</p>
+<p class="viz-beta-note">This is a beta: it works best on evenly lit, plain walls. Tap the wall, then use the Eraser on anything that got picked up by mistake.</p>
 </div>
 <div class="viz-start">
 <label class="btn viz-upload"><input type="file" accept="image/*" capture="environment" hidden data-viz="file"> Take or choose a photo</label>
@@ -12,13 +13,14 @@
 <canvas data-viz="canvas" aria-label="Your room with the chosen wall color"></canvas>
 <p class="viz-hint" data-viz="hint">Tap the wall you want to paint.</p>
 </div>
+<p class="viz-msg" data-viz="msg" aria-live="polite"></p>
 <div class="viz-tools" role="group" aria-label="Wall selection">
 <button type="button" class="viz-tool" data-tool="pick" aria-pressed="true">Tap wall</button>
 <button type="button" class="viz-tool" data-tool="add" aria-pressed="false">Brush</button>
 <button type="button" class="viz-tool" data-tool="erase" aria-pressed="false">Eraser</button>
 <button type="button" class="viz-tool" data-viz="undo">Undo</button>
 <button type="button" class="viz-tool" data-viz="clear">Clear</button>
-<label class="viz-range"><span>Edge sensitivity</span><input type="range" min="4" max="40" value="16" data-viz="tolerance"></label>
+<label class="viz-range"><span>Edge sensitivity</span><input type="range" min="4" max="30" value="12" data-viz="tolerance"></label>
 <label class="viz-range"><span>Before / after</span><input type="range" min="0" max="100" value="100" data-viz="mix"></label>
 </div>
 <div class="viz-colors">

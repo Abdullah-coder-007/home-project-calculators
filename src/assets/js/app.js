@@ -457,7 +457,7 @@
     var prices = store.get('prices:' + tool + (cur === 'USD' ? '' : ':' + cur)) || {};
     (out.items || []).forEach(function (it) {
       if (!it.qty) return;
-      var price = prices[it.key] !== undefined ? prices[it.key] : (L ? L.price(tool, it.key, it.price) : it.price);
+      var price = prices[it.key] !== undefined ? prices[it.key] : (L && !it.local ? L.price(tool, it.key, it.price) : it.price);
       var sub = it.qty * F.num(price);
       total += sub;
       var tr = el('tr');
@@ -858,4 +858,22 @@
     if (!stored() && inEurope()) show();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+
+/* Hide the header while scrolling down, show it again on any scroll up. */
+(function () {
+  'use strict';
+  var head = document.querySelector('.site-head');
+  if (!head) return;
+  var lastY = window.scrollY, ticking = false;
+  function update() {
+    ticking = false;
+    var y = window.scrollY, nav = document.getElementById('site-menu');
+    var menuOpen = nav && nav.classList.contains('is-open');
+    if (menuOpen || y < 80 || head.contains(document.activeElement)) head.classList.remove('is-hidden');
+    else if (y > lastY + 6) head.classList.add('is-hidden');
+    else if (y < lastY - 6) head.classList.remove('is-hidden');
+    if (Math.abs(y - lastY) > 6) lastY = y;
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
 })();
