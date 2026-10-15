@@ -124,6 +124,8 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
         verif += f'<meta name="google-site-verification" content="{esc(CFG["google_site_verification"])}">\n'
     if CFG.get("bing_site_verification"):
         verif += f'<meta name="msvalidate.01" content="{esc(CFG["bing_site_verification"])}">\n'
+    if CFG.get("pinterest_domain_verify"):
+        verif += f'<meta name="p:domain_verify" content="{esc(CFG["pinterest_domain_verify"])}">\n'
 
     ads = ""
     if CFG.get("adsense_client"):
