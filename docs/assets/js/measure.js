@@ -26,6 +26,17 @@
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   var arSupported = null; // null = not checked yet
 
+  // Our own app (Android): opens calcupine://measure and comes back with ?measure=L,W,H.
+  // The page sets data-measure-app to the download page while the app is in testing.
+  function appLink() {
+    var fallback = document.body.getAttribute('data-measure-app');
+    if (!fallback) return '';
+    var ret = location.pathname.replace(/^.*?([a-z0-9-]+-calculator\/)$/, '/$1');
+    if (!/^\/[a-z0-9-]+\/$/.test(ret)) return '';
+    return 'intent://measure?return=' + encodeURIComponent(ret) + '#Intent;scheme=calcupine;package=com.calcupine.measure;' +
+      'S.browser_fallback_url=' + encodeURIComponent(fallback) + ';end';
+  }
+
   function el(tag, cls, html) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -88,7 +99,12 @@
         '<button type="button" class="btn btn-quiet" data-pm="paste">Paste measurement</button></div>' +
         '<p class="pm-note">Tip: you can also ask Siri to “open Measure”. Your other inputs stay as they are while you’re away.</p>';
     } else if (IS_ANDROID) {
-      body = '<h2>Measure ' + label.toLowerCase() + ' with an app</h2>' +
+      var own = appLink();
+      body = (own ? '<div class="pm-own-app"><h2>Measure the whole room at once</h2>' +
+          '<p>Our free <strong>Calcupine Measure</strong> app measures length, width and height in one go and fills them in here.</p>' +
+          '<div class="pm-sheet-actions"><a class="btn" href="' + own + '">Open Calcupine Measure</a></div></div>' +
+          '<p class="pm-or">or measure just this one</p>' : '') +
+        '<h2>Measure ' + label.toLowerCase() + ' with an app</h2>' +
         (arSupported ? '' : '<p>Your phone or browser can’t measure inside this page, so use a free measuring app.</p>') +
         '<ol class="pm-steps">' +
         '<li>Open <strong>' + ANDROID_APP.name + '</strong> by ' + ANDROID_APP.by + '. The button below opens it in Google Play; tap <strong>Install</strong> or <strong>Open</strong>.</li>' +

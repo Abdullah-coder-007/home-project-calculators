@@ -21,10 +21,61 @@
   var T = {};
 
   /* ---------- Paint ---------- */
+
+  /* ---------- Local pack sizes (outside the US and Canada) ----------
+   * Paint is sold in litre tins, concrete in kg bags and board in metric sheets in most
+   * countries. Prices here are typical local shelf prices in the local currency
+   * (item.local = true, so they are not converted again). */
+  function country() { return window.PMLocale ? window.PMLocale.country() : 'US'; }
+  var PAINT_LOCAL = {
+    IN: { tins: [20, 10, 4, 1], perL: { wall: 270, ceil: 220, primer: 180 } },
+    GB: { tins: [10, 5, 2.5], perL: { wall: 7, ceil: 5, primer: 6 } },
+    IE: { tins: [10, 5, 2.5, 1], perL: { wall: 8, ceil: 6, primer: 7 } },
+    EU: { tins: [10, 5, 2.5, 1], perL: { wall: 8, ceil: 6, primer: 7 } },
+    AU: { tins: [15, 10, 4, 1], perL: { wall: 22, ceil: 15, primer: 18 } },
+    NZ: { tins: [10, 4, 1], perL: { wall: 24, ceil: 17, primer: 20 } }
+  };
+  function tinPremium(size) { return size <= 1 ? 1.3 : size <= 2.5 ? 1.1 : size <= 5 ? 1 : size <= 10 ? 0.92 : 0.88; }
+  function tinPrice(size, perL) { var p = size * perL * tinPremium(size); return p >= 100 ? Math.round(p / 5) * 5 : Math.round(p); }
+  // Cheapest mix of tin sizes that holds at least `litres` (half-litre steps).
+  function bestTins(litres, sizes, perL) {
+    if (!(litres > 0)) return [];
+    var need = Math.ceil(litres * 2), top = need + Math.max.apply(null, sizes) * 2;
+    var cost = [0], pick = [null];
+    for (var u = 1; u <= top; u++) {
+      cost[u] = Infinity; pick[u] = null;
+      sizes.forEach(function (sz) {
+        var k = Math.round(sz * 2);
+        if (k <= u && cost[u - k] + tinPrice(sz, perL) < cost[u]) { cost[u] = cost[u - k] + tinPrice(sz, perL); pick[u] = sz; }
+      });
+    }
+    var bestU = need;
+    for (var w = need; w <= top; w++) if (cost[w] < cost[bestU]) bestU = w;
+    var counts = {};
+    for (var x = bestU; x > 0 && pick[x];) { counts[pick[x]] = (counts[pick[x]] || 0) + 1; x -= Math.round(pick[x] * 2); }
+    return Object.keys(counts).map(Number).sort(function (a, b) { return b - a; }).map(function (sz) { return { size: sz, count: counts[sz] }; });
+  }
+  function litresOf(tins) { return tins.reduce(function (t, x) { return t + x.size * x.count; }, 0); }
+  function tinsText(tins) { return tins.map(function (x) { return x.count + ' × ' + x.size + ' L'; }).join(' + '); }
+  var CONCRETE_LOCAL = {
+    GB: { kg: 25, cuFt: 0.39, price: 6.5 }, IE: { kg: 25, cuFt: 0.39, price: 7 }, EU: { kg: 25, cuFt: 0.39, price: 7 },
+    AU: { kg: 20, cuFt: 0.34, price: 10 }, NZ: { kg: 20, cuFt: 0.34, price: 12 }
+  };
+  var BOARD_LOCAL = {
+    GB: { label: '2400 × 1200 mm plasterboard', sqft: 31.0, price: 10, filler: 15 },
+    IE: { label: '2400 × 1200 mm plasterboard', sqft: 31.0, price: 9, filler: 15 },
+    EU: { label: '2400 × 1200 mm plasterboard', sqft: 31.0, price: 9, filler: 15 },
+    AU: { label: '2400 × 1200 mm plasterboard', sqft: 31.0, price: 20, filler: 30 },
+    NZ: { label: '2400 × 1200 mm plasterboard', sqft: 31.0, price: 24, filler: 35 },
+    IN: { label: '1830 × 1220 mm (6 × 4 ft) gypsum board', sqft: 24.0, price: 480, filler: 650 }
+  };
+
   T.paint = {
     calc: function (v, F) {
       var r = F.paint(v);
       var ready = r.wallArea > 0 || r.ceilingArea > 0;
+      var loc = PAINT_LOCAL[country()];
+      if (loc) return paintLocal(r, ready, loc);
       var items = [
         { key: 'wall-gal', name: 'Wall paint', qty: r.wallBuy.gallons, unit: plural(r.wallBuy.gallons, 'gallon', 'gallons'), unitSingle: 'gallon', price: 40 },
         { key: 'wall-qt', name: 'Wall paint, extra quart', qty: r.wallBuy.quarts, unit: 'quart', price: 16 },
@@ -57,6 +108,39 @@
     }
   };
 
+  function paintLocal(r, ready, loc) {
+    var G = 3.78541, items = [], wallL = r.wallGallons * G, ceilL = r.ceilingGallons * G, primerL = r.primerGallons * G;
+    var wall = bestTins(wallL, loc.tins, loc.perL.wall), ceil = bestTins(ceilL, loc.tins, loc.perL.ceil), primer = bestTins(primerL, loc.tins, loc.perL.primer);
+    function add(tins, key, label, perL) {
+      tins.forEach(function (t) {
+        items.push({ key: key + '-' + t.size + 'L', name: label + ', ' + t.size + ' L tin', qty: t.count, unit: plural(t.count, 'tin', 'tins'), unitSingle: 'tin', price: tinPrice(t.size, perL), local: true });
+      });
+    }
+    add(wall, 'wall', 'Wall paint', loc.perL.wall);
+    add(ceil, 'ceil', 'Ceiling paint (flat white)', loc.perL.ceil);
+    add(primer, 'primer', 'Primer', loc.perL.primer);
+    items.push({ key: 'tape', name: "Painter's tape, 50 m roll", qty: r.tapeRolls, unit: plural(r.tapeRolls, 'roll', 'rolls'), unitSingle: 'roll', price: 7 });
+    items.push({ key: 'roller', name: 'Roller, covers and tray', qty: ready ? 1 : 0, unit: 'kit', price: 18 });
+    items.push({ key: 'brush', name: '63 mm angled brush for cutting in', qty: ready ? 1 : 0, unit: 'brush', price: 12 });
+    var notes = [];
+    if (ready) {
+      notes.push(fmt(r.wallArea * 0.092903, 1) + ' m\u00b2 of wall to paint after removing doors and windows, at about 8.6 m\u00b2 per litre per coat.');
+      notes.push('Check the coverage on the tin you buy: it ranges from about 8 to 14 m\u00b2 per litre.');
+      notes.push('Going from a dark color to a light one often needs primer or a third coat.');
+    }
+    var bought = litresOf(wall);
+    return {
+      ready: ready,
+      headline: {
+        value: ready ? fmt(bought, bought % 1 ? 1 : 0) : '0',
+        unit: ready ? 'litres of wall paint' : 'Enter your room size',
+        sub: ready ? fmt(wallL, 1) + ' L needed for ' + r.coats + ' ' + plural(r.coats, 'coat', 'coats') + ': ' + tinsText(wall) +
+          (ceil.length ? ', plus ' + tinsText(ceil) + ' for the ceiling' : '') : ''
+      },
+      items: items, notes: notes
+    };
+  }
+
   /* ---------- Concrete ---------- */
   var BAG_PRICE = { 40: 4.25, 60: 5.25, 80: 6.5 };
   T.concrete = {
@@ -72,6 +156,19 @@
       if (v.mode === 'round') v.depthIn = v.holeDepthIn;
       var r = F.concrete(v);
       var ready = r.cuFt > 0;
+      if (country() === 'IN') return concreteIndia(r, ready);
+      var cl = CONCRETE_LOCAL[country()];
+      if (cl) {
+        var bagsL = ready ? Math.ceil(r.cuFtTotal / cl.cuFt) : 0, m3 = r.cuFtTotal * 0.0283168;
+        return {
+          ready: ready,
+          headline: { value: ready ? fmt(bagsL) : '0', unit: ready ? cl.kg + ' kg ' + plural(bagsL, 'bag', 'bags') + ' of concrete mix' : 'Enter your dimensions',
+            sub: ready ? fmt(m3, 2) + ' m\u00b3 including waste' : '' },
+          items: [{ key: 'bag-local', name: cl.kg + ' kg bags of concrete mix', qty: bagsL, unit: plural(bagsL, 'bag', 'bags'), unitSingle: 'bag', price: cl.price, local: true, note: 'Each makes about ' + fmt(cl.cuFt * 28.3168, 0) + ' litres' }],
+          notes: ready ? ['Volume: ' + fmt(r.cuFt * 0.0283168, 2) + ' m\u00b3, plus ' + Math.round(r.waste * 100) + '% extra for spills and uneven ground.',
+            m3 >= 0.75 ? 'At ' + fmt(m3, 2) + ' m\u00b3, a ready-mix or mix-on-site delivery is usually easier than mixing bags by hand.' : 'Rent a small drum mixer for jobs over about 20 bags.'] : []
+        };
+      }
       var items = [
         { key: 'bag-' + r.bagSize, name: r.bagSize + ' lb bags of concrete mix', qty: r.bags, unit: plural(r.bags, 'bag', 'bags'), unitSingle: 'bag', price: BAG_PRICE[r.bagSize], note: 'Each yields about ' + r.bagYield + ' cu ft' }
       ];
@@ -96,6 +193,27 @@
       };
     }
   };
+
+  // India: concrete is usually mixed on site from cement, sand and aggregate.
+  // M15 nominal mix (1:2:4) per cubic metre: about 6.34 bags of cement (50 kg),
+  // 0.44 m3 of sand and 0.88 m3 of aggregate.
+  function concreteIndia(r, ready) {
+    var m3 = r.cuFtTotal * 0.0283168, CFT = 35.3147;
+    var cement = ready ? Math.ceil(m3 * 6.34) : 0, sand = m3 * 0.44 * CFT, agg = m3 * 0.88 * CFT;
+    return {
+      ready: ready,
+      headline: { value: ready ? fmt(cement) : '0', unit: ready ? plural(cement, 'bag', 'bags') + ' of cement (50 kg)' : 'Enter your dimensions',
+        sub: ready ? fmt(m3, 2) + ' m\u00b3 of M15 concrete (1:2:4) including waste' : '' },
+      items: [
+        { key: 'cement', name: 'Cement, 50 kg bag (OPC or PPC)', qty: cement, unit: plural(cement, 'bag', 'bags'), unitSingle: 'bag', price: 375, local: true },
+        { key: 'sand-in', name: 'Sand (river or M-sand)', qty: Math.ceil(sand), unit: 'cft', unitSingle: 'cft', price: 50, local: true },
+        { key: 'agg-in', name: '20 mm aggregate (jelly)', qty: Math.ceil(agg), unit: 'cft', unitSingle: 'cft', price: 45, local: true }
+      ],
+      notes: ready ? ['Mix 1 part cement, 2 parts sand and 4 parts aggregate by volume, with clean water.',
+        'For roof slabs and columns, engineers usually ask for M20 or stronger; check with yours.',
+        m3 >= 3 ? 'At ' + fmt(m3, 1) + ' m\u00b3, ready-mix (RMC) delivery is worth a quote.' : 'Keep the concrete wet for at least 7 days (curing) so it reaches full strength.'] : []
+    };
+  }
 
   /* ---------- Tile ---------- */
   T.tile = {
@@ -254,6 +372,24 @@
   T.drywall = {
     calc: function (v, F) {
       var r = F.drywall(v), ready = r.sheets > 0;
+      var bl = BOARD_LOCAL[country()];
+      if (bl) {
+        var sheetsL = r.area > 0 ? Math.ceil(r.area * (1 + F.num(v.wastePct, 10) / 100) / bl.sqft) : 0, fillerL = r.compoundGal * 3.78541;
+        var tubs = r.area > 0 ? Math.ceil(fillerL / 10) : 0;
+        return {
+          ready: ready,
+          headline: { value: ready ? fmt(sheetsL) : '0', unit: ready ? plural(sheetsL, 'sheet', 'sheets') + ' of ' + bl.label : 'Enter your room size',
+            sub: ready ? fmt(r.area * 0.092903, 1) + ' m\u00b2 of board' + (r.ceiling ? ' including the ceiling' : '') : '' },
+          items: [
+            { key: 'board-local', name: bl.label, qty: sheetsL, unit: plural(sheetsL, 'sheet', 'sheets'), unitSingle: 'sheet', price: bl.price, local: true },
+            { key: 'filler-local', name: 'Ready-mixed joint filler, 10 L tub', qty: tubs, unit: plural(tubs, 'tub', 'tubs'), unitSingle: 'tub', price: bl.filler, local: true, note: 'About ' + fmt(fillerL, 0) + ' L for three coats' },
+            { key: 'tape', name: 'Paper joint tape, 75 m roll', qty: r.tapeRolls, unit: plural(r.tapeRolls, 'roll', 'rolls'), unitSingle: 'roll', price: 6 },
+            { key: 'screws', name: 'Drywall screws, 32 mm', qty: Math.round(r.area * 1.0), unit: 'screws', unitSingle: 'screw', price: 0.03 },
+            { key: 'bead', name: 'Corner bead, 2.4 m', qty: r.cornerBead, unit: 'pieces', unitSingle: 'piece', price: 5 }
+          ],
+          notes: ready ? ['Standard 12.5 mm board suits most walls and ceilings; use moisture-resistant board in bathrooms.'] : []
+        };
+      }
       return {
         ready: ready,
         headline: { value: ready ? fmt(r.sheets) : '0', unit: ready ? plural(r.sheets, 'sheet', 'sheets') + ' of ' + r.sheet.replace('x', ' x ') + ' drywall' : 'Enter your room size',

@@ -44,6 +44,8 @@ warnings = []
 # STAGING=1 python3 build.py -> a private preview: hidden from search engines,
 # no analytics or ads, and a banner on every page.
 STAGING = os.environ.get("STAGING") == "1"
+# While the app is in testing, staging links to the latest test build on GitHub.
+APP_TEST_URL = "https://github.com/Abdullah-coder-007/home-project-calculators/releases/tag/app-latest"
 if STAGING:
     CFG["ga4_id"] = ""
     CFG["adsense_client"] = ""
@@ -136,6 +138,8 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
                "s.crossOrigin='anonymous';document.head.appendChild(s);}</script>\n")
 
     analytics = ga4_head()
+    app_url = CFG.get("measure_app_url") or (APP_TEST_URL if STAGING else "")
+    measure_app = f' data-measure-app="{esc(app_url)}"' if app_url else ""
 
     ld = ""
     for block in schema or []:
@@ -179,7 +183,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <link rel="stylesheet" href="{prefix}assets/css/site.css?v={css_v}">
 <link rel="stylesheet" href="{prefix}assets/css/accents.css?v={css_v}">
 {verif}{analytics}{ads}{ld}</head>
-<body data-accent="{accent}">
+<body data-accent="{accent}"{measure_app}>
 {'<div class="staging-bar">Staging preview: not the live site</div>' if STAGING else ''}<a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="{prefix or './'}"><span class="brand-mark" aria-hidden="true"></span>{esc(CFG['name'])}</a>
@@ -235,6 +239,8 @@ def load_tool(slug):
     meta = json.loads((d / "meta.json").read_text())
     meta["slug"] = slug
     meta["form"] = with_diagrams((d / "form.html").read_text())
+    extra = d / "extra.html"
+    meta["extra"] = extra.read_text() if extra.exists() else ""
     meta["guide"] = fill((d / "guide.html").read_text())
     return meta
 
@@ -283,6 +289,7 @@ def tool_page(t, all_tools):
 </form>
 {RESULT_PANEL}
 </div>
+{t.get("extra", "").replace("{{v}}", asset_hash(SRC / "assets/js/visualizer.js") if (SRC / "assets/js/visualizer.js").exists() else "")}
 <p class="embed-credit"><a href="{url}" target="_blank" rel="noopener">{esc(t['h1'])}</a> by {esc(CFG['name'])}</p>
 <article class="guide">
 <nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol>{toc_html}</ol></nav>
@@ -395,17 +402,29 @@ def author_box(prefix):
             f'<a href="{prefix}how-we-calculate/">How we calculate</a> \u00b7 <a href="{prefix}contact/">Report a mistake</a></p></div></section>')
 
 
-def with_diagrams(html_text):
-    """Replace <!-- diagram: name --> with a "What to measure" drawing from src/diagrams/."""
-    def repl(m):
-        f = SRC / "diagrams" / f"{m.group(1)}.svg"
-        if not f.exists():
-            warnings.append(f"missing diagram {m.group(1)}")
-            return ""
-        return ('<details class="measure-diagram"><summary>What to measure</summary>'
-                f'<div class="diagram">{f.read_text().strip()}</div></details>')
-    return re.sub(r"<!--\s*diagram:\s*([\w-]+)\s*-->", repl, html_text)
+MEASURE_TIPS = {
+    "room": [("\u2194", "Length", "the longest wall, corner to corner"), ("\u2194", "Width", "the other wall, corner to corner"), ("\u2195", "Height", "floor to ceiling")],
+    "slab": [("\u2194", "Length", "one edge, end to end"), ("\u2194", "Width", "the other edge, end to end"), ("\u2195", "Thickness", "how deep the concrete will be")],
+    "footing": [("\u2194", "Total length", "add up every run of the footing or wall"), ("\u2194", "Width", "side to side"), ("\u2195", "Depth", "top to bottom")],
+    "round": [("\u2194", "Diameter", "straight across the hole or form"), ("\u2195", "Depth", "top to bottom"), ("#", "Number", "how many holes or columns")],
+    "square": [("\u2194", "Width", "one side of the column"), ("\u2195", "Height", "bottom to top"), ("#", "Number", "how many columns")],
+    "steps": [("\u2195", "Rise", "height of one step"), ("\u2194", "Run", "depth of one step, front to back"), ("\u2194", "Width", "side to side")],
+    "curb": [("\u2194", "Length", "along the curb"), ("\u2195", "Curb", "width and height of the raised part"), ("\u2194", "Gutter", "width and thickness of the flat pan")],
+    "stairs": [("\u2195", "Total rise", "floor to the finished floor above"), ("\u2194", "Tread", "depth of each step"), ("\u2194", "Width", "side to side")],
+    "roof": [("\u2194", "Length and width", "outside walls of the house"), ("\u2194", "Overhang", "how far the roof sticks out past the walls"), ("\u2197", "Pitch", "inches of rise per 12 inches across")],
+}
 
+
+def with_diagrams(html_text):
+    """Replace <!-- diagram: name --> with three short "what to measure" lines."""
+    def repl(m):
+        tips = MEASURE_TIPS.get(m.group(1))
+        if not tips:
+            warnings.append(f"missing measuring tips {m.group(1)}")
+            return ""
+        items = "".join(f'<li><span class="mt-ico" aria-hidden="true">{i}</span><strong>{esc(a)}</strong> {esc(b)}</li>' for i, a, b in tips)
+        return f'<ul class="measure-tips" aria-label="What to measure">{items}</ul>'
+    return re.sub(r"<!--\s*diagram:\s*([\w-]+)\s*-->", repl, html_text)
 
 def post_card(post, prefix):
     thumb = post["image_url"].replace("w=1600&h=900", "w=640&h=360")

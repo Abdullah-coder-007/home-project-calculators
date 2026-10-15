@@ -1,0 +1,40 @@
+<section class="viz" id="visualizer" aria-labelledby="viz-title">
+<div class="viz-head">
+<h2 id="viz-title">See the color on your wall <span class="beta-tag">Beta</span></h2>
+<p>Add a photo of your room, tap a wall, then try colors. The new color keeps your room's real light and shadows. Your photo stays on your device; nothing is uploaded.</p>
+<p class="viz-beta-note">This is a beta: it works best on evenly lit, plain walls. Tap the wall, then use the Eraser on anything that got picked up by mistake.</p>
+</div>
+<div class="viz-start">
+<label class="btn viz-upload"><input type="file" accept="image/*" capture="environment" hidden data-viz="file"> Take or choose a photo</label>
+<button type="button" class="btn btn-ghost" data-viz="sample">Try a sample room</button>
+</div>
+<div class="viz-work" hidden>
+<div class="viz-stage">
+<canvas data-viz="canvas" aria-label="Your room with the chosen wall color"></canvas>
+<p class="viz-hint" data-viz="hint">Tap the wall you want to paint.</p>
+</div>
+<p class="viz-msg" data-viz="msg" aria-live="polite"></p>
+<div class="viz-tools" role="group" aria-label="Wall selection">
+<button type="button" class="viz-tool" data-tool="pick" aria-pressed="true">Tap wall</button>
+<button type="button" class="viz-tool" data-tool="add" aria-pressed="false">Brush</button>
+<button type="button" class="viz-tool" data-tool="erase" aria-pressed="false">Eraser</button>
+<button type="button" class="viz-tool" data-viz="undo">Undo</button>
+<button type="button" class="viz-tool" data-viz="clear">Clear</button>
+<label class="viz-range"><span>Edge sensitivity</span><input type="range" min="4" max="30" value="12" data-viz="tolerance"></label>
+<label class="viz-range"><span>Before / after</span><input type="range" min="0" max="100" value="100" data-viz="mix"></label>
+</div>
+<div class="viz-colors">
+<h3>Pick a color</h3>
+<div class="viz-swatches" data-viz="trend" role="list" aria-label="Colors of the moment"></div>
+<div class="viz-custom"><label><span>Your own color</span> <input type="color" value="#c9d7a6" data-viz="custom"></label> <span class="viz-code" data-viz="code"></span></div>
+<h3>Goes well with your pick</h3>
+<div class="viz-swatches" data-viz="matches" role="list" aria-label="Matching colors"></div>
+</div>
+<div class="viz-compare">
+<div class="viz-compare-head"><h3>Compare up to 4</h3><button type="button" class="btn btn-quiet" data-viz="keep">Add this color to compare</button></div>
+<div class="viz-grid" data-viz="grid"></div>
+<p class="viz-note">Colors on screens differ from real paint. Ask your store to match the color code, and test a sample on the wall before buying.</p>
+</div>
+</div>
+</section>
+<script src="../assets/js/visualizer.js?v={{v}}" defer></script>
