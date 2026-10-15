@@ -35,3 +35,7 @@ node --test tests/*.test.js   # check all formulas
 - `adsense_client` — your `ca-pub-...` ID once AdSense approves the site; this also creates `ads.txt`
 
 Then rebuild and push.
+
+## Hosting
+
+Cloudflare builds from the `main` branch and serves the `docs/` folder, as set in `wrangler.jsonc`. Every push to `main` goes live on calcupine.com in about a minute.
