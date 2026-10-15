@@ -365,8 +365,36 @@
     };
   }
 
+  /* ---------- Reading a pasted measurement ---------- */
+  // Turns text like 4' 3", 4 ft 3 in, 51 in, 4.25 ft, 1.3 m or 130 cm
+  // (as copied from Apple's Measure app or typed) into feet + inches.
+  function parseLength(text) {
+    if (text === undefined || text === null) return null;
+    var t = String(text).toLowerCase().trim()
+      .replace(/[′’´`]/g, "'").replace(/[″”]|''/g, '"')
+      .replace(/(\d),(\d)/g, '$1.$2').replace(/½/g, '.5').replace(/¼/g, '.25').replace(/¾/g, '.75');
+    var m, inches = null;
+    // Feet and inches together: 4' 3", 4 ft 3 in, 4ft 3.5in, 4 feet 3 inches
+    if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:'|ft|feet|foot)\s*(\d+(?:\.\d+)?)\s*(?:"|in|inch|inches)?\b/))) inches = parseFloat(m[1]) * 12 + parseFloat(m[2]);
+    else if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:'|ft|feet|foot)/))) inches = parseFloat(m[1]) * 12;
+    else if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:"|in\b|inch|inches)/))) inches = parseFloat(m[1]);
+    else if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:cm|centimet)/))) inches = parseFloat(m[1]) / 2.54;
+    else if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:mm|millimet)/))) inches = parseFloat(m[1]) / 25.4;
+    else if ((m = t.match(/(\d+(?:\.\d+)?)\s*(?:m\b|meter|metre)/))) inches = parseFloat(m[1]) * 39.3701;
+    else if ((m = t.match(/^(\d+(?:\.\d+)?)$/))) inches = parseFloat(m[1]) * 12; // a bare number means feet
+    if (inches === null || !isFinite(inches) || inches <= 0) return null;
+    return splitInches(inches);
+  }
+  // Whole feet + inches rounded to the nearest half inch.
+  function splitInches(totalIn) {
+    var half = Math.round(totalIn * 2) / 2;
+    var ft = Math.floor(half / 12 + 1e-9);
+    var inch = Math.round((half - ft * 12) * 2) / 2;
+    return { ft: ft, inch: inch, totalIn: totalIn };
+  }
+
   return {
-    num: num, ceil: ceil, round: round,
+    num: num, ceil: ceil, round: round, parseLength: parseLength, splitInches: splitInches,
     area: area, volume: volume, drywall: drywall, SHEET_SQFT: SHEET_SQFT, wallpaper: wallpaper, fence: fence,
     deck: deck, roofing: roofing, pavers: pavers, stairs: stairs, lawn: lawn, evenLength: evenLength,
     shapeArea: shapeArea, totalArea: totalArea,

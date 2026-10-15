@@ -60,7 +60,8 @@ body {
 }
 img, svg { max-width: 100%; }
 a { color: var(--accent-deep); text-underline-offset: 0.18em; text-decoration-thickness: 2px; }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) a { color: color-mix(in srgb, var(--accent) 55%, white); } }
+@media (prefers-color-scheme: dark) { :where(:root:not([data-theme="light"])) a { color: color-mix(in srgb, var(--accent) 55%, white); } }
+:where(:root[data-theme="dark"]) a { color: color-mix(in srgb, var(--accent) 55%, white); }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .skip { position: absolute; left: -999px; top: 0; background: var(--surface); padding: 8px 12px; z-index: 10; }
@@ -525,6 +526,60 @@ html.embed .embed-credit { display: block; font-size: 0.9rem; margin: 18px 0; co
 .toc li { margin-bottom: 4px; break-inside: avoid; }
 .toc a { color: var(--ink); font-weight: 600; text-decoration-color: color-mix(in srgb, var(--accent) 50%, transparent); }
 .guide h2[id], .faq h2[id] { scroll-margin-top: 90px; }
+
+/* Feet + inch pairs need room: never squeeze two of them side by side on a phone */
+@media (max-width: 640px) {
+  .row:has(> .ftin) { grid-template-columns: 1fr; }
+  .row > .ftin + .ftin { margin-top: 2px; }
+}
+.ftin-pair input { min-width: 0; padding-left: 12px; padding-right: 8px; }
+
+/* ---------- Camera measuring ---------- */
+.ftin-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ftin-head > span { font-weight: 600; font-size: 0.94rem; }
+.measure-btn {
+  display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+  padding: 6px 11px; min-height: 34px; border-radius: 999px; border: 0; color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 3px 0 var(--accent-deep);
+}
+.measure-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--accent-deep); }
+.pm-sheet-wrap { position: fixed; inset: 0; z-index: 50; background: rgba(17, 13, 43, 0.55); display: flex; align-items: flex-end; justify-content: center; }
+.pm-sheet {
+  position: relative; width: 100%; max-width: 520px; max-height: 88vh; overflow: auto; background: var(--surface); color: var(--ink);
+  border-radius: 26px 26px 0 0; padding: 26px 20px calc(22px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
+  animation: pm-up 0.22s ease;
+}
+@keyframes pm-up { from { transform: translateY(40px); opacity: 0; } }
+.pm-sheet h2 { font-size: 1.4rem; margin: 0 40px 12px 0; }
+.pm-steps { padding-left: 1.3em; margin: 0 0 16px; }
+.pm-steps li { margin-bottom: 8px; }
+.pm-steps li::marker { color: var(--accent); font-weight: 800; }
+.pm-sheet-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 10px; }
+.pm-sheet-actions .btn { flex: 1 1 200px; margin: 0; }
+.pm-note, .pm-paste-msg { color: var(--muted); font-size: 0.9rem; margin: 6px 0 0; }
+.pm-paste-msg:empty { display: none; }
+.pm-close { position: absolute; top: 14px; right: 14px; width: 38px; height: 38px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface-2); color: var(--ink); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+.pm-toast {
+  position: fixed; left: 50%; bottom: 96px; z-index: 60; transform: translateX(-50%); padding: 10px 16px; border-radius: 999px;
+  background: var(--ink); color: var(--surface); font-weight: 700; font-size: 0.92rem; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3); transition: opacity 0.4s;
+}
+.pm-toast.out { opacity: 0; }
+.pm-ar { position: fixed; inset: 0; z-index: 70; color: #fff; font-family: var(--font); }
+.pm-ar-line { position: absolute; inset: 0; pointer-events: none; display: none; }
+.pm-ar.has-line .pm-ar-line { display: block; }
+.pm-ar-line line { stroke: #ffc93c; stroke-width: 4; stroke-linecap: round; }
+.pm-ar-line circle { fill: #ffc93c; stroke: #2a2000; stroke-width: 2; }
+.pm-ar-cross { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.7); }
+.pm-ar-cross::after { content: ""; position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px; border-radius: 50%; background: #fff; }
+.pm-ar-cross.on { border-color: #ffc93c; box-shadow: 0 0 0 4px rgba(255, 201, 60, 0.35); }
+.pm-ar-cross.on::after { background: #ffc93c; }
+.pm-ar-top { position: absolute; top: 0; left: 0; right: 0; padding: calc(16px + env(safe-area-inset-top)) 18px 16px; background: linear-gradient(rgba(0, 0, 0, 0.6), transparent); text-align: center; }
+.pm-ar-help { margin: 0; font-weight: 700; text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6); }
+.pm-ar-reading { margin: 8px 0 0; font-family: var(--font-display); font-weight: 800; font-size: 2.6rem; color: #ffc93c; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); }
+.pm-ar-bottom { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; gap: 10px; padding: 16px 16px calc(18px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, rgba(0, 0, 0, 0.6)); }
+.pm-ar-bottom .btn { flex: 1 1 140px; margin: 0; }
+.pm-ar-bottom .btn[disabled] { opacity: 0.5; }
+@media print { .measure-btn { display: none !important; } }
 
 /* ---------- Phones ---------- */
 @media (max-width: 760px) {

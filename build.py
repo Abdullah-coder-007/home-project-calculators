@@ -82,7 +82,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
         prefix = "../" * depth
     canonical = f"{BASE}/{path}"
     css_v = asset_hash(SRC / "assets/css/site.css")
-    js_v = "".join(asset_hash(SRC / f"assets/js/{n}.js") for n in ("formulas", "tools", "app"))[:10]
+    js_v = "".join(asset_hash(SRC / f"assets/js/{n}.js") for n in ("formulas", "tools", "app", "measure"))[:10]
 
     verif = ""
     if CFG.get("google_site_verification"):
@@ -157,6 +157,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <script src="{prefix}assets/js/formulas.js?v={js_v}" defer></script>
 <script src="{prefix}assets/js/tools.js?v={js_v}" defer></script>
 <script src="{prefix}assets/js/app.js?v={js_v}" defer></script>
+<script src="{prefix}assets/js/measure.js?v={js_v}" defer></script>
 </body>
 </html>
 """
