@@ -25,6 +25,8 @@ import shutil
 import sys
 from pathlib import Path
 
+import iso
+
 ROOT = Path(__file__).parent
 SRC = ROOT / "src"
 OUT = ROOT / "docs"
@@ -69,7 +71,7 @@ def nav_html(prefix, current):
     return "".join(out)
 
 
-def page(*, path, title, description, body, schema=None, current=None, noindex=False, prefix=None):
+def page(*, path, title, description, body, schema=None, current=None, noindex=False, prefix=None, accent="violet"):
     depth = path.count("/")  # "" -> 0, "paint-calculator/" -> 1
     if prefix is None:
         prefix = "../" * depth
@@ -116,14 +118,14 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{esc(canonical)}">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#f2c230">
+<meta name="theme-color" content="#6c4cf5">
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="{prefix}assets/css/site.css?v={css_v}">
 {verif}{ads}{ld}</head>
-<body>
+<body data-accent="{accent}">
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="{prefix or './'}"><span class="brand-mark" aria-hidden="true"></span>{esc(CFG['name'])}</a>
@@ -188,16 +190,21 @@ def tool_page(t, all_tools):
         f"<details><summary>{esc(q['q'])}</summary><p>{q['a']}</p></details>" for q in t.get("faq", [])
     )
     related = [x for x in all_tools if x["slug"] in t.get("related", [])] or [x for x in all_tools if x["slug"] != t["slug"]][:3]
-    related_html = "".join(f'<li><a href="../{r["slug"]}/">{esc(r["short"])}</a>: {esc(r["what"])}</li>' for r in related)
+    related_html = "".join(
+        f'<li data-accent="{r["tool"]}"><a href="../{r["slug"]}/"><span class="mini-art">{iso.tool_icon(r["tool"])}</span>'
+        f'<span><strong>{esc(r["short"])}</strong><span class="t-what">{esc(r["what"])}</span></span></a></li>' for r in related)
     embed_code = (f'<iframe src="{url}?embed=1" title="{esc(t["h1"])}" width="100%" height="900" '
                   f'style="border:0;max-width:720px" loading="lazy"></iframe>\n'
                   f'<p><a href="{url}">{esc(t["h1"])}</a> by {esc(CFG["name"])}</p>')
 
-    body = f"""<p class="crumbs"><a href="../">All calculators</a> / {esc(t['short'])}</p>
-<div class="tool-head">
+    body = f"""<section class="tool-head">
+<div class="tool-head-text">
+<p class="crumbs"><a href="../">All calculators</a> / {esc(t['short'])}</p>
 <h1>{esc(t['h1'])}</h1>
 <p class="lede">{t['lede']}</p>
 </div>
+<div class="tool-head-art">{iso.tool_icon(t['tool'])}</div>
+</section>
 <div class="tool-grid">
 <form id="calc" class="calc" data-tool="{esc(t['tool'])}" novalidate>
 <h2>Your project</h2>
@@ -209,7 +216,7 @@ def tool_page(t, all_tools):
 <article class="guide">
 {t['guide']}
 <section class="faq"><h2>Common questions</h2>{faq_html}</section>
-<section class="related"><h2>Related calculators</h2><ul>{related_html}</ul></section>
+<section class="related"><h2>Related calculators</h2><ul class="related-list">{related_html}</ul></section>
 </article>
 <section class="embed-box">
 <h2>Add this calculator to your site</h2>
@@ -230,22 +237,30 @@ def tool_page(t, all_tools):
         schema.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q["q"],
              "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", q["a"])}} for q in t["faq"]]})
-    return page(path=path, title=t["title"], description=t["description"], body=body, schema=schema)
+    return page(path=path, title=t["title"], description=t["description"], body=body, schema=schema, accent=t["tool"])
 
 
 def home_page(tools):
-    rows = "".join(
-        f'<li><a href="{t["slug"]}/"><span class="t-name">{esc(t["short"])}</span>'
-        f'<span class="t-what">{esc(t["what"])}</span></a></li>' for t in tools)
+    cards = "".join(
+        f'<li class="tool-card" data-accent="{t["tool"]}"><a href="{t["slug"]}/">'
+        f'<span class="card-art">{iso.tool_icon(t["tool"])}</span>'
+        f'<span class="card-body"><span class="t-name">{esc(t["short"])}</span>'
+        f'<span class="t-what">{esc(t["what"])}</span>'
+        f'<span class="card-go">Open calculator</span></span></a></li>' for t in tools)
     body = f"""<section class="home-hero">
+<div class="hero-text">
 <h1>Know how much to buy before you drive to the store.</h1>
-<p class="lede">Free calculators for paint, concrete, tile, flooring and mulch. Enter your measurements, get a shopping list with quantities and a cost estimate, and print it for the store.</p>
+<p class="lede">Free calculators for paint, concrete, tile, flooring and mulch. Enter your measurements and get exact quantities, a shopping list and a cost estimate you can print.</p>
+<div class="hero-actions"><a class="btn" href="paint-calculator/">Start with paint</a><a class="btn btn-ghost" href="#tools">See all calculators</a></div>
+</div>
+<div class="hero-art-wrap">{iso.hero_scene()}</div>
 </section>
-<ul class="tool-index">{rows}</ul>
+<h2 class="section-title" id="tools">Pick your project</h2>
+<ul class="tool-cards">{cards}</ul>
 <section class="home-notes">
-<div><h2>Odd-shaped rooms work</h2><p>Add L-shapes, triangles and circles, and subtract islands or built-ins. Most calculators only handle simple rectangles.</p></div>
-<div><h2>Waste is built in</h2><p>Every result includes extra for cuts, spills and breakage, using the allowances pros use. You can change it.</p></div>
-<div><h2>Every formula is public</h2><p>See exactly how each number is worked out on our <a href="how-we-calculate/">How we calculate</a> page.</p></div>
+<div class="note" data-accent="tile"><span class="note-dot" aria-hidden="true"></span><h2>Odd-shaped rooms work</h2><p>Add L-shapes, triangles and circles, and subtract islands or built-ins. Most calculators only handle simple rectangles.</p></div>
+<div class="note" data-accent="flooring"><span class="note-dot" aria-hidden="true"></span><h2>Waste is built in</h2><p>Every result includes extra for cuts, spills and breakage, using the allowances pros use. You can change it.</p></div>
+<div class="note" data-accent="paint"><span class="note-dot" aria-hidden="true"></span><h2>Every formula is public</h2><p>See exactly how each number is worked out on our <a href="how-we-calculate/">How we calculate</a> page.</p></div>
 </section>"""
     schema = [{"@context": "https://schema.org", "@type": "WebSite", "name": CFG["name"], "url": BASE + "/",
                "description": CFG["tagline"]}]
@@ -259,7 +274,9 @@ def plain_page(slug):
     m = re.match(r"\s*<!--\s*(\{.*?\})\s*-->\s*", raw, re.S)
     meta = {k: html.unescape(fill(v)) for k, v in json.loads(m.group(1)).items()}
     content = fill(raw[m.end():])
-    body = f'<p class="crumbs"><a href="../">All calculators</a> / {esc(meta["h1"])}</p>\n<article class="page">\n<h1>{esc(meta["h1"])}</h1>\n{content}\n</article>'
+    body = (f'<section class="tool-head page-head"><div class="tool-head-text">'
+            f'<p class="crumbs"><a href="../">All calculators</a> / {esc(meta["h1"])}</p>'
+            f'<h1>{esc(meta["h1"])}</h1></div></section>\n<article class="page">\n{content}\n</article>')
     return page(path=f"{slug}/", title=f"{meta['title']} | {CFG['name']}", description=meta["description"],
                 body=body, current=f"{slug}/")
 

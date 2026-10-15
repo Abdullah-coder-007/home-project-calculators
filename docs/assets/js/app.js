@@ -359,3 +359,20 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { boot(); bootEmbed(); });
   else { boot(); bootEmbed(); }
 })();
+
+/* Homepage cards tilt toward the mouse (desktop only, off for reduced motion). */
+(function () {
+  'use strict';
+  if (!window.matchMedia || !matchMedia('(pointer: fine)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  function init() {
+    Array.prototype.forEach.call(document.querySelectorAll('.tool-card a, .related-list a'), function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(800px) rotateX(' + (-y * 8).toFixed(2) + 'deg) rotateY(' + (x * 10).toFixed(2) + 'deg) translateY(-6px)';
+      });
+      card.addEventListener('pointerleave', function () { card.style.transform = ''; });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
