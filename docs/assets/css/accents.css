@@ -2,7 +2,7 @@
 [data-accent="paint"] { --accent: #f2367c; --accent-2: #ff7a59; --accent-deep: #b81d58; --accent-soft: #ffe5ef; }
 [data-accent="concrete"] { --accent: #2f6bff; --accent-2: #24b4ff; --accent-deep: #1c46b8; --accent-soft: #e3ecff; }
 [data-accent="tile"] { --accent: #0fa596; --accent-2: #3ad6a0; --accent-deep: #08776c; --accent-soft: #dcf7f2; }
-[data-accent="flooring"] { --accent: #f2830d; --accent-2: #ffc23c; --accent-deep: #b55d00; --accent-soft: #fff0dc; }
+[data-accent="flooring"] { --accent: #f2830d; --accent-2: #ffc23c; --accent-deep: #9c5000; --accent-soft: #fff0dc; }
 [data-accent="mulch"] { --accent: #2fa43f; --accent-2: #9ad13b; --accent-deep: #1d7a2b; --accent-soft: #e2f6e1; }
 [data-accent="area"] { --accent: #7c3aed; --accent-2: #c084fc; --accent-deep: #5521b5; --accent-soft: #f1e8ff; }
 [data-accent="volume"] { --accent: #0891b2; --accent-2: #22d3ee; --accent-deep: #0e6680; --accent-soft: #dff7fc; }

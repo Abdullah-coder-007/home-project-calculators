@@ -106,7 +106,7 @@ ACCENTS = {
     "paint":     ("#f2367c", "#ff7a59", "#b81d58", "#ffe5ef"),
     "concrete":  ("#2f6bff", "#24b4ff", "#1c46b8", "#e3ecff"),
     "tile":      ("#0fa596", "#3ad6a0", "#08776c", "#dcf7f2"),
-    "flooring":  ("#f2830d", "#ffc23c", "#b55d00", "#fff0dc"),
+    "flooring":  ("#f2830d", "#ffc23c", "#9c5000", "#fff0dc"),
     "mulch":     ("#2fa43f", "#9ad13b", "#1d7a2b", "#e2f6e1"),
     "area":      ("#7c3aed", "#c084fc", "#5521b5", "#f1e8ff"),
     "volume":    ("#0891b2", "#22d3ee", "#0e6680", "#dff7fc"),

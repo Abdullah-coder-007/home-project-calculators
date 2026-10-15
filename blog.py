@@ -151,7 +151,11 @@ def build(out_dir, tools, ctx):
                 who = f'<a href="{esc(p["image_credit_url"])}" rel="noopener">{who}</a>'
             credit = f'<figcaption>Photo: {who}</figcaption>'
         src = p["image_url"] if (p["image"] or "").startswith("http") else f'{prefix}assets/blog/{esc(p["image"] or "")}'
-        hero = (f'<figure class="post-hero"><img src="{esc(src)}" alt="{esc(p["image_alt"])}" '
+        srcset = ""
+        if "w=1600&h=900" in src:
+            srcset = (' srcset="' + ", ".join(esc(src.replace("w=1600&h=900", f"w={w}&h={w * 9 // 16}")) + f" {w}w"
+                                            for w in (640, 960, 1280, 1600)) + '" sizes="(max-width: 1100px) 100vw, 1060px"')
+        hero = (f'<figure class="post-hero"><img src="{esc(src)}"{srcset} alt="{esc(p["image_alt"])}" '
                 f'width="1600" height="900" fetchpriority="high">{credit}</figure>') if p["image"] else ""
         updated = (f' · Updated {p["updated_human"]}' if p["updated"] != p["date"] else "")
         first_tool = by_slug.get(cat_tools[0]) if cat_tools else None

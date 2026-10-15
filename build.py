@@ -172,7 +172,8 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="{prefix}assets/css/site.css?v={css_v}">
 <link rel="stylesheet" href="{prefix}assets/css/accents.css?v={css_v}">
 {verif}{analytics}{ads}{ld}</head>
@@ -275,7 +276,7 @@ def tool_page(t, all_tools):
 </section>
 <div class="tool-grid">
 <form id="calc" class="calc" data-tool="{esc(t['tool'])}" novalidate>
-<h2>Your project</h2>
+{UNITS_TOGGLE if re.search(r'class="unit">(ft|in|sq ft)<', t['form']) else ''}<h2>Your project</h2>
 {t['form']}
 </form>
 {RESULT_PANEL}
@@ -374,6 +375,11 @@ def plain_page(slug):
 
 
 TOOLS_BY_SLUG = {}
+
+
+UNITS_TOGGLE = ('<div class="units-toggle" role="group" aria-label="Units"><span class="units-label">Units</span>'
+                '<button type="button" data-units="imperial" aria-pressed="true">ft &amp; in</button>'
+                '<button type="button" data-units="metric" aria-pressed="false">m &amp; cm</button></div>')
 
 
 def author_box(prefix):

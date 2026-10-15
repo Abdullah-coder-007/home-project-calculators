@@ -471,11 +471,14 @@
     if (!form.querySelector('.ftin-pair, .unit')) return;
     var any = Array.prototype.some.call(form.querySelectorAll('.unit'), function (u) { return u.hasAttribute('data-imp') || /^(ft|in|sq ft)$/.test(u.textContent.trim()); });
     if (!any) return;
-    var box = el('div', { class: 'units-toggle', role: 'group', 'aria-label': 'Units' },
-      '<span class="units-label">Units</span>' +
-      '<button type="button" data-units="imperial">ft &amp; in</button>' +
-      '<button type="button" data-units="metric">m &amp; cm</button>');
-    form.insertBefore(box, form.firstChild);
+    var box = form.querySelector('.units-toggle');
+    if (!box) {
+      box = el('div', { class: 'units-toggle', role: 'group', 'aria-label': 'Units' },
+        '<span class="units-label">Units</span>' +
+        '<button type="button" data-units="imperial">ft &amp; in</button>' +
+        '<button type="button" data-units="metric">m &amp; cm</button>');
+      form.insertBefore(box, form.firstChild);
+    }
     function paint() {
       $all('button', box).forEach(function (b) { b.setAttribute('aria-pressed', String((b.getAttribute('data-units') === 'metric') === U.metric())); });
     }
