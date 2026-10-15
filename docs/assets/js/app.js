@@ -602,7 +602,12 @@
     }
     markExamples = false;
     if (state) writeForm(form, state);
+    var measured = (params.get('measure') || '').split(',').map(parseFloat);
     var repaintUnits = bootUnits(form, builderRoot, function () { recalc(true); });
+    if (measured.length >= 2 && measured.every(function (x) { return isFinite(x) && x >= 0 && x < 100; })) {
+      fillMeasured(form, measured);
+      try { var u = new URL(location.href); u.searchParams.delete('measure'); history.replaceState(null, '', u); } catch (e) { /* old browser */ }
+    }
     bootCountry(panel, form, !state);
     if (L) L.onChange(function () {
       if (!U.chosen() && U.metric() !== (L.defaultUnits() === 'metric')) {
@@ -688,6 +693,27 @@
       done();
     });
     return paint;
+  }
+
+  // Numbers sent back by the Calcupine Measure app: [length, width, height] in metres.
+  // Fills the first visible Length, Width and Height boxes (in the area builder too).
+  function fillMeasured(form, m) {
+    var want = [['length', m[0]], ['width', m[1]], ['height', m[2]]];
+    var fields = $all('.field.ftin', form).filter(function (f) { return !f.closest('[hidden]'); });
+    var done = {};
+    want.forEach(function (w) {
+      if (!(w[1] > 0)) return;
+      var f = fields.filter(function (x) {
+        var lab = (x.querySelector('.ftin-head > span:first-child') || x.querySelector(':scope > span') || {}).textContent || '';
+        return !done[lab] && new RegExp('\\b' + w[0] + '\\b', 'i').test(lab);
+      })[0];
+      if (!f) return;
+      var lab = (f.querySelector('.ftin-head > span:first-child') || f.querySelector(':scope > span')).textContent;
+      done[lab] = 1;
+      // Round to the nearest quarter inch (or millimetre in metric): phone AR isn't finer than that.
+      U.setFeet(f.querySelectorAll('.ftin-pair input'), U.metric() ? Math.round(w[1] * 1000) / 1000 / 0.3048 : Math.round(w[1] / 0.0254 * 4) / 4 / 12);
+    });
+    form.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   // "Prices for: United Kingdom (GBP)" menu above the shopping list.

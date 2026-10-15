@@ -44,6 +44,8 @@ warnings = []
 # STAGING=1 python3 build.py -> a private preview: hidden from search engines,
 # no analytics or ads, and a banner on every page.
 STAGING = os.environ.get("STAGING") == "1"
+# While the app is in testing, staging links to the latest test build on GitHub.
+APP_TEST_URL = "https://github.com/Abdullah-coder-007/home-project-calculators/releases/tag/app-latest"
 if STAGING:
     CFG["ga4_id"] = ""
     CFG["adsense_client"] = ""
@@ -134,6 +136,8 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
                "s.crossOrigin='anonymous';document.head.appendChild(s);}</script>\n")
 
     analytics = ga4_head()
+    app_url = CFG.get("measure_app_url") or (APP_TEST_URL if STAGING else "")
+    measure_app = f' data-measure-app="{esc(app_url)}"' if app_url else ""
 
     ld = ""
     for block in schema or []:
@@ -177,7 +181,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <link rel="stylesheet" href="{prefix}assets/css/site.css?v={css_v}">
 <link rel="stylesheet" href="{prefix}assets/css/accents.css?v={css_v}">
 {verif}{analytics}{ads}{ld}</head>
-<body data-accent="{accent}">
+<body data-accent="{accent}"{measure_app}>
 {'<div class="staging-bar">Staging preview: not the live site</div>' if STAGING else ''}<a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="{prefix or './'}"><span class="brand-mark" aria-hidden="true"></span>{esc(CFG['name'])}</a>

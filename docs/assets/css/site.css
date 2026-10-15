@@ -720,3 +720,7 @@ input::placeholder { color: var(--muted); opacity: 0.75; font-weight: 500; }
 .shop-country select { font: inherit; font-weight: 600; min-height: 40px; padding: 6px 10px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); max-width: 100%; }
 .shop-country-note { color: var(--muted); font-size: 0.85rem; }
 .shop-list .cur { margin-right: 2px; }
+
+.pm-own-app { background: var(--accent-soft); border-radius: 16px; padding: 12px 14px; margin-bottom: 8px; }
+.pm-own-app h2 { margin-top: 0; }
+.pm-or { text-align: center; color: var(--muted); font-weight: 700; font-size: 0.85rem; margin: 10px 0 0; }
