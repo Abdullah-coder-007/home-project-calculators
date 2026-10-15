@@ -2,7 +2,7 @@
 
 15 free calculators that tell homeowners exactly what to buy: paint, drywall, wallpaper, flooring, tile, square footage, concrete, pavers, cubic yards, mulch/soil/gravel, sod and seed, fences, decks, roofing and stairs. Each page gives quantities, a printable shopping list with editable prices, a how-to guide and an embeddable version for other sites.
 
-Live site: https://calcupine.com (hosted on Cloudflare Pages from the `docs/` folder)
+Live site: https://calcupine.com (hosted on Cloudflare from the `docs/` folder)
 
 ## How the project is laid out
 
@@ -18,7 +18,7 @@ Live site: https://calcupine.com (hosted on Cloudflare Pages from the `docs/` fo
 | `src/assets/css/site.css` | Design |
 | `tests/` | Checks every formula against hand-worked examples |
 | `build.py` | Builds the finished website into `docs/` |
-| `docs/` | The finished website that GitHub Pages serves. Don't edit by hand; it is rebuilt each time |
+| `docs/` | The finished website that Cloudflare serves. Don't edit by hand; it is rebuilt each time |
 
 ## Making changes
 
@@ -30,7 +30,7 @@ node --test tests/*.test.js   # check all formulas
 ## Settings to fill in later (in `site.json`)
 
 - `contact_email` — needed before applying to AdSense
-- `custom_domain` — once you buy a domain, e.g. `projectmath.com`
+- `custom_domain` — once you buy a domain, already served at calcupine.com, so leave empty
 - `google_site_verification`, `bing_site_verification` — from Search Console and Bing Webmaster Tools
 - `adsense_client` — your `ca-pub-...` ID once AdSense approves the site; this also creates `ads.txt`
 
