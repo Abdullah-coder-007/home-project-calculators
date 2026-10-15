@@ -1,0 +1,38 @@
+<div class="group">
+  <p class="group-title">Room</p>
+  <div data-area-builder></div>
+</div>
+
+<div class="group">
+  <p class="group-title">Flooring</p>
+  <div class="row">
+    <label class="field"><span>Square feet per box</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="boxSqFt" value="20"><span class="unit">sq ft</span></span>
+      <span class="hint">On the box label</span>
+    </label>
+    <label class="field"><span>Price per square foot</span>
+      <span class="with-unit"><span class="unit">$</span><input type="number" inputmode="decimal" min="0" step="0.01" name="pricePerSqFt" value="2.50"></span>
+      <span class="hint">Used for the box price below</span>
+    </label>
+  </div>
+  <fieldset class="choices">
+    <legend>Layout</legend>
+    <label><input type="radio" name="pattern" value="straight" checked><span>Straight (10% extra)</span></label>
+    <label><input type="radio" name="pattern" value="diagonal"><span>Diagonal (15%)</span></label>
+    <label><input type="radio" name="pattern" value="herringbone"><span>Herringbone (20%)</span></label>
+  </fieldset>
+  <label class="field"><span>Your own waste %</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" max="50" step="any" name="wastePct" value="" placeholder="Auto"><span class="unit">%</span></span>
+    <span class="hint">Leave empty to use the layout's amount</span>
+  </label>
+</div>
+
+<div class="group">
+  <p class="group-title">Extras</p>
+  <label class="check"><input type="checkbox" name="underlayment" checked> <span>Add underlayment</span></label>
+  <div class="row">
+    <label class="field"><span>Underlayment per roll</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="underlaymentSqFt" value="100"><span class="unit">sq ft</span></span></label>
+    <label class="field"><span>Trim length</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="trimFt" value="48"><span class="unit">ft</span></span><span class="hint">Wall length minus doorways</span></label>
+    <label class="field"><span>Doorways</span><input type="number" inputmode="numeric" min="0" step="1" name="doorways" value="1"><span class="hint">Where the floor meets another floor</span></label>
+  </div>
+</div>

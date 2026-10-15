@@ -1,0 +1,13 @@
+{
+  "name": "ProjectMath",
+  "tagline": "Home project calculators that tell you exactly what to buy.",
+  "base_url": "https://abdullah-coder-007.github.io/home-project-calculators",
+  "custom_domain": "",
+  "owner_name": "Abdullah",
+  "contact_email": "",
+  "adsense_client": "",
+  "google_site_verification": "",
+  "bing_site_verification": "",
+  "tools": ["paint-calculator", "concrete-calculator", "tile-calculator", "flooring-calculator", "mulch-calculator"],
+  "pages": ["about", "contact", "how-we-calculate", "privacy-policy", "terms"]
+}

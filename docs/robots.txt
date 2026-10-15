@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abdullah-coder-007.github.io/home-project-calculators/sitemap.xml

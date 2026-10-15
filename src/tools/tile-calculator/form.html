@@ -1,0 +1,57 @@
+<div class="group">
+  <p class="group-title">Area to tile</p>
+  <div data-area-builder></div>
+</div>
+
+<div class="group">
+  <p class="group-title">Tile</p>
+  <div class="row">
+    <label class="field"><span>Tile length</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="tileL" value="12"><span class="unit">in</span></span></label>
+    <label class="field"><span>Tile width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="tileW" value="12"><span class="unit">in</span></span></label>
+  </div>
+  <div class="row">
+    <label class="field"><span>Grout joint</span>
+      <select name="jointIn">
+        <option value="0.0625">1/16 in</option>
+        <option value="0.125" selected>1/8 in</option>
+        <option value="0.1875">3/16 in</option>
+        <option value="0.25">1/4 in</option>
+      </select>
+    </label>
+    <label class="field"><span>Tile thickness</span>
+      <select name="thicknessIn">
+        <option value="0.25">1/4 in</option>
+        <option value="0.3125">5/16 in</option>
+        <option value="0.375" selected>3/8 in</option>
+        <option value="0.5">1/2 in</option>
+      </select>
+    </label>
+  </div>
+  <label class="field"><span>Square feet per box</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="boxSqFt" value="15"><span class="unit">sq ft</span></span>
+    <span class="hint">Printed on the box or the store's product page. Leave empty to count single tiles.</span>
+  </label>
+</div>
+
+<div class="group">
+  <fieldset class="choices">
+    <legend>Layout</legend>
+    <label><input type="radio" name="pattern" value="straight" checked><span>Straight (10% extra)</span></label>
+    <label><input type="radio" name="pattern" value="diagonal"><span>Diagonal (15%)</span></label>
+    <label><input type="radio" name="pattern" value="herringbone"><span>Herringbone (20%)</span></label>
+  </fieldset>
+  <div class="row">
+    <label class="field"><span>Your own waste %</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" max="50" step="any" name="wastePct" value="" placeholder="Auto"><span class="unit">%</span></span>
+      <span class="hint">Leave empty to use the layout's amount</span>
+    </label>
+    <label class="field"><span>Trowel notch</span>
+      <select name="trowel">
+        <option value="1/4x1/4">1/4 x 1/4 in</option>
+        <option value="1/4x3/8" selected>1/4 x 3/8 in</option>
+        <option value="1/2x1/2">1/2 x 1/2 in</option>
+      </select>
+      <span class="hint">1/4 x 1/4 for tile under 8 in, 1/4 x 3/8 for 8 to 16 in, 1/2 x 1/2 for larger</span>
+    </label>
+  </div>
+</div>

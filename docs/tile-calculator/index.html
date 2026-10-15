@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed');</script>
+<title>Tile Calculator: How Many Tiles and Boxes Do I Need? | ProjectMath</title>
+<meta name="description" content="Calculate how many tiles and boxes to buy for a floor, shower or backsplash, with waste for straight, diagonal or herringbone layouts, plus thinset and grout.">
+<link rel="canonical" href="https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ProjectMath">
+<meta property="og:title" content="Tile Calculator: How Many Tiles and Boxes Do I Need? | ProjectMath">
+<meta property="og:description" content="Calculate how many tiles and boxes to buy for a floor, shower or backsplash, with waste for straight, diagonal or herringbone layouts, plus thinset and grout.">
+<meta property="og:url" content="https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f2c230">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css?v=dca5e54a92">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Tile calculator", "url": "https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/", "description": "Calculate how many tiles and boxes to buy for a floor, shower or backsplash, with waste for straight, diagonal or herringbone layouts, plus thinset and grout.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": "https://abdullah-coder-007.github.io/home-project-calculators/"}, {"@type": "ListItem", "position": 2, "name": "Tile calculator", "item": "https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much extra tile should I buy?", "acceptedAnswer": {"@type": "Answer", "text": "Add about 10% for a straight layout, 15% for diagonal, and 15 to 20% for herringbone or large tiles that break easily. Rooms with lots of corners and cuts need the higher end."}}, {"@type": "Question", "name": "How many 12x12 tiles do I need for 100 square feet?", "acceptedAnswer": {"@type": "Answer", "text": "Each 12 by 12 inch tile covers 1 sq ft, slightly more with a grout joint. For 100 sq ft with 10% extra you need about 108 tiles at a 1/8 inch joint."}}, {"@type": "Question", "name": "How much grout do I need?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on tile size, joint width and tile thickness. Small tiles with wide joints use far more grout than large tiles with thin joints. The calculator estimates the pounds and you should confirm with the coverage chart on the grout bag."}}, {"@type": "Question", "name": "Which trowel size should I use?", "acceptedAnswer": {"@type": "Answer", "text": "As a rough guide: 1/4 by 1/4 inch square notch for tiles up to about 8 inches, 1/4 by 3/8 inch for 8 to 16 inch tiles, and 1/2 by 1/2 inch for larger tiles. Always follow the tile and mortar maker's instructions."}}, {"@type": "Question", "name": "Should I keep spare tiles?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Keep at least a few tiles, ideally a full box, from the same lot. Matching a discontinued tile years later for a repair can be impossible."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>ProjectMath</a>
+<nav class="site-nav" aria-label="Main"><a href=".././">All calculators</a><a href="../how-we-calculate/">How we calculate</a><a href="../about/">About</a></nav>
+</div></header>
+<main id="main" class="wrap">
+<p class="crumbs"><a href="../">All calculators</a> / Tile calculator</p>
+<div class="tool-head">
+<h1>Tile calculator</h1>
+<p class="lede">Enter your floor or wall area, tile size and layout to get the number of tiles and boxes, plus thinset and grout. Add sections for L-shaped rooms and subtract areas like a vanity.</p>
+</div>
+<div class="tool-grid">
+<form id="calc" class="calc" data-tool="tile" novalidate>
+<h2>Your project</h2>
+<div class="group">
+  <p class="group-title">Area to tile</p>
+  <div data-area-builder></div>
+</div>
+
+<div class="group">
+  <p class="group-title">Tile</p>
+  <div class="row">
+    <label class="field"><span>Tile length</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="tileL" value="12"><span class="unit">in</span></span></label>
+    <label class="field"><span>Tile width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="tileW" value="12"><span class="unit">in</span></span></label>
+  </div>
+  <div class="row">
+    <label class="field"><span>Grout joint</span>
+      <select name="jointIn">
+        <option value="0.0625">1/16 in</option>
+        <option value="0.125" selected>1/8 in</option>
+        <option value="0.1875">3/16 in</option>
+        <option value="0.25">1/4 in</option>
+      </select>
+    </label>
+    <label class="field"><span>Tile thickness</span>
+      <select name="thicknessIn">
+        <option value="0.25">1/4 in</option>
+        <option value="0.3125">5/16 in</option>
+        <option value="0.375" selected>3/8 in</option>
+        <option value="0.5">1/2 in</option>
+      </select>
+    </label>
+  </div>
+  <label class="field"><span>Square feet per box</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="boxSqFt" value="15"><span class="unit">sq ft</span></span>
+    <span class="hint">Printed on the box or the store's product page. Leave empty to count single tiles.</span>
+  </label>
+</div>
+
+<div class="group">
+  <fieldset class="choices">
+    <legend>Layout</legend>
+    <label><input type="radio" name="pattern" value="straight" checked><span>Straight (10% extra)</span></label>
+    <label><input type="radio" name="pattern" value="diagonal"><span>Diagonal (15%)</span></label>
+    <label><input type="radio" name="pattern" value="herringbone"><span>Herringbone (20%)</span></label>
+  </fieldset>
+  <div class="row">
+    <label class="field"><span>Your own waste %</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" max="50" step="any" name="wastePct" value="" placeholder="Auto"><span class="unit">%</span></span>
+      <span class="hint">Leave empty to use the layout's amount</span>
+    </label>
+    <label class="field"><span>Trowel notch</span>
+      <select name="trowel">
+        <option value="1/4x1/4">1/4 x 1/4 in</option>
+        <option value="1/4x3/8" selected>1/4 x 3/8 in</option>
+        <option value="1/2x1/2">1/2 x 1/2 in</option>
+      </select>
+      <span class="hint">1/4 x 1/4 for tile under 8 in, 1/4 x 3/8 for 8 to 16 in, 1/2 x 1/2 for larger</span>
+    </label>
+  </div>
+</div>
+
+</form>
+<a class="result-peek" href="#result" hidden><span class="peek-value">0</span> <span class="peek-unit"></span><span class="peek-go">See shopping list</span></a>
+<aside class="result" id="result" aria-label="Result">
+<div class="result-figure is-empty" aria-live="polite">
+<p class="result-label">You need</p>
+<div class="result-line"><span class="result-value">0</span><span class="result-unit"></span></div>
+<p class="result-sub"></p>
+</div>
+<div class="result-body">
+<div class="shop" hidden>
+<h3>Shopping list</h3>
+<table class="shop-list">
+<thead><tr><th scope="col">Item</th><th scope="col">Qty</th><th scope="col">Price each</th><th scope="col" class="sub">Cost</th></tr></thead>
+<tbody></tbody>
+<tfoot><tr><th scope="row" colspan="3">Estimated total</th><td class="shop-total">$0.00</td></tr></tfoot>
+</table>
+<p class="price-hint">Prices are rough US starting points. Type your store's prices to update the total; this device remembers them.</p>
+<div class="actions">
+<button type="button" class="btn" data-action="print">Print list</button>
+<button type="button" class="btn btn-quiet" data-action="copy">Copy list</button>
+<button type="button" class="btn btn-quiet" data-action="share">Share this result</button>
+</div>
+</div>
+<ul class="result-notes" hidden></ul>
+</div>
+</aside>
+</div>
+<p class="embed-credit"><a href="https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/" target="_blank" rel="noopener">Tile calculator</a> by ProjectMath</p>
+<article class="guide">
+<h2>How the tile calculator works</h2>
+<p>The calculator adds up your area, adds a waste allowance for cuts and breakage, and divides by the space one tile covers including its grout joint.</p>
+<p class="formula">Area to buy = area &times; (1 + waste %)<br>
+Space per tile (sq ft) = (tile length + joint) &times; (tile width + joint) &divide; 144<br>
+Tiles = area to buy &divide; space per tile, rounded up<br>
+Boxes = area to buy &divide; square feet per box, rounded up</p>
+
+<h3>Worked example</h3>
+<p>A 10 by 10 foot bathroom floor is 100 sq ft. With a straight layout, 10% extra makes 110 sq ft. A 12 by 12 inch tile with a 1/8 inch joint covers 1.02 sq ft, so you need <strong>108 tiles</strong>, or 8 boxes of 15 sq ft.</p>
+
+<h2>Waste allowance by layout</h2>
+<table>
+<thead><tr><th>Layout</th><th>Typical extra</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Straight (grid or brick offset)</td><td>10%</td><td>Cuts only along the edges</td></tr>
+<tr><td>Diagonal</td><td>15%</td><td>Every edge tile is cut at an angle</td></tr>
+<tr><td>Herringbone or chevron</td><td>20%</td><td>Many angled cuts and offcuts you cannot reuse</td></tr>
+<tr><td>Large tiles (24 in and up)</td><td>Add 5%</td><td>Each broken tile is a bigger loss</td></tr>
+</tbody>
+</table>
+
+<h2>Measuring an area to tile</h2>
+<ol>
+<li>Measure wall to wall. For floors, tile usually runs under the toilet but not under the vanity cabinet or built-in tub.</li>
+<li>Split L-shaped rooms into rectangles with <em>Add a section</em>.</li>
+<li>Use a cut-out section for areas you will not tile, such as a kitchen island or a vanity.</li>
+<li>For a backsplash, measure the width of each wall run and the height from countertop to the bottom of the upper cabinets, then subtract windows and outlets larger than a tile.</li>
+</ol>
+
+<h2>Grout and thinset estimates</h2>
+<p>Grout fills the joints between tiles, so the amount depends on the joint volume. The calculator works out the joint volume per square foot and converts it to pounds, then adds 10%. Small mosaic tiles with wide joints can need several times more grout than large tiles.</p>
+<p class="formula">Grout (cubic inches per sq ft) = 144 &times; (tile length + tile width) &times; joint &times; thickness &divide; (tile length &times; tile width)</p>
+<p>Thinset coverage depends on the trowel. The calculator uses approximate coverage per 50 lb bag of 95 sq ft for a 1/4 by 1/4 inch notch, 70 sq ft for 1/4 by 3/8 inch and 45 sq ft for 1/2 by 1/2 inch. Back-buttering large tiles uses more. Check the chart on your mortar bag before buying.</p>
+
+<h2>Before you buy</h2>
+<ul>
+<li>Check that every box shows the same lot or batch number; shades vary between lots.</li>
+<li>Lay out a few rows dry before setting any tile to see where cuts will fall.</li>
+<li>Unused full boxes can often be returned. Keep the receipt and do not open boxes until you need them.</li>
+</ul>
+
+<section class="faq"><h2>Common questions</h2><details><summary>How much extra tile should I buy?</summary><p>Add about 10% for a straight layout, 15% for diagonal, and 15 to 20% for herringbone or large tiles that break easily. Rooms with lots of corners and cuts need the higher end.</p></details><details><summary>How many 12x12 tiles do I need for 100 square feet?</summary><p>Each 12 by 12 inch tile covers 1 sq ft, slightly more with a grout joint. For 100 sq ft with 10% extra you need about 108 tiles at a 1/8 inch joint.</p></details><details><summary>How much grout do I need?</summary><p>It depends on tile size, joint width and tile thickness. Small tiles with wide joints use far more grout than large tiles with thin joints. The calculator estimates the pounds and you should confirm with the coverage chart on the grout bag.</p></details><details><summary>Which trowel size should I use?</summary><p>As a rough guide: 1/4 by 1/4 inch square notch for tiles up to about 8 inches, 1/4 by 3/8 inch for 8 to 16 inch tiles, and 1/2 by 1/2 inch for larger tiles. Always follow the tile and mortar maker's instructions.</p></details><details><summary>Should I keep spare tiles?</summary><p>Yes. Keep at least a few tiles, ideally a full box, from the same lot. Matching a discontinued tile years later for a repair can be impossible.</p></details></section>
+<section class="related"><h2>Related calculators</h2><ul><li><a href="../paint-calculator/">Paint calculator</a>: Gallons of wall and ceiling paint, primer and tape for a room</li><li><a href="../flooring-calculator/">Flooring calculator</a>: Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim</li></ul></section>
+</article>
+<section class="embed-box">
+<h2>Add this calculator to your site</h2>
+<p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
+<label class="field"><span>Embed code</span><textarea id="embed-code" readonly>&lt;iframe src=&quot;https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/?embed=1&quot; title=&quot;Tile calculator&quot; width=&quot;100%&quot; height=&quot;900&quot; style=&quot;border:0;max-width:720px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://abdullah-coder-007.github.io/home-project-calculators/tile-calculator/&quot;&gt;Tile calculator&lt;/a&gt; by ProjectMath&lt;/p&gt;</textarea></label>
+<button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
+</section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a></nav>
+<p>Estimates only. Always check quantities with your supplier and the product label before you buy.</p>
+<p>&copy; 2026 ProjectMath</p>
+</div></footer>
+<script src="../assets/js/formulas.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/tools.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/app.js?v=aa5a892c69" defer></script>
+</body>
+</html>

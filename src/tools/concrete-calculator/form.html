@@ -1,0 +1,64 @@
+<div class="group">
+  <fieldset class="choices">
+    <legend>What are you pouring?</legend>
+    <label><input type="radio" name="mode" value="slab" checked><span>Slab or patio</span></label>
+    <label><input type="radio" name="mode" value="footing"><span>Footing or wall</span></label>
+    <label><input type="radio" name="mode" value="round"><span>Post holes or columns</span></label>
+  </fieldset>
+</div>
+
+<div class="group" data-mode="slab">
+  <div class="row">
+    <div class="field ftin"><span>Length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="10"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="10"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+  <label class="field"><span>Thickness</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="thicknessIn" value="4"><span class="unit">in</span></span>
+    <span class="hint">4 in for patios and paths, 5 to 6 in for driveways</span>
+  </label>
+</div>
+
+<div class="group" data-mode="footing" hidden>
+  <div class="field ftin"><span>Total length</span>
+    <div class="ftin-pair">
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="flength_ft" value="20"><span class="unit">ft</span></label>
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="flength_in" value=""><span class="unit">in</span></label>
+    </div>
+  </div>
+  <div class="row">
+    <label class="field"><span>Width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="widthIn" value="12"><span class="unit">in</span></span></label>
+    <label class="field"><span>Depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="depthIn" value="12"><span class="unit">in</span></span></label>
+  </div>
+</div>
+
+<div class="group" data-mode="round" hidden>
+  <div class="row">
+    <label class="field"><span>Hole diameter</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="diameterIn" value="10"><span class="unit">in</span></span></label>
+    <label class="field"><span>Hole depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="holeDepthIn" value="30"><span class="unit">in</span></span></label>
+    <label class="field"><span>Number of holes</span><input type="number" inputmode="numeric" min="1" step="1" name="count" value="4"></label>
+  </div>
+  <p class="hint">The post itself takes up some of the hole, so you will use a little less than shown. Treat the result as a safe upper amount.</p>
+</div>
+
+<div class="group">
+  <div class="row">
+    <label class="field"><span>Bag size</span>
+      <select name="bagSize">
+        <option value="80" selected>80 lb (0.60 cu ft)</option>
+        <option value="60">60 lb (0.45 cu ft)</option>
+        <option value="40">40 lb (0.30 cu ft)</option>
+      </select>
+    </label>
+    <label class="field"><span>Extra for waste</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" max="50" step="any" name="wastePct" value="10"><span class="unit">%</span></span></label>
+  </div>
+</div>

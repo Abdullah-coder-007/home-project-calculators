@@ -1,0 +1,17 @@
+{
+  "tool": "paint",
+  "short": "Paint calculator",
+  "what": "Gallons of wall and ceiling paint, primer and tape for a room",
+  "title": "Paint Calculator: How Much Paint Do I Need for a Room? | ProjectMath",
+  "description": "Work out how many gallons of paint you need for walls and ceiling, minus doors and windows. Free paint calculator with primer, tape and a printable shopping list.",
+  "h1": "Paint calculator",
+  "lede": "Enter your room size to see how many gallons of paint to buy, after taking out doors and windows. The example room is 14 by 12 feet; change it to yours.",
+  "related": ["flooring-calculator", "tile-calculator"],
+  "faq": [
+    {"q": "How much paint do I need for a 12x12 room?", "a": "A 12 by 12 foot room with 8 foot walls has 384 sq ft of wall. Take off one door and one window (about 36 sq ft) and two coats need roughly 2 gallons at 350 sq ft per gallon. Add a gallon if you are also painting the ceiling."},
+    {"q": "How many square feet does a gallon of paint cover?", "a": "Most interior paint labels say 250 to 400 sq ft per gallon for one coat. Smooth, primed walls get close to the top of that range; textured, porous or unpainted drywall uses more. This calculator uses 350 by default, and you can change it."},
+    {"q": "Do I really need two coats?", "a": "Usually yes. One coat often looks patchy, especially with a color change. Two coats give even color and the durability the manufacturer rates the paint for."},
+    {"q": "Should I buy a 5-gallon bucket?", "a": "If you need more than about 4 gallons of one color, a 5-gallon bucket is normally cheaper per gallon and keeps the color consistent across walls."},
+    {"q": "When do I need primer?", "a": "Prime new drywall, patched areas, stained walls, glossy surfaces, and big jumps from dark to light colors. Clean walls already painted a similar color often need no primer."}
+  ]
+}

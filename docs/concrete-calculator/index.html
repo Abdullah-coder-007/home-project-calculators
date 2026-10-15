@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed');</script>
+<title>Concrete Calculator: How Many Bags of Concrete Do I Need? | ProjectMath</title>
+<meta name="description" content="Calculate bags of concrete (40, 60 or 80 lb) or cubic yards for a slab, patio, footing or fence post holes. Includes waste, ready-mix advice and a shopping list.">
+<link rel="canonical" href="https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ProjectMath">
+<meta property="og:title" content="Concrete Calculator: How Many Bags of Concrete Do I Need? | ProjectMath">
+<meta property="og:description" content="Calculate bags of concrete (40, 60 or 80 lb) or cubic yards for a slab, patio, footing or fence post holes. Includes waste, ready-mix advice and a shopping list.">
+<meta property="og:url" content="https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f2c230">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css?v=dca5e54a92">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Concrete calculator", "url": "https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/", "description": "Calculate bags of concrete (40, 60 or 80 lb) or cubic yards for a slab, patio, footing or fence post holes. Includes waste, ready-mix advice and a shopping list.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": "https://abdullah-coder-007.github.io/home-project-calculators/"}, {"@type": "ListItem", "position": 2, "name": "Concrete calculator", "item": "https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many 80 lb bags of concrete make a yard?", "acceptedAnswer": {"@type": "Answer", "text": "One cubic yard is 27 cubic feet, and an 80 lb bag yields about 0.60 cubic feet, so it takes 45 bags. With 60 lb bags (0.45 cu ft) it takes 60, and with 40 lb bags (0.30 cu ft) it takes 90."}}, {"@type": "Question", "name": "How many bags for a 10x10 slab 4 inches thick?", "acceptedAnswer": {"@type": "Answer", "text": "A 10 by 10 foot slab at 4 inches is 33.3 cubic feet. With 10% extra that is 36.7 cubic feet, or 62 bags of 80 lb mix. At about 1.4 cubic yards, ready-mix delivery is usually the easier choice."}}, {"@type": "Question", "name": "When should I order ready-mix instead of bags?", "acceptedAnswer": {"@type": "Answer", "text": "Around 1 cubic yard (45 bags of 80 lb mix) is where most people switch. Mixing that many bags by hand is slow, and the first part of a slab can start setting before you finish. Some suppliers charge a short-load fee for small orders, so ask."}}, {"@type": "Question", "name": "How thick should a concrete slab be?", "acceptedAnswer": {"@type": "Answer", "text": "4 inches is typical for patios, walkways and shed floors. Driveways and areas that carry vehicles are usually 5 to 6 inches. Local codes and soil conditions can require more, so check with your building department."}}, {"@type": "Question", "name": "How much extra concrete should I buy?", "acceptedAnswer": {"@type": "Answer", "text": "Plan for 5 to 10% extra. Ground is rarely perfectly flat, forms bow a little, and running short mid-pour leaves a weak joint. The calculator adds 10% unless you change it."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>ProjectMath</a>
+<nav class="site-nav" aria-label="Main"><a href=".././">All calculators</a><a href="../how-we-calculate/">How we calculate</a><a href="../about/">About</a></nav>
+</div></header>
+<main id="main" class="wrap">
+<p class="crumbs"><a href="../">All calculators</a> / Concrete calculator</p>
+<div class="tool-head">
+<h1>Concrete calculator</h1>
+<p class="lede">Choose a slab, footing or round holes, enter the size, and get the number of bags or cubic yards to order. The example is a 10 by 10 foot patio, 4 inches thick.</p>
+</div>
+<div class="tool-grid">
+<form id="calc" class="calc" data-tool="concrete" novalidate>
+<h2>Your project</h2>
+<div class="group">
+  <fieldset class="choices">
+    <legend>What are you pouring?</legend>
+    <label><input type="radio" name="mode" value="slab" checked><span>Slab or patio</span></label>
+    <label><input type="radio" name="mode" value="footing"><span>Footing or wall</span></label>
+    <label><input type="radio" name="mode" value="round"><span>Post holes or columns</span></label>
+  </fieldset>
+</div>
+
+<div class="group" data-mode="slab">
+  <div class="row">
+    <div class="field ftin"><span>Length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="10"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="10"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+  <label class="field"><span>Thickness</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="thicknessIn" value="4"><span class="unit">in</span></span>
+    <span class="hint">4 in for patios and paths, 5 to 6 in for driveways</span>
+  </label>
+</div>
+
+<div class="group" data-mode="footing" hidden>
+  <div class="field ftin"><span>Total length</span>
+    <div class="ftin-pair">
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="flength_ft" value="20"><span class="unit">ft</span></label>
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="flength_in" value=""><span class="unit">in</span></label>
+    </div>
+  </div>
+  <div class="row">
+    <label class="field"><span>Width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="widthIn" value="12"><span class="unit">in</span></span></label>
+    <label class="field"><span>Depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="depthIn" value="12"><span class="unit">in</span></span></label>
+  </div>
+</div>
+
+<div class="group" data-mode="round" hidden>
+  <div class="row">
+    <label class="field"><span>Hole diameter</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="diameterIn" value="10"><span class="unit">in</span></span></label>
+    <label class="field"><span>Hole depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="holeDepthIn" value="30"><span class="unit">in</span></span></label>
+    <label class="field"><span>Number of holes</span><input type="number" inputmode="numeric" min="1" step="1" name="count" value="4"></label>
+  </div>
+  <p class="hint">The post itself takes up some of the hole, so you will use a little less than shown. Treat the result as a safe upper amount.</p>
+</div>
+
+<div class="group">
+  <div class="row">
+    <label class="field"><span>Bag size</span>
+      <select name="bagSize">
+        <option value="80" selected>80 lb (0.60 cu ft)</option>
+        <option value="60">60 lb (0.45 cu ft)</option>
+        <option value="40">40 lb (0.30 cu ft)</option>
+      </select>
+    </label>
+    <label class="field"><span>Extra for waste</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" max="50" step="any" name="wastePct" value="10"><span class="unit">%</span></span></label>
+  </div>
+</div>
+
+</form>
+<a class="result-peek" href="#result" hidden><span class="peek-value">0</span> <span class="peek-unit"></span><span class="peek-go">See shopping list</span></a>
+<aside class="result" id="result" aria-label="Result">
+<div class="result-figure is-empty" aria-live="polite">
+<p class="result-label">You need</p>
+<div class="result-line"><span class="result-value">0</span><span class="result-unit"></span></div>
+<p class="result-sub"></p>
+</div>
+<div class="result-body">
+<div class="shop" hidden>
+<h3>Shopping list</h3>
+<table class="shop-list">
+<thead><tr><th scope="col">Item</th><th scope="col">Qty</th><th scope="col">Price each</th><th scope="col" class="sub">Cost</th></tr></thead>
+<tbody></tbody>
+<tfoot><tr><th scope="row" colspan="3">Estimated total</th><td class="shop-total">$0.00</td></tr></tfoot>
+</table>
+<p class="price-hint">Prices are rough US starting points. Type your store's prices to update the total; this device remembers them.</p>
+<div class="actions">
+<button type="button" class="btn" data-action="print">Print list</button>
+<button type="button" class="btn btn-quiet" data-action="copy">Copy list</button>
+<button type="button" class="btn btn-quiet" data-action="share">Share this result</button>
+</div>
+</div>
+<ul class="result-notes" hidden></ul>
+</div>
+</aside>
+</div>
+<p class="embed-credit"><a href="https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/" target="_blank" rel="noopener">Concrete calculator</a> by ProjectMath</p>
+<article class="guide">
+<h2>How the concrete calculator works</h2>
+<p>Concrete is measured by volume. The calculator turns your measurements into cubic feet, adds extra for waste, then converts the total into bags or cubic yards.</p>
+<p class="formula">Slab: length (ft) &times; width (ft) &times; thickness (in) &divide; 12<br>
+Footing: length (ft) &times; width (in) &divide; 12 &times; depth (in) &divide; 12<br>
+Round hole: 3.1416 &times; (diameter &divide; 2 &divide; 12)&sup2; &times; depth (in) &divide; 12 &times; number of holes<br>
+Cubic yards = cubic feet &divide; 27</p>
+
+<h3>Bag yields</h3>
+<p>Bagged concrete mix makes less finished concrete than its weight suggests. These are the standard yields printed on most bags; check yours, as specialty mixes can differ.</p>
+<table>
+<thead><tr><th>Bag size</th><th>Yield per bag</th><th>Bags per cubic yard</th></tr></thead>
+<tbody>
+<tr><td>80 lb</td><td>0.60 cu ft</td><td>45</td></tr>
+<tr><td>60 lb</td><td>0.45 cu ft</td><td>60</td></tr>
+<tr><td>40 lb</td><td>0.30 cu ft</td><td>90</td></tr>
+</tbody>
+</table>
+
+<h3>Worked example</h3>
+<p>A 10 by 10 foot patio, 4 inches thick: 10 &times; 10 &times; 4 &divide; 12 = 33.3 cubic feet. Adding 10% gives 36.7 cubic feet, which is 1.36 cubic yards or <strong>62 bags of 80 lb mix</strong>. That is a lot of bags to mix by hand, so the calculator suggests ready-mix delivery for jobs over 1 cubic yard.</p>
+
+<h2>Measuring for a pour</h2>
+<ol>
+<li>Measure inside the forms, not the outside of the boards.</li>
+<li>Check the depth in several places. If the ground dips, use the average depth, or the deepest point if you want to be safe.</li>
+<li>For an L-shaped patio, split it into two rectangles, calculate each, and add the bags together.</li>
+<li>For fence posts, a common rule is a hole about three times the post width and deep enough to reach below your area's frost line. Ask your local building department for the frost depth.</li>
+</ol>
+
+<h2>Bags or ready-mix?</h2>
+<table>
+<thead><tr><th>Job size</th><th>Usually best</th></tr></thead>
+<tbody>
+<tr><td>Under 1/3 cubic yard (up to about 15 bags)</td><td>Bags, mixed in a wheelbarrow or tub</td></tr>
+<tr><td>1/3 to 1 cubic yard (15 to 45 bags)</td><td>Bags with a rented drum mixer and a helper</td></tr>
+<tr><td>Over 1 cubic yard</td><td>Ready-mix delivery; ask about short-load fees</td></tr>
+</tbody>
+</table>
+
+<h2>Before you pour</h2>
+<ul>
+<li>Most patios and walkways sit on a compacted gravel base of about 4 inches. Use the <a href="../mulch-calculator/">gravel calculator</a> for it.</li>
+<li>Have everything ready before the first bag is mixed: forms set, base compacted, tools and water at hand.</li>
+<li>Do not pour on frozen ground or when frost is expected; follow the temperature range on the bag.</li>
+<li>Keep the surface damp, or cover it, for the curing time the manufacturer recommends.</li>
+</ul>
+
+<section class="faq"><h2>Common questions</h2><details><summary>How many 80 lb bags of concrete make a yard?</summary><p>One cubic yard is 27 cubic feet, and an 80 lb bag yields about 0.60 cubic feet, so it takes 45 bags. With 60 lb bags (0.45 cu ft) it takes 60, and with 40 lb bags (0.30 cu ft) it takes 90.</p></details><details><summary>How many bags for a 10x10 slab 4 inches thick?</summary><p>A 10 by 10 foot slab at 4 inches is 33.3 cubic feet. With 10% extra that is 36.7 cubic feet, or 62 bags of 80 lb mix. At about 1.4 cubic yards, ready-mix delivery is usually the easier choice.</p></details><details><summary>When should I order ready-mix instead of bags?</summary><p>Around 1 cubic yard (45 bags of 80 lb mix) is where most people switch. Mixing that many bags by hand is slow, and the first part of a slab can start setting before you finish. Some suppliers charge a short-load fee for small orders, so ask.</p></details><details><summary>How thick should a concrete slab be?</summary><p>4 inches is typical for patios, walkways and shed floors. Driveways and areas that carry vehicles are usually 5 to 6 inches. Local codes and soil conditions can require more, so check with your building department.</p></details><details><summary>How much extra concrete should I buy?</summary><p>Plan for 5 to 10% extra. Ground is rarely perfectly flat, forms bow a little, and running short mid-pour leaves a weak joint. The calculator adds 10% unless you change it.</p></details></section>
+<section class="related"><h2>Related calculators</h2><ul><li><a href="../paint-calculator/">Paint calculator</a>: Gallons of wall and ceiling paint, primer and tape for a room</li><li><a href="../mulch-calculator/">Mulch, soil and gravel calculator</a>: Bags, cubic yards or tons of mulch, topsoil, gravel and sand</li></ul></section>
+</article>
+<section class="embed-box">
+<h2>Add this calculator to your site</h2>
+<p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
+<label class="field"><span>Embed code</span><textarea id="embed-code" readonly>&lt;iframe src=&quot;https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/?embed=1&quot; title=&quot;Concrete calculator&quot; width=&quot;100%&quot; height=&quot;900&quot; style=&quot;border:0;max-width:720px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://abdullah-coder-007.github.io/home-project-calculators/concrete-calculator/&quot;&gt;Concrete calculator&lt;/a&gt; by ProjectMath&lt;/p&gt;</textarea></label>
+<button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
+</section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a></nav>
+<p>Estimates only. Always check quantities with your supplier and the product label before you buy.</p>
+<p>&copy; 2026 ProjectMath</p>
+</div></footer>
+<script src="../assets/js/formulas.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/tools.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/app.js?v=aa5a892c69" defer></script>
+</body>
+</html>

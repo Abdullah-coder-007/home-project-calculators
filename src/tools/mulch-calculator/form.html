@@ -1,0 +1,27 @@
+<div class="group">
+  <fieldset class="choices">
+    <legend>Material</legend>
+    <label><input type="radio" name="material" value="mulch" checked><span>Mulch</span></label>
+    <label><input type="radio" name="material" value="topsoil"><span>Topsoil</span></label>
+    <label><input type="radio" name="material" value="gravel"><span>Gravel</span></label>
+    <label><input type="radio" name="material" value="sand"><span>Sand</span></label>
+  </fieldset>
+</div>
+
+<div class="group">
+  <p class="group-title">Area</p>
+  <div data-area-builder></div>
+</div>
+
+<div class="group">
+  <div class="row">
+    <label class="field"><span>Depth</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="depthIn" value="3"><span class="unit">in</span></span>
+      <span class="hint">Mulch 2 to 3 in, gravel paths 3 to 4 in</span>
+    </label>
+    <label class="field"><span>Bag size</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="bagCuFt" value="2"><span class="unit">cu ft</span></span>
+      <span class="hint">On the bag label</span>
+    </label>
+  </div>
+</div>

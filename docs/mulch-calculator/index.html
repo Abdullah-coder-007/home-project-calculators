@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed');</script>
+<title>Mulch Calculator: How Much Mulch, Soil or Gravel Do I Need? | ProjectMath</title>
+<meta name="description" content="Calculate cubic yards, bags or tons of mulch, topsoil, gravel or sand for garden beds, paths and patio bases. Works with odd-shaped and round beds.">
+<link rel="canonical" href="https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ProjectMath">
+<meta property="og:title" content="Mulch Calculator: How Much Mulch, Soil or Gravel Do I Need? | ProjectMath">
+<meta property="og:description" content="Calculate cubic yards, bags or tons of mulch, topsoil, gravel or sand for garden beds, paths and patio bases. Works with odd-shaped and round beds.">
+<meta property="og:url" content="https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f2c230">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css?v=dca5e54a92">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Mulch, soil and gravel calculator", "url": "https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/", "description": "Calculate cubic yards, bags or tons of mulch, topsoil, gravel or sand for garden beds, paths and patio bases. Works with odd-shaped and round beds.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": "https://abdullah-coder-007.github.io/home-project-calculators/"}, {"@type": "ListItem", "position": 2, "name": "Mulch, soil and gravel calculator", "item": "https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How many bags of mulch are in a cubic yard?", "acceptedAnswer": {"@type": "Answer", "text": "A cubic yard is 27 cubic feet. That is 13.5 bags of 2 cu ft mulch, or 9 bags of 3 cu ft."}}, {"@type": "Question", "name": "How deep should mulch be?", "acceptedAnswer": {"@type": "Answer", "text": "2 to 3 inches works for most garden beds. Thinner layers let weeds through; much deeper layers can keep roots too wet. Keep mulch pulled back a few inches from tree trunks and stems."}}, {"@type": "Question", "name": "How much does a cubic yard of gravel weigh?", "acceptedAnswer": {"@type": "Answer", "text": "Roughly 1.3 to 1.5 tons depending on the stone and moisture. The calculator uses 1.4 tons. Suppliers often sell gravel by the ton, so ask them for their own figure."}}, {"@type": "Question", "name": "Is bulk mulch cheaper than bags?", "acceptedAnswer": {"@type": "Answer", "text": "Usually, once you need more than about 2 cubic yards. Bulk prices are per yard plus a delivery fee, so small jobs can still be cheaper in bags."}}, {"@type": "Question", "name": "How much topsoil do I need for a raised bed?", "acceptedAnswer": {"@type": "Answer", "text": "Multiply the bed's length by width in feet and by the depth in inches divided by 12. A 4 by 8 foot bed filled 10 inches deep holds about 26.7 cubic feet, close to 1 cubic yard. Many gardeners fill raised beds with a soil and compost blend rather than plain topsoil."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>ProjectMath</a>
+<nav class="site-nav" aria-label="Main"><a href=".././">All calculators</a><a href="../how-we-calculate/">How we calculate</a><a href="../about/">About</a></nav>
+</div></header>
+<main id="main" class="wrap">
+<p class="crumbs"><a href="../">All calculators</a> / Mulch, soil and gravel calculator</p>
+<div class="tool-head">
+<h1>Mulch, soil and gravel calculator</h1>
+<p class="lede">Pick a material, enter your bed or path size and depth, and see how many bags or cubic yards to get. Round tree rings and curved beds work too.</p>
+</div>
+<div class="tool-grid">
+<form id="calc" class="calc" data-tool="mulch" novalidate>
+<h2>Your project</h2>
+<div class="group">
+  <fieldset class="choices">
+    <legend>Material</legend>
+    <label><input type="radio" name="material" value="mulch" checked><span>Mulch</span></label>
+    <label><input type="radio" name="material" value="topsoil"><span>Topsoil</span></label>
+    <label><input type="radio" name="material" value="gravel"><span>Gravel</span></label>
+    <label><input type="radio" name="material" value="sand"><span>Sand</span></label>
+  </fieldset>
+</div>
+
+<div class="group">
+  <p class="group-title">Area</p>
+  <div data-area-builder></div>
+</div>
+
+<div class="group">
+  <div class="row">
+    <label class="field"><span>Depth</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="depthIn" value="3"><span class="unit">in</span></span>
+      <span class="hint">Mulch 2 to 3 in, gravel paths 3 to 4 in</span>
+    </label>
+    <label class="field"><span>Bag size</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="bagCuFt" value="2"><span class="unit">cu ft</span></span>
+      <span class="hint">On the bag label</span>
+    </label>
+  </div>
+</div>
+
+</form>
+<a class="result-peek" href="#result" hidden><span class="peek-value">0</span> <span class="peek-unit"></span><span class="peek-go">See shopping list</span></a>
+<aside class="result" id="result" aria-label="Result">
+<div class="result-figure is-empty" aria-live="polite">
+<p class="result-label">You need</p>
+<div class="result-line"><span class="result-value">0</span><span class="result-unit"></span></div>
+<p class="result-sub"></p>
+</div>
+<div class="result-body">
+<div class="shop" hidden>
+<h3>Shopping list</h3>
+<table class="shop-list">
+<thead><tr><th scope="col">Item</th><th scope="col">Qty</th><th scope="col">Price each</th><th scope="col" class="sub">Cost</th></tr></thead>
+<tbody></tbody>
+<tfoot><tr><th scope="row" colspan="3">Estimated total</th><td class="shop-total">$0.00</td></tr></tfoot>
+</table>
+<p class="price-hint">Prices are rough US starting points. Type your store's prices to update the total; this device remembers them.</p>
+<div class="actions">
+<button type="button" class="btn" data-action="print">Print list</button>
+<button type="button" class="btn btn-quiet" data-action="copy">Copy list</button>
+<button type="button" class="btn btn-quiet" data-action="share">Share this result</button>
+</div>
+</div>
+<ul class="result-notes" hidden></ul>
+</div>
+</aside>
+</div>
+<p class="embed-credit"><a href="https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/" target="_blank" rel="noopener">Mulch, soil and gravel calculator</a> by ProjectMath</p>
+<article class="guide">
+<h2>How the mulch calculator works</h2>
+<p>Landscape materials are sold by volume (bags in cubic feet, bulk in cubic yards) or, for stone and sand, by weight. The calculator finds the volume of your bed or path and converts it into each way you can buy.</p>
+<p class="formula">Cubic feet = area (sq ft) &times; depth (in) &divide; 12<br>
+Cubic yards = cubic feet &divide; 27<br>
+Bags = cubic feet &divide; bag size, rounded up<br>
+Tons = cubic yards &times; weight per cubic yard</p>
+
+<h3>Worked example</h3>
+<p>A 20 by 10 foot flower bed is 200 sq ft. At 3 inches deep that is 50 cubic feet, or <strong>1.85 cubic yards</strong>. In 2 cu ft bags that is 25 bags; in bulk, order 2 yards.</p>
+
+<h2>Recommended depths</h2>
+<table>
+<thead><tr><th>Use</th><th>Depth</th></tr></thead>
+<tbody>
+<tr><td>Mulch on garden beds</td><td>2 to 3 in</td></tr>
+<tr><td>Mulch for playground areas</td><td>Much deeper; follow playground safety guidance for your fall height</td></tr>
+<tr><td>Topsoil over a lawn to level it</td><td>1/4 to 1/2 in at a time</td></tr>
+<tr><td>Topsoil for a new lawn or bed</td><td>4 to 6 in</td></tr>
+<tr><td>Gravel walking path</td><td>3 to 4 in</td></tr>
+<tr><td>Gravel base under a patio or shed</td><td>4 to 6 in, compacted</td></tr>
+<tr><td>Sand bed under pavers</td><td>About 1 in</td></tr>
+</tbody>
+</table>
+
+<h2>Weights used</h2>
+<p>Stone and sand are heavy, and suppliers often price them by the ton. The calculator uses these typical figures; actual weight varies with stone type and moisture.</p>
+<table>
+<thead><tr><th>Material</th><th>Weight per cubic yard</th><th>Common bag</th></tr></thead>
+<tbody>
+<tr><td>Mulch</td><td>Light; sold by volume</td><td>2 cu ft</td></tr>
+<tr><td>Topsoil</td><td>About 1.1 tons</td><td>0.75 cu ft</td></tr>
+<tr><td>Gravel</td><td>About 1.4 tons</td><td>0.5 cu ft</td></tr>
+<tr><td>Sand</td><td>About 1.35 tons</td><td>0.5 cu ft</td></tr>
+</tbody>
+</table>
+
+<h2>Measuring beds and paths</h2>
+<ol>
+<li>Rectangular beds: measure length and width.</li>
+<li>Round tree rings: choose <em>Circle</em> and enter the diameter. Subtract the trunk with a small circle cut-out if it is large.</li>
+<li>Curved or kidney-shaped beds: break them into a rectangle plus half-circles or triangles, or measure the longest length and average width.</li>
+<li>Paths: total length by width. Add each branch as its own section.</li>
+</ol>
+
+<h2>Before you buy</h2>
+<ul>
+<li>Bulk deliveries usually have a minimum order and a delivery fee; ask before comparing with bag prices.</li>
+<li>Have the delivery dumped on a tarp near where you need it to save wheelbarrow trips.</li>
+<li>Check your vehicle's payload before hauling gravel or sand yourself. One cubic yard of gravel is well over a ton.</li>
+</ul>
+
+<section class="faq"><h2>Common questions</h2><details><summary>How many bags of mulch are in a cubic yard?</summary><p>A cubic yard is 27 cubic feet. That is 13.5 bags of 2 cu ft mulch, or 9 bags of 3 cu ft.</p></details><details><summary>How deep should mulch be?</summary><p>2 to 3 inches works for most garden beds. Thinner layers let weeds through; much deeper layers can keep roots too wet. Keep mulch pulled back a few inches from tree trunks and stems.</p></details><details><summary>How much does a cubic yard of gravel weigh?</summary><p>Roughly 1.3 to 1.5 tons depending on the stone and moisture. The calculator uses 1.4 tons. Suppliers often sell gravel by the ton, so ask them for their own figure.</p></details><details><summary>Is bulk mulch cheaper than bags?</summary><p>Usually, once you need more than about 2 cubic yards. Bulk prices are per yard plus a delivery fee, so small jobs can still be cheaper in bags.</p></details><details><summary>How much topsoil do I need for a raised bed?</summary><p>Multiply the bed's length by width in feet and by the depth in inches divided by 12. A 4 by 8 foot bed filled 10 inches deep holds about 26.7 cubic feet, close to 1 cubic yard. Many gardeners fill raised beds with a soil and compost blend rather than plain topsoil.</p></details></section>
+<section class="related"><h2>Related calculators</h2><ul><li><a href="../concrete-calculator/">Concrete calculator</a>: Bags or cubic yards for slabs, footings and post holes</li><li><a href="../flooring-calculator/">Flooring calculator</a>: Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim</li></ul></section>
+</article>
+<section class="embed-box">
+<h2>Add this calculator to your site</h2>
+<p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
+<label class="field"><span>Embed code</span><textarea id="embed-code" readonly>&lt;iframe src=&quot;https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/?embed=1&quot; title=&quot;Mulch, soil and gravel calculator&quot; width=&quot;100%&quot; height=&quot;900&quot; style=&quot;border:0;max-width:720px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://abdullah-coder-007.github.io/home-project-calculators/mulch-calculator/&quot;&gt;Mulch, soil and gravel calculator&lt;/a&gt; by ProjectMath&lt;/p&gt;</textarea></label>
+<button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
+</section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a></nav>
+<p>Estimates only. Always check quantities with your supplier and the product label before you buy.</p>
+<p>&copy; 2026 ProjectMath</p>
+</div></footer>
+<script src="../assets/js/formulas.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/tools.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/app.js?v=aa5a892c69" defer></script>
+</body>
+</html>

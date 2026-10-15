@@ -1,0 +1,17 @@
+{
+  "tool": "tile",
+  "short": "Tile calculator",
+  "what": "Tiles, boxes, thinset and grout for floors, walls and backsplashes",
+  "title": "Tile Calculator: How Many Tiles and Boxes Do I Need? | ProjectMath",
+  "description": "Calculate how many tiles and boxes to buy for a floor, shower or backsplash, with waste for straight, diagonal or herringbone layouts, plus thinset and grout.",
+  "h1": "Tile calculator",
+  "lede": "Enter your floor or wall area, tile size and layout to get the number of tiles and boxes, plus thinset and grout. Add sections for L-shaped rooms and subtract areas like a vanity.",
+  "related": ["flooring-calculator", "paint-calculator"],
+  "faq": [
+    {"q": "How much extra tile should I buy?", "a": "Add about 10% for a straight layout, 15% for diagonal, and 15 to 20% for herringbone or large tiles that break easily. Rooms with lots of corners and cuts need the higher end."},
+    {"q": "How many 12x12 tiles do I need for 100 square feet?", "a": "Each 12 by 12 inch tile covers 1 sq ft, slightly more with a grout joint. For 100 sq ft with 10% extra you need about 108 tiles at a 1/8 inch joint."},
+    {"q": "How much grout do I need?", "a": "It depends on tile size, joint width and tile thickness. Small tiles with wide joints use far more grout than large tiles with thin joints. The calculator estimates the pounds and you should confirm with the coverage chart on the grout bag."},
+    {"q": "Which trowel size should I use?", "a": "As a rough guide: 1/4 by 1/4 inch square notch for tiles up to about 8 inches, 1/4 by 3/8 inch for 8 to 16 inch tiles, and 1/2 by 1/2 inch for larger tiles. Always follow the tile and mortar maker's instructions."},
+    {"q": "Should I keep spare tiles?", "a": "Yes. Keep at least a few tiles, ideally a full box, from the same lot. Matching a discontinued tile years later for a repair can be impossible."}
+  ]
+}

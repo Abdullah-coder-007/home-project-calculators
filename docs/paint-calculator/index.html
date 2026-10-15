@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed');</script>
+<title>Paint Calculator: How Much Paint Do I Need for a Room? | ProjectMath</title>
+<meta name="description" content="Work out how many gallons of paint you need for walls and ceiling, minus doors and windows. Free paint calculator with primer, tape and a printable shopping list.">
+<link rel="canonical" href="https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ProjectMath">
+<meta property="og:title" content="Paint Calculator: How Much Paint Do I Need for a Room? | ProjectMath">
+<meta property="og:description" content="Work out how many gallons of paint you need for walls and ceiling, minus doors and windows. Free paint calculator with primer, tape and a printable shopping list.">
+<meta property="og:url" content="https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#f2c230">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/css/site.css?v=dca5e54a92">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Paint calculator", "url": "https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/", "description": "Work out how many gallons of paint you need for walls and ceiling, minus doors and windows. Free paint calculator with primer, tape and a printable shopping list.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": "https://abdullah-coder-007.github.io/home-project-calculators/"}, {"@type": "ListItem", "position": 2, "name": "Paint calculator", "item": "https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How much paint do I need for a 12x12 room?", "acceptedAnswer": {"@type": "Answer", "text": "A 12 by 12 foot room with 8 foot walls has 384 sq ft of wall. Take off one door and one window (about 36 sq ft) and two coats need roughly 2 gallons at 350 sq ft per gallon. Add a gallon if you are also painting the ceiling."}}, {"@type": "Question", "name": "How many square feet does a gallon of paint cover?", "acceptedAnswer": {"@type": "Answer", "text": "Most interior paint labels say 250 to 400 sq ft per gallon for one coat. Smooth, primed walls get close to the top of that range; textured, porous or unpainted drywall uses more. This calculator uses 350 by default, and you can change it."}}, {"@type": "Question", "name": "Do I really need two coats?", "acceptedAnswer": {"@type": "Answer", "text": "Usually yes. One coat often looks patchy, especially with a color change. Two coats give even color and the durability the manufacturer rates the paint for."}}, {"@type": "Question", "name": "Should I buy a 5-gallon bucket?", "acceptedAnswer": {"@type": "Answer", "text": "If you need more than about 4 gallons of one color, a 5-gallon bucket is normally cheaper per gallon and keeps the color consistent across walls."}}, {"@type": "Question", "name": "When do I need primer?", "acceptedAnswer": {"@type": "Answer", "text": "Prime new drywall, patched areas, stained walls, glossy surfaces, and big jumps from dark to light colors. Clean walls already painted a similar color often need no primer."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>ProjectMath</a>
+<nav class="site-nav" aria-label="Main"><a href=".././">All calculators</a><a href="../how-we-calculate/">How we calculate</a><a href="../about/">About</a></nav>
+</div></header>
+<main id="main" class="wrap">
+<p class="crumbs"><a href="../">All calculators</a> / Paint calculator</p>
+<div class="tool-head">
+<h1>Paint calculator</h1>
+<p class="lede">Enter your room size to see how many gallons of paint to buy, after taking out doors and windows. The example room is 14 by 12 feet; change it to yours.</p>
+</div>
+<div class="tool-grid">
+<form id="calc" class="calc" data-tool="paint" novalidate>
+<h2>Your project</h2>
+<div class="group">
+  <p class="group-title">Room size</p>
+  <div class="row">
+    <div class="field ftin"><span>Length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="14"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="12"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+  <div class="field ftin"><span>Wall height</span>
+    <div class="ftin-pair">
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="height_ft" value="8"><span class="unit">ft</span></label>
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="height_in" value=""><span class="unit">in</span></label>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Doors and windows</p>
+  <div class="row">
+    <label class="field"><span>Doors</span><input type="number" inputmode="numeric" min="0" step="1" name="doors" value="1"><span class="hint">Counted as 3 by 7 ft</span></label>
+    <label class="field"><span>Windows</span><input type="number" inputmode="numeric" min="0" step="1" name="windows" value="2"><span class="hint">Counted as 3 by 5 ft</span></label>
+  </div>
+</div>
+
+<div class="group">
+  <fieldset class="choices">
+    <legend>Coats</legend>
+    <label><input type="radio" name="coats" value="1"><span>1 coat</span></label>
+    <label><input type="radio" name="coats" value="2" checked><span>2 coats</span></label>
+    <label><input type="radio" name="coats" value="3"><span>3 coats</span></label>
+  </fieldset>
+  <label class="field"><span>Coverage per gallon</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="50" step="any" name="coverage" value="350"><span class="unit">sq ft</span></span>
+    <span class="hint">Check your can. Most say 250 to 400 sq ft per gallon.</span>
+  </label>
+  <label class="check"><input type="checkbox" name="ceiling"> <span>Also paint the ceiling</span></label>
+  <label class="check"><input type="checkbox" name="primer"> <span>Prime first (new drywall or big color change)</span></label>
+</div>
+
+</form>
+<a class="result-peek" href="#result" hidden><span class="peek-value">0</span> <span class="peek-unit"></span><span class="peek-go">See shopping list</span></a>
+<aside class="result" id="result" aria-label="Result">
+<div class="result-figure is-empty" aria-live="polite">
+<p class="result-label">You need</p>
+<div class="result-line"><span class="result-value">0</span><span class="result-unit"></span></div>
+<p class="result-sub"></p>
+</div>
+<div class="result-body">
+<div class="shop" hidden>
+<h3>Shopping list</h3>
+<table class="shop-list">
+<thead><tr><th scope="col">Item</th><th scope="col">Qty</th><th scope="col">Price each</th><th scope="col" class="sub">Cost</th></tr></thead>
+<tbody></tbody>
+<tfoot><tr><th scope="row" colspan="3">Estimated total</th><td class="shop-total">$0.00</td></tr></tfoot>
+</table>
+<p class="price-hint">Prices are rough US starting points. Type your store's prices to update the total; this device remembers them.</p>
+<div class="actions">
+<button type="button" class="btn" data-action="print">Print list</button>
+<button type="button" class="btn btn-quiet" data-action="copy">Copy list</button>
+<button type="button" class="btn btn-quiet" data-action="share">Share this result</button>
+</div>
+</div>
+<ul class="result-notes" hidden></ul>
+</div>
+</aside>
+</div>
+<p class="embed-credit"><a href="https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/" target="_blank" rel="noopener">Paint calculator</a> by ProjectMath</p>
+<article class="guide">
+<h2>How the paint calculator works</h2>
+<p>Paint is bought by the gallon, but it is used by the square foot. So the calculator finds the wall area you will actually paint, multiplies it by the number of coats, and divides by how far one gallon spreads.</p>
+<p class="formula">Wall area = 2 &times; (length + width) &times; height &minus; doors &minus; windows<br>
+Gallons = wall area &times; coats &divide; coverage per gallon</p>
+<p>Each door counts as 21 sq ft (3 by 7 feet) and each window as 15 sq ft (3 by 5 feet). If your doors or windows are much bigger, such as a patio slider, add an extra door or two to the count.</p>
+
+<h3>Worked example</h3>
+<p>A 14 by 12 foot bedroom with 8 foot walls has a perimeter of 52 feet, so 416 sq ft of wall. One door and two windows remove 51 sq ft, leaving 365 sq ft. Two coats at 350 sq ft per gallon need 2.09 gallons, which means <strong>2 gallons plus 1 quart</strong>. If the leftover is more than a quarter gallon, the calculator rounds up to another full gallon, because two or more quarts usually cost more than a gallon.</p>
+
+<h2>Measuring your room</h2>
+<ol>
+<li>Measure the length and width of the floor along the walls, ignoring baseboards.</li>
+<li>Measure wall height from floor to ceiling. Standard ceilings are 8 feet; many newer homes have 9 feet.</li>
+<li>Count doors and windows on the walls you are painting. Closets with doors count as a door.</li>
+<li>For a room with angled or uneven walls, add up the widths of all the walls, divide by two, and enter that as the length with a width of 0. The calculator then uses your exact total wall length.</li>
+</ol>
+
+<h2>What affects how much paint you use</h2>
+<table>
+<thead><tr><th>Surface</th><th>Effect on coverage</th></tr></thead>
+<tbody>
+<tr><td>Smooth, previously painted wall, similar color</td><td>Close to the label's top figure</td></tr>
+<tr><td>Textured walls (orange peel, knockdown)</td><td>Uses noticeably more; lower the coverage to about 300</td></tr>
+<tr><td>New, unprimed drywall</td><td>Soaks up paint; prime first</td></tr>
+<tr><td>Dark color to light color</td><td>Expect a third coat or primer</td></tr>
+<tr><td>Roller with thick nap on smooth walls</td><td>Holds more paint; use 3/8 in nap for smooth walls</td></tr>
+</tbody>
+</table>
+
+<h2>Before you buy</h2>
+<ul>
+<li>Buy all the paint for one color at the same time and ask the store to mix it together ("box" it) so every can matches.</li>
+<li>Keep a little leftover in a sealed container, labeled with the color name and room, for touch-ups.</li>
+<li>Ceilings are usually painted in flat white ceiling paint, so the calculator lists it separately from wall paint.</li>
+<li>Trim and doors need a separate semi-gloss paint; one quart covers the trim in most rooms.</li>
+</ul>
+
+<section class="faq"><h2>Common questions</h2><details><summary>How much paint do I need for a 12x12 room?</summary><p>A 12 by 12 foot room with 8 foot walls has 384 sq ft of wall. Take off one door and one window (about 36 sq ft) and two coats need roughly 2 gallons at 350 sq ft per gallon. Add a gallon if you are also painting the ceiling.</p></details><details><summary>How many square feet does a gallon of paint cover?</summary><p>Most interior paint labels say 250 to 400 sq ft per gallon for one coat. Smooth, primed walls get close to the top of that range; textured, porous or unpainted drywall uses more. This calculator uses 350 by default, and you can change it.</p></details><details><summary>Do I really need two coats?</summary><p>Usually yes. One coat often looks patchy, especially with a color change. Two coats give even color and the durability the manufacturer rates the paint for.</p></details><details><summary>Should I buy a 5-gallon bucket?</summary><p>If you need more than about 4 gallons of one color, a 5-gallon bucket is normally cheaper per gallon and keeps the color consistent across walls.</p></details><details><summary>When do I need primer?</summary><p>Prime new drywall, patched areas, stained walls, glossy surfaces, and big jumps from dark to light colors. Clean walls already painted a similar color often need no primer.</p></details></section>
+<section class="related"><h2>Related calculators</h2><ul><li><a href="../tile-calculator/">Tile calculator</a>: Tiles, boxes, thinset and grout for floors, walls and backsplashes</li><li><a href="../flooring-calculator/">Flooring calculator</a>: Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim</li></ul></section>
+</article>
+<section class="embed-box">
+<h2>Add this calculator to your site</h2>
+<p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
+<label class="field"><span>Embed code</span><textarea id="embed-code" readonly>&lt;iframe src=&quot;https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/?embed=1&quot; title=&quot;Paint calculator&quot; width=&quot;100%&quot; height=&quot;900&quot; style=&quot;border:0;max-width:720px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://abdullah-coder-007.github.io/home-project-calculators/paint-calculator/&quot;&gt;Paint calculator&lt;/a&gt; by ProjectMath&lt;/p&gt;</textarea></label>
+<button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
+</section>
+</main>
+<footer class="site-foot"><div class="wrap">
+<nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a></nav>
+<p>Estimates only. Always check quantities with your supplier and the product label before you buy.</p>
+<p>&copy; 2026 ProjectMath</p>
+</div></footer>
+<script src="../assets/js/formulas.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/tools.js?v=aa5a892c69" defer></script>
+<script src="../assets/js/app.js?v=aa5a892c69" defer></script>
+</body>
+</html>

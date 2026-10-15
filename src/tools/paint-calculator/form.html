@@ -1,0 +1,46 @@
+<div class="group">
+  <p class="group-title">Room size</p>
+  <div class="row">
+    <div class="field ftin"><span>Length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="14"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="12"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+  <div class="field ftin"><span>Wall height</span>
+    <div class="ftin-pair">
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="height_ft" value="8"><span class="unit">ft</span></label>
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="height_in" value=""><span class="unit">in</span></label>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Doors and windows</p>
+  <div class="row">
+    <label class="field"><span>Doors</span><input type="number" inputmode="numeric" min="0" step="1" name="doors" value="1"><span class="hint">Counted as 3 by 7 ft</span></label>
+    <label class="field"><span>Windows</span><input type="number" inputmode="numeric" min="0" step="1" name="windows" value="2"><span class="hint">Counted as 3 by 5 ft</span></label>
+  </div>
+</div>
+
+<div class="group">
+  <fieldset class="choices">
+    <legend>Coats</legend>
+    <label><input type="radio" name="coats" value="1"><span>1 coat</span></label>
+    <label><input type="radio" name="coats" value="2" checked><span>2 coats</span></label>
+    <label><input type="radio" name="coats" value="3"><span>3 coats</span></label>
+  </fieldset>
+  <label class="field"><span>Coverage per gallon</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="50" step="any" name="coverage" value="350"><span class="unit">sq ft</span></span>
+    <span class="hint">Check your can. Most say 250 to 400 sq ft per gallon.</span>
+  </label>
+  <label class="check"><input type="checkbox" name="ceiling"> <span>Also paint the ceiling</span></label>
+  <label class="check"><input type="checkbox" name="primer"> <span>Prime first (new drywall or big color change)</span></label>
+</div>

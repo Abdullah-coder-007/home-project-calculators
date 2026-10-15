@@ -1,0 +1,17 @@
+{
+  "tool": "flooring",
+  "short": "Flooring calculator",
+  "what": "Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim",
+  "title": "Flooring Calculator: How Many Boxes of Flooring Do I Need? | ProjectMath",
+  "description": "Find how many boxes of laminate, vinyl plank or hardwood flooring to buy, with waste for your layout, plus underlayment rolls, trim and transitions.",
+  "h1": "Flooring calculator",
+  "lede": "Enter your room, the square feet per box, and your layout to see how many boxes to buy, with underlayment and trim. Works for laminate, vinyl plank and hardwood.",
+  "related": ["tile-calculator", "paint-calculator"],
+  "faq": [
+    {"q": "How much extra flooring should I buy?", "a": "About 10% for a straight layout, 15% for diagonal and around 20% for herringbone. Rooms with many corners, closets or doorways need more cuts and should use the higher figure."},
+    {"q": "How many boxes of flooring for a 12x12 room?", "a": "A 12 by 12 foot room is 144 sq ft. With 10% extra you need 158.4 sq ft. At 20 sq ft per box that is 8 boxes."},
+    {"q": "Do I need underlayment for vinyl plank?", "a": "Many vinyl plank products have a pad attached and say not to add another one. Laminate and floating wood floors usually need underlayment, and a vapor barrier over concrete. Follow the product's installation guide."},
+    {"q": "Should flooring go under kitchen cabinets?", "a": "Floating floors such as laminate and most vinyl plank should not be pinned under heavy cabinets or islands, because they need room to expand. Measure only the open floor and subtract the island with a cut-out section."},
+    {"q": "How do I measure for baseboard or quarter-round?", "a": "Add the lengths of all walls in the room and subtract door openings. The calculator converts that into 8 foot pieces with 10% extra for corner cuts."}
+  ]
+}
