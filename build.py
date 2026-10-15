@@ -237,6 +237,8 @@ def load_tool(slug):
     meta = json.loads((d / "meta.json").read_text())
     meta["slug"] = slug
     meta["form"] = with_diagrams((d / "form.html").read_text())
+    extra = d / "extra.html"
+    meta["extra"] = extra.read_text() if extra.exists() else ""
     meta["guide"] = fill((d / "guide.html").read_text())
     return meta
 
@@ -285,6 +287,7 @@ def tool_page(t, all_tools):
 </form>
 {RESULT_PANEL}
 </div>
+{t.get("extra", "").replace("{{v}}", asset_hash(SRC / "assets/js/visualizer.js") if (SRC / "assets/js/visualizer.js").exists() else "")}
 <p class="embed-credit"><a href="{url}" target="_blank" rel="noopener">{esc(t['h1'])}</a> by {esc(CFG['name'])}</p>
 <article class="guide">
 <nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol>{toc_html}</ol></nav>

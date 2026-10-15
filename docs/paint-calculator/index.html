@@ -25,8 +25,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="../assets/css/site.css?v=e82acab73d">
-<link rel="stylesheet" href="../assets/css/accents.css?v=e82acab73d">
+<link rel="stylesheet" href="../assets/css/site.css?v=32e8d141a8">
+<link rel="stylesheet" href="../assets/css/accents.css?v=32e8d141a8">
 <script>(function(){if(document.documentElement.classList.contains('embed'))return;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;var no={ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};gtag('consent','default',Object.assign({region:["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"],wait_for_update:500},no));gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});var c=null;try{c=localStorage.getItem('pm:consent');}catch(e){}if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',no);gtag('js',new Date());gtag('config','G-2QN7238191');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-2QN7238191';document.head.appendChild(s);})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Paint calculator", "url": "https://calcupine.com/paint-calculator/", "description": "Work out how many gallons of paint you need for walls and ceiling, minus doors and windows. Free paint calculator with primer, tape and a printable shopping list.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": "https://calcupine.com/"}, {"@type": "ListItem", "position": 2, "name": "Paint calculator", "item": "https://calcupine.com/paint-calculator/"}]}</script>
@@ -126,6 +126,45 @@
 </div>
 </aside>
 </div>
+<section class="viz" id="visualizer" aria-labelledby="viz-title">
+<div class="viz-head">
+<h2 id="viz-title">See the color on your wall</h2>
+<p>Add a photo of your room, tap a wall, then try colors. The new color keeps your room's real light and shadows. Your photo stays on your device; nothing is uploaded.</p>
+</div>
+<div class="viz-start">
+<label class="btn viz-upload"><input type="file" accept="image/*" capture="environment" hidden data-viz="file"> Take or choose a photo</label>
+<button type="button" class="btn btn-ghost" data-viz="sample">Try a sample room</button>
+</div>
+<div class="viz-work" hidden>
+<div class="viz-stage">
+<canvas data-viz="canvas" aria-label="Your room with the chosen wall color"></canvas>
+<p class="viz-hint" data-viz="hint">Tap the wall you want to paint.</p>
+</div>
+<div class="viz-tools" role="group" aria-label="Wall selection">
+<button type="button" class="viz-tool" data-tool="pick" aria-pressed="true">Tap wall</button>
+<button type="button" class="viz-tool" data-tool="add" aria-pressed="false">Brush</button>
+<button type="button" class="viz-tool" data-tool="erase" aria-pressed="false">Eraser</button>
+<button type="button" class="viz-tool" data-viz="undo">Undo</button>
+<button type="button" class="viz-tool" data-viz="clear">Clear</button>
+<label class="viz-range"><span>Edge sensitivity</span><input type="range" min="4" max="40" value="16" data-viz="tolerance"></label>
+<label class="viz-range"><span>Before / after</span><input type="range" min="0" max="100" value="100" data-viz="mix"></label>
+</div>
+<div class="viz-colors">
+<h3>Pick a color</h3>
+<div class="viz-swatches" data-viz="trend" role="list" aria-label="Colors of the moment"></div>
+<div class="viz-custom"><label><span>Your own color</span> <input type="color" value="#c9d7a6" data-viz="custom"></label> <span class="viz-code" data-viz="code"></span></div>
+<h3>Goes well with your pick</h3>
+<div class="viz-swatches" data-viz="matches" role="list" aria-label="Matching colors"></div>
+</div>
+<div class="viz-compare">
+<div class="viz-compare-head"><h3>Compare up to 4</h3><button type="button" class="btn btn-quiet" data-viz="keep">Add this color to compare</button></div>
+<div class="viz-grid" data-viz="grid"></div>
+<p class="viz-note">Colors on screens differ from real paint. Ask your store to match the color code, and test a sample on the wall before buying.</p>
+</div>
+</div>
+</section>
+<script src="../assets/js/visualizer.js?v=dd507a1210" defer></script>
+
 <p class="embed-credit"><a href="https://calcupine.com/paint-calculator/" target="_blank" rel="noopener">Paint calculator</a> by Calcupine</p>
 <article class="guide">
 <nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#how-the-paint-calculator-works">How the paint calculator works</a></li><li><a href="#measuring-your-room">Measuring your room</a></li><li><a href="#what-affects-how-much-paint-you-use">What affects how much paint you use</a></li><li><a href="#before-you-buy">Before you buy</a></li><li><a href="#sources">Sources</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
