@@ -62,6 +62,9 @@ def fill(text):
     return re.sub(r"\{\{\s*([\w.]+)\s*\}\}", lambda m: repl.get(m.group(1), m.group(0)), text)
 
 
+TOOL_LINKS = []  # (slug, short name, color), filled in main()
+
+
 def nav_html(prefix, current):
     links = [("", "All calculators"), ("how-we-calculate/", "How we calculate"), ("about/", "About")]
     out = []
@@ -129,7 +132,8 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head"><div class="wrap">
 <a class="brand" href="{prefix or './'}"><span class="brand-mark" aria-hidden="true"></span>{esc(CFG['name'])}</a>
-<nav class="site-nav" aria-label="Main">{nav_html(prefix, current)}</nav>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu"><span class="menu-icon" aria-hidden="true"></span>Menu</button>
+<nav id="site-menu" class="site-nav" aria-label="Main">{nav_html(prefix, current)}<span class="menu-tools">{"".join(f'<a href="{prefix}{slug}/" data-accent="{color}"><span class="menu-dot" aria-hidden="true"></span>{esc(name)}</a>' for slug, name, color in TOOL_LINKS)}</span></nav>
 </div></header>
 <main id="main" class="wrap">
 {body}
@@ -197,6 +201,21 @@ def tool_page(t, all_tools):
                   f'style="border:0;max-width:720px" loading="lazy"></iframe>\n'
                   f'<p><a href="{url}">{esc(t["h1"])}</a> by {esc(CFG["name"])}</p>')
 
+    # "On this page" links built from the guide's h2 headings
+    toc, used = [], set()
+
+    def add_id(m):
+        text = re.sub(r"<[^>]+>", "", m.group(1))
+        slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:48]
+        while slug in used:
+            slug += "-2"
+        used.add(slug)
+        toc.append((slug, text))
+        return f'<h2 id="{slug}">{m.group(1)}</h2>'
+    guide_html = re.sub(r"<h2>(.*?)</h2>", add_id, t["guide"])
+    toc.append(("questions", "Common questions"))
+    toc_html = "".join(f'<li><a href="#{a}">{x}</a></li>' for a, x in toc)
+
     body = f"""<section class="tool-head">
 <div class="tool-head-text">
 <p class="crumbs"><a href="../">All calculators</a> / {esc(t['short'])}</p>
@@ -214,8 +233,9 @@ def tool_page(t, all_tools):
 </div>
 <p class="embed-credit"><a href="{url}" target="_blank" rel="noopener">{esc(t['h1'])}</a> by {esc(CFG['name'])}</p>
 <article class="guide">
-{t['guide']}
-<section class="faq"><h2>Common questions</h2>{faq_html}</section>
+<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol>{toc_html}</ol></nav>
+{guide_html}
+<section class="faq"><h2 id="questions">Common questions</h2>{faq_html}</section>
 <section class="related"><h2>Related calculators</h2><ul class="related-list">{related_html}</ul></section>
 </article>
 <section class="embed-box">
@@ -283,6 +303,7 @@ def plain_page(slug):
 
 def main():
     tools = [load_tool(s) for s in CFG["tools"]]
+    TOOL_LINKS[:] = [(t["slug"], t["short"], t["tool"]) for t in tools]
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
