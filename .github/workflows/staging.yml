@@ -37,8 +37,8 @@ jobs:
             lighthouse "http://localhost:8080/$u" --quiet --chrome-flags="--headless=new --no-sandbox" \
               --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=lh.json || continue
             node -e "const r=require('./lh.json');const c=r.categories;const f=k=>Math.round(c[k].score*100);
-              console.log('LH /$u', f('performance'), f('accessibility'), f('best-practices'), f('seo'));
-              Object.values(r.audits).filter(a=>a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable').slice(0,12).forEach(a=>console.log('  FIX', a.id, '-', a.title));
+              require('fs').appendFileSync('docs/lighthouse.txt','LH /$u '+[f('performance'),f('accessibility'),f('best-practices'),f('seo')].join(' ')+'\\n');console.log('LH /$u', f('performance'), f('accessibility'), f('best-practices'), f('seo'));
+              Object.values(r.audits).filter(a=>a.score!==null&&a.score<0.9&&a.scoreDisplayMode!=='informative'&&a.scoreDisplayMode!=='notApplicable').slice(0,12).forEach(a=>require('fs').appendFileSync('docs/lighthouse.txt','  FIX '+a.id+' - '+a.title+(a.displayValue?' ('+a.displayValue+')':'')+'\\n'));
               require('fs').appendFileSync(process.env.GITHUB_STEP_SUMMARY, '| /$u | '+f('performance')+' | '+f('accessibility')+' | '+f('best-practices')+' | '+f('seo')+' |\\n');"
           done
       - name: Publish to gh-pages
