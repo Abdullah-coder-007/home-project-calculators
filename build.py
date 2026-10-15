@@ -63,10 +63,11 @@ def fill(text):
 
 
 TOOL_LINKS = []  # (slug, short name, color), filled in main()
+BLOG_POSTS = []  # filled in main() from content/blog/
 
 
 def nav_html(prefix, current):
-    links = [("", "All calculators"), ("how-we-calculate/", "How we calculate"), ("about/", "About")]
+    links = [("", "All calculators")] + ([("blog/", "Guides")] if BLOG_POSTS else []) + [("how-we-calculate/", "How we calculate"), ("about/", "About")]
     out = []
     for href, label in links:
         cur = ' aria-current="page"' if href == current else ""
@@ -74,7 +75,8 @@ def nav_html(prefix, current):
     return "".join(out)
 
 
-def page(*, path, title, description, body, schema=None, current=None, noindex=False, prefix=None, accent="violet"):
+def page(*, path, title, description, body, schema=None, current=None, noindex=False, prefix=None, accent="violet",
+         image="home", og_type="website", extra_head=""):
     depth = path.count("/")  # "" -> 0, "paint-calculator/" -> 1
     if prefix is None:
         prefix = "../" * depth
@@ -100,7 +102,10 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
     for block in schema or []:
         ld += '<script type="application/ld+json">' + json.dumps(block, ensure_ascii=False) + "</script>\n"
 
-    robots = '<meta name="robots" content="noindex">\n' if noindex else ""
+    # max-image-preview:large lets Google Discover show the big share image.
+    robots = ('<meta name="robots" content="noindex">\n' if noindex
+              else '<meta name="robots" content="index, follow, max-image-preview:large">\n')
+    og_image = image if image.startswith("http") else f"{BASE}/assets/og/{image}.jpg"
     footer_links = "".join(
         f'<a href="{prefix}{p}/">{label}</a>'
         for p, label in [("about", "About"), ("contact", "Contact"), ("how-we-calculate", "How we calculate"),
@@ -115,12 +120,17 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(description)}">
 <link rel="canonical" href="{esc(canonical)}">
-{robots}<meta property="og:type" content="website">
+{robots}<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="{esc(CFG['name'])}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{esc(canonical)}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{esc(og_image)}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{esc(og_image)}">
+{extra_head}
 <meta name="theme-color" content="#6c4cf5">
 <link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -237,6 +247,7 @@ def tool_page(t, all_tools):
 <nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol>{toc_html}</ol></nav>
 {guide_html}
 <section class="faq"><h2 id="questions">Common questions</h2>{faq_html}</section>
+{guides_for(t["slug"], "../")}
 <section class="related"><h2>Related calculators</h2><ul class="related-list">{related_html}</ul></section>
 </article>
 <section class="embed-box">
@@ -258,7 +269,8 @@ def tool_page(t, all_tools):
         schema.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q["q"],
              "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", q["a"])}} for q in t["faq"]]})
-    return page(path=path, title=t["title"], description=t["description"], body=body, schema=schema, accent=t["tool"])
+    return page(path=path, title=t["title"], description=t["description"], body=body, schema=schema, accent=t["tool"],
+                image=t["slug"])
 
 
 def home_page(tools):
@@ -295,6 +307,7 @@ def home_page(tools):
 </section>
 <nav class="jump" aria-label="Calculator groups">{jump}</nav>
 {groups}
+{latest_guides_html("")}
 <section class="why">
 <h2 class="section-title">Why ProjectMath</h2>
 <p class="lede why-lede">Built to fix what people dislike about big calculator sites: clutter, confusing results and answers you can't check.</p>
@@ -321,9 +334,44 @@ def plain_page(slug):
                 body=body, current=f"{slug}/")
 
 
+TOOLS_BY_SLUG = {}
+
+
+def post_card(post, prefix):
+    return (f'<li class="post-card" data-accent="{post["accent"]}"><a href="{prefix}{post["path"]}">'
+            f'<span class="post-img"><img src="{post["image_url"]}" alt="" width="1200" height="630" loading="lazy"></span>'
+            f'<span class="post-body"><span class="post-cat">{esc(post["category_label"])}</span>'
+            f'<span class="post-title">{esc(post["title"])}</span>'
+            f'<span class="post-desc">{esc(post["description"])}</span>'
+            f'<span class="post-date">{post["date_human"]}</span></span></a></li>')
+
+
+def latest_guides_html(prefix, limit=6):
+    if not BLOG_POSTS:
+        return ""
+    cards = "".join(post_card(p, prefix) for p in BLOG_POSTS[:limit])
+    return (f'<section class="latest"><h2 class="section-title">Latest guides</h2><ul class="post-cards">{cards}</ul>'
+            f'<p class="more-link"><a class="btn btn-ghost" href="{prefix}blog/">All guides</a></p></section>')
+
+
+def guides_for(tool_slug, prefix):
+    posts = [p for p in BLOG_POSTS if tool_slug in p["calculators"]][:3]
+    if not posts:
+        return ""
+    return f'<section class="related"><h2>Guides for this project</h2><ul class="post-cards">{"".join(post_card(p, prefix) for p in posts)}</ul></section>'
+
+
+import blog  # noqa: E402
+
+
 def main():
     tools = [load_tool(s) for s in CFG["tools"]]
     TOOL_LINKS[:] = [(t["slug"], t["short"], t["tool"]) for t in tools]
+    TOOLS_BY_SLUG.update({t["slug"]: t for t in tools})
+    def accent_for(cat):
+        first = next((t for t in tools if t.get("category") == cat), None)
+        return first["tool"] if first else "violet"
+    BLOG_POSTS[:] = blog.load_posts(CFG, BASE, accent_for)
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
@@ -343,6 +391,9 @@ def main():
         (d / "index.html").write_text(plain_page(p))
         urls.append((p + "/", "0.3"))
 
+    urls += blog.build(OUT, tools, {"posts": BLOG_POSTS, "cfg": CFG, "base": BASE, "page": page,
+                                    "post_card": post_card, "iso": iso, "tools_by_slug": TOOLS_BY_SLUG})
+
     body404 = '<div class="page"><h1>That page isn\'t here</h1><p>The link may be old or mistyped. Pick a calculator from the <a href="' + BASE + '/">full list</a>.</p></div>'
     # 404 can be served at any depth, so it uses absolute links.
     (OUT / "404.html").write_text(page(path="404.html", title=f"Page not found | {CFG['name']}",
@@ -350,8 +401,10 @@ def main():
                                        prefix=BASE + "/"))
 
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u, pr in urls:
-        sm.append(f"<url><loc>{BASE}/{u}</loc><lastmod>{TODAY}</lastmod><priority>{pr}</priority></url>")
+    for entry in urls:
+        u, pr = entry[0], entry[1]
+        lastmod = entry[2] if len(entry) > 2 else TODAY
+        sm.append(f"<url><loc>{BASE}/{u}</loc><lastmod>{lastmod}</lastmod><priority>{pr}</priority></url>")
     sm.append("</urlset>")
     (OUT / "sitemap.xml").write_text("\n".join(sm) + "\n")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n")
