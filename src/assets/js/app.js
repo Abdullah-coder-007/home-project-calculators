@@ -24,7 +24,8 @@
     return u.getAttribute('data-imp');
   }
   // Imperial value of an input as a string, whatever is on screen.
-  function value(input) {
+  function value(input, useExample) {
+    if (input.value === '' && useExample && input.hasAttribute('data-ph')) return input.getAttribute('data-ph');
     if (input.getAttribute('data-shown') !== 'metric' || input.value === '') return input.value;
     var k = kind(input), x = n(input.value);
     if (k === 'ft') return String(x / FT_M);
@@ -75,6 +76,30 @@
     Array.prototype.forEach.call(root.querySelectorAll('input[type=number]'), function (i) {
       if (!i.closest('.ftin-pair')) convertSingle(i, toMetric);
     });
+    placeholders(root);
+  }
+  // Grey example text ("e.g. 12") shown in empty boxes, in the units on screen.
+  // The example values themselves are kept in US units in data-ph.
+  function placeholders(root) {
+    var metric = mode === 'metric';
+    Array.prototype.forEach.call(root.querySelectorAll('.ftin-pair'), function (pair) {
+      var ins = pair.querySelectorAll('input');
+      if (ins.length < 2 || !ins[0].hasAttribute('data-ph')) return;
+      var feet = n(ins[0].getAttribute('data-ph')) + n(ins[1].getAttribute('data-ph')) / 12;
+      var a, b;
+      if (metric) {
+        var cmTotal = r(feet * FT_M * 100, 0); a = Math.floor(cmTotal / 100 + 1e-9); b = r(cmTotal - a * 100, 0);
+      } else {
+        var inTotal = r(feet * 12, 1); a = Math.floor(inTotal / 12 + 1e-9); b = r(inTotal - a * 12, 1);
+      }
+      ins[0].placeholder = 'e.g. ' + a; ins[1].placeholder = b ? String(b) : '0';
+    });
+    Array.prototype.forEach.call(root.querySelectorAll('input[data-ph]'), function (i) {
+      if (i.closest('.ftin-pair')) return;
+      var x = n(i.getAttribute('data-ph')), k = kind(i);
+      if (metric && k) x = k === 'ft' ? r(x * FT_M, 2) : k === 'in' ? r(x * IN_CM, 1) : r(x * SQFT_M2, 1);
+      i.placeholder = 'e.g. ' + x;
+    });
   }
   function describeFeet(feet) {
     if (mode === 'metric') {
@@ -93,7 +118,7 @@
   }
   window.PMUnits = {
     metric: function () { return mode === 'metric'; },
-    value: value, apply: apply, setFeet: setFeet, describeFeet: describeFeet, annotate: annotate,
+    value: value, apply: apply, placeholders: placeholders, setFeet: setFeet, describeFeet: describeFeet, annotate: annotate,
     set: function (m) {
       mode = m === 'metric' ? 'metric' : 'imperial';
       try { localStorage.setItem('pm:units', mode); } catch (e) { /* storage off */ }
@@ -201,6 +226,7 @@
       });
     }
     drawDims(s.type, s);
+    if (markExamples) toExamples(dimsWrap);
     if (U.metric()) U.apply(dimsWrap, true);
     sel.addEventListener('change', function () { drawDims(sel.value, {}); if (U.metric()) U.apply(dimsWrap, true); self.onChange(); });
     row.addEventListener('input', function () { self.onChange(); });
@@ -213,12 +239,12 @@
       r.querySelector('.remove').hidden = i === 0 && r.parentNode.children.length === 1;
     });
   };
-  AreaBuilder.prototype.read = function () {
+  AreaBuilder.prototype.read = function (ex) {
     return $all('.shape', this.list).map(function (r) {
       var s = { type: r.querySelector('[data-k=type]').value, subtract: r.querySelector('[data-k=subtract]').checked };
       SHAPES[s.type].dims.forEach(function (d) {
-        var ft = F.num(U.value(r.querySelector('[data-k=' + d[0] + '_ft]')));
-        var inch = F.num(U.value(r.querySelector('[data-k=' + d[0] + '_in]')));
+        var ft = F.num(U.value(r.querySelector('[data-k=' + d[0] + '_ft]'), ex));
+        var inch = F.num(U.value(r.querySelector('[data-k=' + d[0] + '_in]'), ex));
         s[d[0]] = ft + inch / 12;
       });
       return s;
@@ -230,6 +256,26 @@
     (shapes && shapes.length ? shapes : [{ type: 'rect' }]).forEach(function (s) { self.addRow(s); });
   };
 
+  // Turn the starting numbers in measurement boxes into grey examples, so visitors start
+  // with empty boxes. Settings such as waste % or coverage keep their real defaults.
+  var markExamples = false;
+  function toExamples(root) {
+    $all('.ftin-pair', root).forEach(function (pair) {
+      var ins = pair.querySelectorAll('input');
+      if (ins.length < 2 || (ins[0].value === '' && ins[1].value === '')) return;
+      ins[0].setAttribute('data-ph', ins[0].value); ins[1].setAttribute('data-ph', ins[1].value);
+      ins[0].value = ''; ins[1].value = '';
+    });
+    $all('input[type=number]', root).forEach(function (i) {
+      if (i.closest('.ftin-pair') || i.value === '') return;
+      var u = i.parentNode && i.parentNode.querySelector('.unit');
+      var t = u ? (u.getAttribute('data-imp') || u.textContent.trim()) : '';
+      if (t !== 'ft' && !i.hasAttribute('data-example')) return;
+      i.setAttribute('data-ph', i.value); i.value = '';
+    });
+    U.placeholders(root);
+  }
+
   function splitFt(v) {
     if (v === undefined || v === null || v === '' || !isFinite(v)) return ['', ''];
     var ft = Math.floor(v + 1e-9);
@@ -239,12 +285,12 @@
   }
 
   /* ---------------- Form values ---------------- */
-  function readForm(form) {
+  function readForm(form, ex) {
     var v = {};
     $all('input[name], select[name]', form).forEach(function (i) {
       if (i.type === 'checkbox') v[i.name] = i.checked;
       else if (i.type === 'radio') { if (i.checked) v[i.name] = i.value; }
-      else v[i.name] = U.value(i);
+      else v[i.name] = U.value(i, ex);
     });
     // Combine name_ft + name_in into name (feet).
     Object.keys(v).forEach(function (k) {
@@ -373,15 +419,25 @@
     var state = params.get('s') ? decodeState(params.get('s')) : store.get('last:' + toolName);
 
     function recalc(skipUrl) {
-      var v = readForm(form);
+      // Until the visitor types a measurement, show the grey examples' answer, marked "Example".
+      var hasExamples = !!form.querySelector('[data-ph]');
+      var ex = hasExamples && !$all('[data-ph]', form).some(function (i) { return i.value !== ''; });
+      var v = readForm(form, ex);
       if (builder) {
-        v.shapes = builder.read();
+        v.shapes = builder.read(ex);
         v.area = F.totalArea(v.shapes);
-        builder.totalEl.textContent = U.annotate('Total area: ' + fmt(v.area, 1) + ' sq ft');
+        builder.totalEl.textContent = U.annotate((ex ? 'Example area: ' : 'Total area: ') + fmt(v.area, 1) + ' sq ft');
       }
       if (tool.prepare) tool.prepare(form, v);
       var out = tool.calc(v, F);
       renderResult(panel, toolName, out);
+      panel.classList.toggle('is-example', ex);
+      var lab = $('.result-label', panel);
+      if (lab) lab.textContent = ex ? 'Example result' : 'You need';
+      var hint = $('.example-hint', panel);
+      if (!hint) { hint = el('p', { class: 'example-hint' }, 'These are example numbers. Type your own measurements to get your answer.'); $('.result-figure', panel).appendChild(hint); }
+      hint.hidden = !ex;
+      if (ex) return;
       if (!skipUrl && out.ready) {
         var raw = readRaw();
         store.set('last:' + toolName, raw);
@@ -415,10 +471,13 @@
       return raw;
     }
 
+    markExamples = !state;
+    if (!state) toExamples(form);
     if (builderRoot) {
       builder = new AreaBuilder(builderRoot, function () { recalc(); });
       builder.load(state && state.shapes ? state.shapes : (tool.defaultShapes || [{ type: 'rect' }]));
     }
+    markExamples = false;
     if (state) writeForm(form, state);
     bootUnits(form, builderRoot, function () { recalc(true); });
 

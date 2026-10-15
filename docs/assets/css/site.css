@@ -707,3 +707,9 @@ html.embed .cookie-bar { display: none; }
 .diagram-svg { display: block; width: 100%; max-width: 460px; height: auto; margin: 0 auto; }
 
 .staging-bar { background: #ffd54f; color: #1b1640; text-align: center; font-weight: 800; font-size: 0.85rem; padding: 6px 12px; }
+
+/* Example result (before the visitor types) */
+input::placeholder { color: var(--muted); opacity: 0.75; font-weight: 500; }
+.result.is-example .result-value, .result.is-example .result-unit { opacity: 0.5; }
+.result.is-example .shop, .result.is-example .result-notes { opacity: 0.55; }
+.example-hint { margin: 8px 0 0; font-size: 0.9rem; font-weight: 600; opacity: 0.9; }
