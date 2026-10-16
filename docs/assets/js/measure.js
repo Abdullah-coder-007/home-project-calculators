@@ -212,19 +212,31 @@
     var canvas = document.createElement('canvas');
     gl = canvas.getContext('webgl', { xrCompatible: true, alpha: true });
 
+    // Surfaces: Chrome looks for flat planes, and (where the phone supports it) feature
+    // points too, which lock on much faster on plain or dim floors. If nothing locks on
+    // within a few seconds we switch to an estimate from the phone's angle and height, so
+    // "Set start" always becomes usable.
+    var floorY = -1.35, estimating = false, startedAt = 0, lastHit = 0, tracked = false;
+    function hitSourceFor(viewer) {
+      return session.requestHitTestSource({ space: viewer, entityTypes: ['plane', 'point'] })
+        .catch(function () { return session.requestHitTestSource({ space: viewer }); });
+    }
     navigator.xr.requestSession('immersive-ar', {
-      requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay', 'local'], domOverlay: { root: ui }
+      requiredFeatures: ['hit-test'], optionalFeatures: ['dom-overlay', 'local', 'local-floor'], domOverlay: { root: ui }
     }).then(function (s) {
       session = s;
       session.addEventListener('end', cleanup);
       session.updateRenderState({ baseLayer: new XRWebGLLayer(session, gl) });
-      return session.requestReferenceSpace('viewer').then(function (viewer) {
-        return session.requestHitTestSource({ space: viewer });
-      }).then(function (src) {
+      return session.requestReferenceSpace('viewer').then(hitSourceFor).then(function (src) {
         hitSource = src;
-        return session.requestReferenceSpace('local');
-      }).then(function (local) {
-        refSpace = local;
+      }, function () { hitSource = null; }).then(function () {
+        // local-floor puts the floor at height 0; plain local starts at the phone, so the
+        // floor is roughly chest height below it.
+        return session.requestReferenceSpace('local-floor').then(function (sp) { floorY = 0; return sp; },
+          function () { return session.requestReferenceSpace('local'); });
+      }).then(function (space) {
+        refSpace = space;
+        startedAt = performance.now();
         session.requestAnimationFrame(onFrame);
       });
     }).catch(function () {
@@ -232,6 +244,16 @@
       arSupported = false;
       sheet(field);
     });
+
+    // Where the centre of the screen meets the floor, from the phone's position and tilt.
+    function estimate(pose) {
+      var m = pose.transform.matrix, o = pose.transform.position;
+      var d = [-m[8], -m[9], -m[10]];
+      if (d[1] > -0.12) return null;                          // aiming level or upward
+      var t = (floorY - o.y) / d[1];
+      if (!(t > 0) || t > 15) return null;
+      return [o.x + d[0] * t, floorY, o.z + d[2] * t];
+    }
 
     function project(p) {
       if (!view) return null;
@@ -249,18 +271,32 @@
       var pose = frame.getViewerPose(refSpace);
       view = pose && pose.views[0];
       var hits = hitSource ? frame.getHitTestResults(hitSource) : [];
+      var now = performance.now();
+      if (pose) tracked = true;
       if (hits.length) {
         var p = hits[0].getPose(refSpace).transform.position;
         current = [p.x, p.y, p.z];
-        cross.classList.add('on');
-        if (!end) mark.disabled = false;
+        lastHit = now;
+        if (estimating) { estimating = false; ui.classList.remove('is-estimate'); help.textContent = start ? 'Locked on. Point at the other end and tap Set end.' : 'Locked on. Point at one end and tap Set start.'; }
       } else {
         current = null;
-        cross.classList.remove('on');
-        if (!end) mark.disabled = true;
+        // Nothing found for 6 seconds: measure by the phone's angle instead.
+        if (pose && now - Math.max(startedAt, lastHit) > 6000) {
+          if (!estimating) {
+            estimating = true; ui.classList.add('is-estimate');
+            help.textContent = 'Couldn’t lock on to the surface, so we’re estimating from your phone’s angle. Hold the phone at chest height and aim at the floor where it meets each end.';
+          }
+          current = estimate(pose);
+        } else if (!pose && !tracked && now - startedAt > 8000) {
+          help.textContent = 'The camera isn’t tracking. Try more light, or tap “Use an app instead”.';
+        } else if (!start && now - startedAt > 2500 && !estimating) {
+          help.textContent = 'Point at the floor in good light and sweep the phone slowly side to side.';
+        }
       }
+      cross.classList.toggle('on', !!current);
+      if (!end) mark.disabled = !current;
       // Live distance and a line from the start point to the target
-      if (start && !end && current) reading.textContent = show(dist(start, current));
+      if (start && !end && current) reading.textContent = show(dist(start, current)) + (estimating ? ' (estimate)' : '');
       var a = start && project(start);
       var b = end ? project(end) : [ui.clientWidth / 2, ui.clientHeight / 2];
       if (a && b) {
