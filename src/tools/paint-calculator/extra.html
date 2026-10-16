@@ -1,13 +1,30 @@
 <section class="viz" id="visualizer" aria-labelledby="viz-title">
 <div class="viz-head">
-<h2 id="viz-title">See the color on your wall <span class="beta-tag">Beta</span></h2>
-<p>Add a photo of your room, tap a wall, then try colors. The new color keeps your room's real light and shadows. Your photo stays on your device; nothing is uploaded.</p>
-<p class="viz-beta-note">This is a beta: it works best on evenly lit, plain walls. Tap the wall, then use the Eraser on anything that got picked up by mistake.</p>
+<h2 id="viz-title">See the color on your walls</h2>
+<p>Pick a room, tap a wall, then tap a color. Paint one feature wall, or all of them. Try your own photo too; it stays on your device and nothing is uploaded.</p>
 </div>
+<div class="viz-rooms" role="tablist" aria-label="Choose a room">
+<button type="button" role="tab" class="viz-room" data-room="living" aria-selected="true">Living room</button>
+<button type="button" role="tab" class="viz-room" data-room="bedroom" aria-selected="false">Bedroom</button>
+<button type="button" role="tab" class="viz-room" data-room="kitchen" aria-selected="false">Kitchen</button>
+<button type="button" role="tab" class="viz-room" data-room="photo" aria-selected="false">Your photo <span class="beta-tag">Beta</span></button>
+</div>
+<div class="viz-scene" data-viz="scene">
+<div class="viz-stage viz-svg" data-viz="roomstage" aria-label="Sample room with your chosen colors"></div>
+<div class="viz-walls" role="group" aria-label="Which wall to paint" data-viz="walls">
+<button type="button" class="viz-tool" data-wall="back" aria-pressed="true">Main wall</button>
+<button type="button" class="viz-tool" data-wall="left" aria-pressed="false">Left wall</button>
+<button type="button" class="viz-tool" data-wall="right" aria-pressed="false">Right wall</button>
+<button type="button" class="viz-tool" data-wall="ceiling" aria-pressed="false">Ceiling</button>
+<button type="button" class="viz-tool" data-wall="all" aria-pressed="false">All walls</button>
+</div>
+</div>
+<div class="viz-photo" data-viz="photo" hidden>
 <div class="viz-start">
 <label class="btn viz-upload"><input type="file" accept="image/*" capture="environment" hidden data-viz="file"> Take or choose a photo</label>
-<button type="button" class="btn btn-ghost" data-viz="sample">Try a sample room</button>
+<button type="button" class="btn btn-ghost" data-viz="sample">Use a practice photo</button>
 </div>
+<p class="viz-beta-note">Works best on evenly lit, plain walls. Tap the wall, then use the Eraser on anything picked up by mistake.</p>
 <div class="viz-work" hidden>
 <div class="viz-stage">
 <canvas data-viz="canvas" aria-label="Your room with the chosen wall color"></canvas>
@@ -23,18 +40,24 @@
 <label class="viz-range"><span>Edge sensitivity</span><input type="range" min="4" max="30" value="12" data-viz="tolerance"></label>
 <label class="viz-range"><span>Before / after</span><input type="range" min="0" max="100" value="100" data-viz="mix"></label>
 </div>
+</div>
+</div>
+<div class="viz-now" aria-live="polite"><span class="viz-chip" data-viz="nowchip"></span><span><strong data-viz="nowname"></strong> <span class="viz-hex" data-viz="nowhex"></span><br><span class="viz-where" data-viz="nowwhere"></span></span><button type="button" class="btn btn-quiet" data-viz="copy">Copy code</button></div>
 <div class="viz-colors">
-<h3>Pick a color</h3>
-<div class="viz-swatches" data-viz="trend" role="list" aria-label="Colors of the moment"></div>
-<div class="viz-custom"><label><span>Your own color</span> <input type="color" value="#c9d7a6" data-viz="custom"></label> <span class="viz-code" data-viz="code"></span></div>
+<div class="viz-colors-head"><h3>Pick a color</h3><button type="button" class="btn btn-ghost" data-viz="surprise">Surprise me</button></div>
+<label class="viz-search"><span class="sr-only">Find a color by name or code</span><input type="search" placeholder="Find a color: sage, #9FB3C8…" data-viz="search" autocomplete="off"></label>
+<div class="viz-families" role="tablist" aria-label="Color families" data-viz="families"></div>
+<div class="viz-swatches" data-viz="trend" role="list" aria-label="Colors"></div>
+<div class="viz-custom"><label><span>Or any color</span> <input type="color" value="#c9d7a6" data-viz="custom"></label></div>
+<h3>Ready-made pairings</h3>
+<div class="viz-combos" data-viz="combos"></div>
 <h3>Goes well with your pick</h3>
 <div class="viz-swatches" data-viz="matches" role="list" aria-label="Matching colors"></div>
 </div>
 <div class="viz-compare">
-<div class="viz-compare-head"><h3>Compare up to 4</h3><button type="button" class="btn btn-quiet" data-viz="keep">Add this color to compare</button></div>
+<div class="viz-compare-head"><h3>Compare up to 4 looks</h3><button type="button" class="btn btn-quiet" data-viz="keep">Save this look</button></div>
 <div class="viz-grid" data-viz="grid"></div>
 <p class="viz-note">Colors on screens differ from real paint. Ask your store to match the color code, and test a sample on the wall before buying.</p>
-</div>
 </div>
 </section>
 <script src="../assets/js/visualizer.js?v={{v}}" defer></script>

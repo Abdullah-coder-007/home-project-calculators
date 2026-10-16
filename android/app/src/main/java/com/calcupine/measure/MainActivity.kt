@@ -112,7 +112,26 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1)
             return
         }
+        tries = 0
+        startAr()
+    }
+
+    private var tries = 0
+
+    /** Phones without Google Play Services for AR (or where it can't be updated) use tilt measuring. */
+    private fun useTilt() {
+        startActivity(Intent(this, TiltActivity::class.java)
+            .putExtra("imperial", imperial)
+            .putExtra("return", returnPath))
+        finish()
+    }
+
+    private fun startAr() {
         if (session == null) {
+            val availability = ArCoreApk.getInstance().checkAvailability(this)
+            if (availability.isTransient && tries++ < 12) { surface.postDelayed({ startAr() }, 250); return }
+            if (!availability.isSupported) { useTilt(); return }
+            if (installRequested && availability != ArCoreApk.Availability.SUPPORTED_INSTALLED) { useTilt(); return }
             try {
                 when (ArCoreApk.getInstance().requestInstall(this, !installRequested)) {
                     ArCoreApk.InstallStatus.INSTALL_REQUESTED -> { installRequested = true; return }
@@ -128,8 +147,9 @@ class MainActivity : AppCompatActivity(), GLSurfaceView.Renderer {
                 s.configure(config)
                 session = s
             } catch (e: UnavailableException) {
-                Toast.makeText(this, getString(R.string.ar_unavailable), Toast.LENGTH_LONG).show()
-                finish(); return
+                useTilt(); return
+            } catch (e: Exception) {
+                useTilt(); return
             }
         }
         try {
