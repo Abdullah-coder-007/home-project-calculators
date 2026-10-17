@@ -1,6 +1,8 @@
 ---
 title: "Porcelain, pedestal and 'slurry' pavers: the patio trends people are searching this fall, explained"
 description: Searches for pedestal pavers and slurry pavers are climbing. What these words mean, how porcelain pavers compare with classic concrete ones, and what to know before laying a patio as the weather cools.
+seo_title: "Porcelain, Pedestal and Slurry Pavers Explained"
+seo_description: "What porcelain, pedestal and slurry pavers are, how porcelain compares with concrete pavers, and what to know before laying a patio in fall."
 date: 2026-10-15
 author: Noah Scott
 image: https://images.unsplash.com/photo-1780838446281-9394772d07a8?w=1600&h=900&fit=crop&q=80&auto=format

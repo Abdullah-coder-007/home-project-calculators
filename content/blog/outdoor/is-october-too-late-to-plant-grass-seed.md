@@ -1,6 +1,8 @@
 ---
 title: "Is October too late to plant grass seed? What turf experts actually say"
 description: '"Is it too late to plant grass seed?" is one of the fastest-rising lawn searches right now. The honest answer by grass type and region, the dormant-seeding trick, and what to do with all those leaves.'
+seo_title: "Is October Too Late to Plant Grass Seed?"
+seo_description: "Is it too late to plant grass seed in October? The answer by grass type and region, how dormant seeding works, and what to do about fallen leaves."
 date: 2026-10-15
 author: Noah Scott
 image: https://images.unsplash.com/photo-1728889153657-5730575c0931?w=1600&h=900&fit=crop&q=80&auto=format

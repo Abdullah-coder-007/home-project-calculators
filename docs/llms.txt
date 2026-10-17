@@ -1,0 +1,33 @@
+# Calcupine
+
+> Home project calculators that tell you exactly what to buy. Free calculators for US home projects that turn room and yard measurements into what to buy (gallons, sheets, boxes, bags, yards), with a shopping list and cost estimate. Every formula is published and tested.
+
+## Walls and ceilings
+- [Paint calculator](https://calcupine.com/paint-calculator/): Gallons of wall and ceiling paint, primer and tape for a room
+- [Drywall calculator](https://calcupine.com/drywall-calculator/): Sheets, joint compound, tape and screws for a room
+- [Wallpaper calculator](https://calcupine.com/wallpaper-calculator/): Rolls of wallpaper with pattern repeat built in
+
+## Floors
+- [Flooring calculator](https://calcupine.com/flooring-calculator/): Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim
+- [Tile calculator](https://calcupine.com/tile-calculator/): Tiles, boxes, thinset and grout for floors, walls and backsplashes
+- [Square footage calculator](https://calcupine.com/square-footage-calculator/): Area of any room or yard in sq ft, sq yd and m²
+
+## Concrete, pavers and fill
+- [Concrete calculator](https://calcupine.com/concrete-calculator/): Bags or cubic yards for slabs, footings and post holes
+- [Paver calculator](https://calcupine.com/paver-calculator/): Pavers, base gravel, sand and edging for a patio or path
+- [Cubic yard calculator](https://calcupine.com/cubic-yard-calculator/): Cubic yards, cubic feet and m³ for any fill or dig
+
+## Yard, garden and outdoor
+- [Mulch, soil and gravel calculator](https://calcupine.com/mulch-calculator/): Bags, cubic yards or tons of mulch, topsoil, gravel and sand
+- [Sod and grass seed calculator](https://calcupine.com/sod-calculator/): Sod pieces and pallets, or pounds of grass seed
+- [Fence calculator](https://calcupine.com/fence-calculator/): Posts, rails, pickets and concrete for a wood fence
+- [Deck calculator](https://calcupine.com/deck-calculator/): Deck boards, joists and screws for a rectangular deck
+
+## Roofs and stairs
+- [Roofing calculator](https://calcupine.com/roofing-calculator/): Roof area, squares, shingle bundles and underlayment
+- [Stairs calculator](https://calcupine.com/stairs-calculator/): Risers, treads and stringer length that meet code
+
+## About
+- [How we calculate](https://calcupine.com/how-we-calculate/): every formula, assumption and source
+- [Guides](https://calcupine.com/blog/): project guides with worked examples
+- [Contact](https://calcupine.com/contact/)

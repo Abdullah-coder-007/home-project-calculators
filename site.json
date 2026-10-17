@@ -62,5 +62,44 @@
       "bio": "Noah Scott writes Calcupine's project guides. Every guide starts from what homeowners are searching for right now, is researched from manufacturer data, university extension advice and building standards, and is checked against our calculators before it goes live."
     }
   },
-  "guide_author": "Noah Scott"
+  "guide_author": "Noah Scott",
+  "indexnow_key": "4b0c5fabafb00e65d574c690e6b8c0a9",
+  "same_as": [],
+  "category_pages": {
+    "walls": {
+      "slug": "wall-and-ceiling-calculators",
+      "h1": "Wall and ceiling calculators",
+      "title": "Wall and Ceiling Calculators: Paint, Drywall, Wallpaper",
+      "description": "Free calculators for wall and ceiling projects: gallons of paint, sheets of drywall with screws and mud, and rolls of wallpaper with pattern repeat.",
+      "intro": "Planning to paint, hang drywall or wallpaper a room? Each calculator takes your room size in feet and inches, subtracts doors and windows, adds the waste the trades plan for and tells you what to buy in store units: gallons and quarts, 4 by 8 or 4 by 12 sheets, or double rolls."
+    },
+    "floors": {
+      "slug": "floor-calculators",
+      "h1": "Floor calculators",
+      "title": "Floor Calculators: Flooring, Tile and Square Footage",
+      "description": "Free floor calculators: boxes of flooring with waste, tiles with thinset and grout, and square footage for L-shaped and odd-shaped rooms.",
+      "intro": "Measure once and get the square footage, the number of boxes or tiles and the extras you need for a floor. The calculators handle L-shaped rooms and cut-outs, add extra waste for diagonal and herringbone tile layouts, and round up to full boxes after the waste is added."
+    },
+    "concrete": {
+      "slug": "concrete-and-paver-calculators",
+      "h1": "Concrete, paver and fill calculators",
+      "title": "Concrete, Paver and Fill Calculators: Bags and Yards",
+      "description": "Free calculators for concrete bags or cubic yards, patio pavers with base gravel and sand, and cubic yards of fill for slabs, footings and holes.",
+      "intro": "Work out concrete for slabs, footings, post holes, steps and curbs in 40, 60 or 80 lb bags or ready-mix yards, pavers with the gravel base and bedding sand under them, and cubic yards of any fill from length, width and depth."
+    },
+    "outdoor": {
+      "slug": "yard-and-garden-calculators",
+      "h1": "Yard, garden and outdoor calculators",
+      "title": "Yard and Garden Calculators: Mulch, Sod, Fence, Deck",
+      "description": "Free yard and garden calculators: bags or yards of mulch, soil and gravel, sod pallets and grass seed, fence posts and pickets, and deck boards.",
+      "intro": "Outdoor projects are bought by the bag, the pallet, the post and the board. These calculators turn your yard measurements into those units: bags or bulk yards of mulch, soil and gravel, pallets of sod or pounds of seed, every fence post, rail and picket, and deck boards with joists and screws."
+    },
+    "structure": {
+      "slug": "roof-and-stair-calculators",
+      "h1": "Roof and stair calculators",
+      "title": "Roof and Stair Calculators: Shingles and Stair Layout",
+      "description": "Free roof and stair calculators: bundles of shingles, underlayment and drip edge from your house size and pitch, and stair risers, treads and stringers.",
+      "intro": "Get roofing squares and bundles of shingles from the outside size of your house, the overhang and the roof pitch, and lay out stairs with the number of risers, tread depth and stringer length, checked against common building code limits."
+    }
+  }
 }

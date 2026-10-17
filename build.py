@@ -24,6 +24,7 @@ import html
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -54,6 +55,38 @@ if STAGING:
 
 def esc(s):
     return html.escape(str(s), quote=True)
+
+
+def git_date(*paths):
+    """Date of the last commit that changed these files: the honest "updated" date.
+    Template-wide changes (build.py, CSS) don't count, so pages only look updated
+    when their own content changed."""
+    try:
+        out = subprocess.run(["git", "log", "-1", "--format=%cs", "--", *[str(p) for p in paths]],
+                             cwd=ROOT, capture_output=True, text=True, timeout=20).stdout.strip()
+    except Exception:
+        out = ""
+    return out or TODAY
+
+
+def human_date(iso_date):
+    return datetime.date.fromisoformat(iso_date).strftime("%B %-d, %Y")
+
+
+def fit_title(title):
+    """Search results cut titles at about 60 characters; drop the brand suffix
+    rather than lose the words people searched for."""
+    suffix = f" | {CFG['name']}"
+    if len(title) > 60 and title.endswith(suffix):
+        return title[: -len(suffix)]
+    return title
+
+
+def author_path(name):
+    return "authors/" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") + "/"
+
+
+HUBS = {}  # category key -> settings from site.json "category_pages", filled in main()
 
 
 def asset_hash(path):
@@ -115,6 +148,7 @@ def ga4_head():
 
 def page(*, path, title, description, body, schema=None, current=None, noindex=False, prefix=None, accent="violet",
          image="home", og_type="website", extra_head=""):
+    title = fit_title(title)
     depth = path.count("/")  # "" -> 0, "paint-calculator/" -> 1
     if prefix is None:
         prefix = "../" * depth
@@ -283,6 +317,9 @@ def tool_page(t, all_tools):
         else:
             guide_html += (f'<details class="fold" id="{heading_id(h)}"><summary><h3>{h}</h3></summary>'
                            f'<div class="fold-body">{content}</div></details>')
+    hub = HUBS.get(t.get("category"))
+    hub_crumb = f'<a href="../{hub["slug"]}/">{esc(hub["h1"])}</a> / ' if hub else ""
+    updated = t["updated"]
     lede = re.sub(r"\s*The example[^.;]*[.;][^.]*\.?$", "", t["lede"]).strip()
     has_lengths = re.search(r'class="unit">(ft|in|sq ft)<', t['form'])
     measure_note = ('' if LAB or not has_lengths else
@@ -291,7 +328,7 @@ def tool_page(t, all_tools):
 
     body = f"""<section class="tool-head">
 <div class="tool-head-text">
-<p class="crumbs"><a href="../">All calculators</a> / {esc(t['short'])}</p>
+<p class="crumbs"><a href="../">All calculators</a> / {hub_crumb}{esc(t['short'])}</p>
 <h1>{esc(t['h1'])}</h1>
 <p class="lede">{lede}</p>
 </div>
@@ -311,7 +348,7 @@ def tool_page(t, all_tools):
 <section class="faq"><h2 id="questions">Common questions</h2>{faq_html}</section>
 {guides_for(t["slug"], "../")}
 <section class="related"><h2>Related calculators</h2><ul class="related-list">{related_html}</ul></section>
-{author_line("../")}
+{author_line("../", updated)}
 </article>
 <details class="embed-box fold">
 <summary><h3>Add this calculator to your site</h3></summary>
@@ -322,13 +359,16 @@ def tool_page(t, all_tools):
 </div>
 </details>"""
 
+    crumbs = [{"@type": "ListItem", "position": 1, "name": "All calculators", "item": BASE + "/"}]
+    if hub:
+        crumbs.append({"@type": "ListItem", "position": 2, "name": hub["h1"], "item": f"{BASE}/{hub['slug']}/"})
+    crumbs.append({"@type": "ListItem", "position": len(crumbs) + 1, "name": t["short"], "item": url})
     schema = [
         {"@context": "https://schema.org", "@type": "WebApplication", "name": t["h1"], "url": url,
          "description": t["description"], "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any",
-         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}},
-        {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "All calculators", "item": BASE + "/"},
-            {"@type": "ListItem", "position": 2, "name": t["short"], "item": url}]},
+         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+         "dateModified": updated, "publisher": ORG_REF},
+        {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": crumbs},
     ]
     if t.get("faq"):
         schema.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
@@ -336,6 +376,103 @@ def tool_page(t, all_tools):
              "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", q["a"])}} for q in t["faq"]]})
     return page(path=path, title=t["title"], description=t["description"], body=body, schema=schema, accent=t["tool"],
                 image=t["slug"])
+
+
+def organization():
+    org = {"@context": "https://schema.org", "@type": "Organization", "@id": BASE + "/#organization",
+           "name": CFG["name"], "url": BASE + "/", "logo": f"{BASE}/assets/logo.png",
+           "description": CFG["tagline"]}
+    if CFG.get("contact_email"):
+        org["email"] = CFG["contact_email"]
+    if CFG.get("same_as"):
+        org["sameAs"] = CFG["same_as"]
+    return org
+
+
+ORG_REF = {"@id": "", "@type": "Organization", "name": "", "url": ""}  # set in main()
+
+
+def hub_page(key, label, hub, tools):
+    """One page per calculator group, e.g. /concrete-and-paver-calculators/."""
+    prefix = "../"
+    members = [t for t in tools if t.get("category") == key]
+    cards = "".join(
+        f'<li class="tool-card" data-accent="{t["tool"]}"><a href="{prefix}{t["slug"]}/">'
+        f'<span class="card-art">{iso.tool_icon(t["tool"])}</span>'
+        f'<span class="card-body"><span class="t-name">{esc(t["short"])}</span>'
+        f'<span class="t-what">{esc(t["what"])}</span>'
+        f'<span class="card-go">Open calculator</span></span></a></li>' for t in members)
+    posts = [p for p in BLOG_POSTS if p["category"] == key][:6]
+    guides = ""
+    if posts:
+        guides = (f'<section class="latest"><h2 class="section-title">{esc(label)} guides</h2><ul class="post-cards">'
+                  + "".join(post_card(p, prefix) for p in posts)
+                  + f'</ul><p class="more-link"><a class="btn btn-ghost" href="{prefix}blog/{key}/">All {esc(label.lower())} guides</a></p></section>')
+    others = "".join(f'<a href="{prefix}{h["slug"]}/">{esc(h["h1"])}</a>' for k, h in HUBS.items() if k != key)
+    accent = members[0]["tool"] if members else "violet"
+    body = f"""<section class="tool-head">
+<div class="tool-head-text">
+<p class="crumbs"><a href="{prefix}">All calculators</a> / {esc(hub['h1'])}</p>
+<h1>{esc(hub['h1'])}</h1>
+<p class="lede">{esc(hub['intro'])}</p>
+</div>
+<div class="tool-head-art">{iso.tool_icon(accent)}</div>
+</section>
+<section class="tool-group"><h2 class="section-title">{len(members)} free calculators</h2><ul class="tool-cards">{cards}</ul></section>
+{guides}
+<nav class="jump" aria-label="Other calculator groups">{others}</nav>"""
+    url = f"{BASE}/{hub['slug']}/"
+    schema = [
+        {"@context": "https://schema.org", "@type": "CollectionPage", "name": hub["h1"], "url": url,
+         "description": hub["description"], "publisher": ORG_REF,
+         "mainEntity": {"@type": "ItemList", "itemListElement": [
+             {"@type": "ListItem", "position": n + 1, "name": t["short"], "url": f"{BASE}/{t['slug']}/"} for n, t in enumerate(members)]}},
+        {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "All calculators", "item": BASE + "/"},
+            {"@type": "ListItem", "position": 2, "name": hub["h1"], "item": url}]},
+    ]
+    return page(path=f"{hub['slug']}/", title=f"{hub['title']} | {CFG['name']}", description=hub["description"],
+                body=body, schema=schema, accent=accent, image=members[0]["slug"] if members else "home")
+
+
+def author_page(name, info):
+    prefix = "../../"
+    posts = [p for p in BLOG_POSTS if p["author"] == name]
+    cards = "".join(post_card(p, prefix) for p in posts)
+    path = author_path(name)
+    body = f"""<section class="tool-head page-head"><div class="tool-head-text">
+<p class="crumbs"><a href="{prefix}">Home</a> / Authors / {esc(name)}</p>
+<h1>{esc(name)}</h1>
+<p class="lede">{esc(info.get('bio', ''))}</p>
+</div></section>
+<article class="page">
+<h2>How the guides are checked</h2>
+<p>Every number in a guide is worked out with the same formulas as our calculators, which are tested against hand-worked examples. Sources are linked at the end of each guide. See <a href="{prefix}how-we-calculate/">how we calculate</a>, or <a href="{prefix}contact/">report a mistake</a>.</p>
+</article>
+{('<section class="latest"><h2 class="section-title">Guides by ' + esc(name) + '</h2><ul class="post-cards">' + cards + '</ul></section>') if cards else ''}"""
+    person = {"@context": "https://schema.org", "@type": "Person", "name": name, "url": f"{BASE}/{path}",
+              "description": info.get("bio", ""), "worksFor": ORG_REF}
+    schema = [{"@context": "https://schema.org", "@type": "ProfilePage", "mainEntity": person}]
+    return page(path=path, title=f"{name}, Guides Writer | {CFG['name']}",
+                description=f"{name} writes {CFG['name']}'s home project guides. Read how the guides are researched and checked, and see every guide by {name}.",
+                body=body, schema=schema, image="home")
+
+
+def llms_txt(tools):
+    lines = [f"# {CFG['name']}", "", f"> {CFG['tagline']} Free calculators for US home projects that turn room and yard "
+             "measurements into what to buy (gallons, sheets, boxes, bags, yards), with a shopping list and cost estimate. "
+             "Every formula is published and tested.", ""]
+    for key, label in CFG["categories"]:
+        members = [t for t in tools if t.get("category") == key]
+        if not members:
+            continue
+        lines.append(f"## {label}")
+        lines += [f"- [{t['short']}]({BASE}/{t['slug']}/): {t['what']}" for t in members]
+        lines.append("")
+    lines += ["## About", f"- [How we calculate]({BASE}/how-we-calculate/): every formula, assumption and source",
+              f"- [Guides]({BASE}/blog/): project guides with worked examples",
+              f"- [Contact]({BASE}/contact/)", ""]
+    return "\n".join(lines)
 
 
 def home_page(tools):
@@ -349,7 +486,9 @@ def home_page(tools):
     for key, label in CFG["categories"]:
         members = [t for t in tools if t.get("category") == key]
         if members:
-            groups += f'<section class="tool-group"><h2 class="section-title" id="{key}">{esc(label)}</h2><ul class="tool-cards">{"".join(card(t) for t in members)}</ul></section>'
+            hub = HUBS.get(key)
+            heading = f'<a href="{hub["slug"]}/">{esc(label)}</a>' if hub else esc(label)
+            groups += f'<section class="tool-group"><h2 class="section-title" id="{key}">{heading}</h2><ul class="tool-cards">{"".join(card(t) for t in members)}</ul></section>'
     jump = "".join(f'<a href="#{k}">{esc(l)}</a>' for k, l in CFG["categories"])
     why = [
         ("paint", "Calculator first, no clutter", "The calculator is the first thing on every page. No pop-ups, no autoplay video, no sign-up."),
@@ -379,7 +518,8 @@ def home_page(tools):
 <div class="home-notes">{why_html}</div>
 </section>"""
     schema = [{"@context": "https://schema.org", "@type": "WebSite", "name": CFG["name"], "url": BASE + "/",
-               "description": CFG["tagline"]},
+               "description": CFG["tagline"], "publisher": ORG_REF},
+              organization(),
               {"@context": "https://schema.org", "@type": "ItemList", "itemListElement": [
                   {"@type": "ListItem", "position": n + 1, "name": t["short"], "url": f"{BASE}/{t['slug']}/"} for n, t in enumerate(tools)]}]
     return page(path="", title=f"{CFG['name']}: Free Home Project Calculators",
@@ -442,10 +582,11 @@ def with_diagrams(html_text):
         return f'<ul class="measure-tips" aria-label="What to measure">{items}</ul>'
     return re.sub(r"<!--\s*diagram:\s*([\w-]+)\s*-->", repl, html_text)
 
-def author_line(prefix):
+def author_line(prefix, updated):
     """One short line on calculator pages: who wrote it, when, and how to check it."""
     name = CFG.get("guide_author") or CFG["owner_name"]
-    return (f'<p class="author-line">Guide by <strong>{esc(name)}</strong> \u00b7 Updated {datetime.date.today().strftime("%B %-d, %Y")} \u00b7 '
+    who = (f'<a href="{prefix}{author_path(name)}">{esc(name)}</a>' if name in (CFG.get("authors") or {}) else esc(name))
+    return (f'<p class="author-line">Guide by <strong>{who}</strong> \u00b7 Updated {human_date(updated)} \u00b7 '
             f'Formulas tested against worked examples \u00b7 <a href="{prefix}how-we-calculate/">How we calculate</a> \u00b7 '
             f'<a href="{prefix}contact/">Report a mistake</a></p>')
 
@@ -481,6 +622,12 @@ import blog  # noqa: E402
 
 def main():
     tools = [load_tool(s) for s in CFG["tools"]]
+    for t in tools:
+        t["updated"] = git_date(SRC / "tools" / t["slug"])
+    ORG_REF.clear()
+    ORG_REF.update({"@type": "Organization", "@id": BASE + "/#organization", "name": CFG["name"], "url": BASE + "/",
+                    "logo": f"{BASE}/assets/logo.png"})
+    HUBS.update(CFG.get("category_pages") or {})
     TOOL_LINKS[:] = [(t["slug"], t["short"], t["tool"]) for t in tools]
     TOOLS_BY_SLUG.update({t["slug"]: t for t in tools})
     def accent_for(cat):
@@ -493,21 +640,41 @@ def main():
     shutil.copytree(SRC / "assets", OUT / "assets")
     (OUT / "assets/css/accents.css").write_text(iso.accents_css())
 
+    newest_post = max((p["updated"].isoformat() for p in BLOG_POSTS), default="")
     (OUT / "index.html").write_text(home_page(tools))
-    urls = [("", "1.0")]
+    urls = [("", "1.0", max([t["updated"] for t in tools] + [newest_post]))]
     for t in tools:
         d = OUT / t["slug"]
         d.mkdir()
         (d / "index.html").write_text(tool_page(t, tools))
-        urls.append((t["slug"] + "/", "0.9"))
+        urls.append((t["slug"] + "/", "0.9", t["updated"]))
+    for key, label in CFG["categories"]:
+        hub = HUBS.get(key)
+        members = [t for t in tools if t.get("category") == key]
+        if not hub or not members:
+            continue
+        d = OUT / hub["slug"]
+        d.mkdir()
+        (d / "index.html").write_text(hub_page(key, label, hub, tools))
+        dates = [t["updated"] for t in members] + [p["updated"].isoformat() for p in BLOG_POSTS if p["category"] == key]
+        urls.append((hub["slug"] + "/", "0.8", max(dates)))
     for p in CFG["pages"]:
         d = OUT / p
         d.mkdir()
         (d / "index.html").write_text(plain_page(p))
-        urls.append((p + "/", "0.3"))
+        urls.append((p + "/", "0.3", git_date(SRC / "pages" / f"{p}.html")))
+    for name, info in (CFG.get("authors") or {}).items():
+        mine = [p for p in BLOG_POSTS if p["author"] == name]
+        if not mine:
+            continue
+        d = OUT / author_path(name)
+        d.mkdir(parents=True)
+        (d / "index.html").write_text(author_page(name, info))
+        urls.append((author_path(name), "0.4", max(p["updated"].isoformat() for p in mine)))
 
     urls += blog.build(OUT, tools, {"posts": BLOG_POSTS, "cfg": CFG, "base": BASE, "page": page,
-                                    "post_card": post_card, "iso": iso, "tools_by_slug": TOOLS_BY_SLUG})
+                                    "post_card": post_card, "iso": iso, "tools_by_slug": TOOLS_BY_SLUG,
+                                    "author_path": author_path, "org_ref": ORG_REF, "hubs": HUBS})
 
     body404 = '<div class="page"><h1>That page isn\'t here</h1><p>The link may be old or mistyped. Pick a calculator from the <a href="' + BASE + '/">full list</a>.</p></div>'
     # 404 can be served at any depth, so it uses absolute links.
@@ -525,6 +692,11 @@ def main():
     (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /\n" if STAGING else
                                     f"User-agent: *\nAllow: /\n\nSitemap: {BASE}/sitemap.xml\n")
     (OUT / ".nojekyll").write_text("")
+    if not STAGING:
+        (OUT / "llms.txt").write_text(llms_txt(tools))
+        if CFG.get("indexnow_key"):
+            # IndexNow: proves we own the site so Bing and others accept our "this page changed" pings.
+            (OUT / f"{CFG['indexnow_key']}.txt").write_text(CFG["indexnow_key"])
 
     if CFG.get("custom_domain"):
         (OUT / "CNAME").write_text(CFG["custom_domain"].strip() + "\n")

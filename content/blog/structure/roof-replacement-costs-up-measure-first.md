@@ -1,6 +1,8 @@
 ---
 title: "Roof replacement costs are up by a third. Measure your roof before you call for quotes"
 description: A new roof cost about 33% more in 2025 than the four years before, and prices are still rising. Why, and how to measure your roof in "squares" so you can compare quotes line by line.
+seo_title: "Roof Replacement Costs Are Up: Measure Your Roof First"
+seo_description: "A new roof cost about 33% more in 2025 than in the four years before. Why, and how to measure your roof in squares to compare quotes line by line."
 date: 2026-10-15
 author: Noah Scott
 image: https://images.unsplash.com/photo-1727777266423-6a33048e4894?w=1600&h=900&fit=crop&q=80&auto=format

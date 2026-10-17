@@ -1,6 +1,8 @@
 ---
 title: "Celery is the 2027 Color of the Year. Here's how much paint a Celery room really takes"
 description: Sherwin-Williams picked Celery (SW 6421), Behr went olive, and searches for the new greens are surging. What the 2027 colors are, where they work, and exactly how much to buy.
+seo_title: "Celery 2027 Color of the Year: How Much Paint to Buy"
+seo_description: "Sherwin-Williams named Celery (SW 6421) its 2027 Color of the Year. The other 2027 colors, where Celery works, and exactly how much paint to buy."
 date: 2026-10-15
 author: Noah Scott
 image: https://images.unsplash.com/photo-1767467961045-60e4294e0c7f?w=1600&h=900&fit=crop&q=80&auto=format

@@ -1,6 +1,8 @@
 ---
 title: "Benjamin Moore's 2027 Color of the Year is Webster Green. Here's how much paint a door, a room or a drenched study takes"
 description: Benjamin Moore just named Webster Green (HC-130) its 2027 Color of the Year. What the color is, where Benjamin Moore says to use it, and exactly how much paint to buy.
+seo_title: "Webster Green 2027: How Much Paint You Need"
+seo_description: "Benjamin Moore named Webster Green (HC-130) its 2027 Color of the Year. Where to use it, and how much paint a door, a room or a whole study takes."
 date: 2026-10-16
 author: Noah Scott
 image: https://images.unsplash.com/photo-1784847332730-103be959c597?w=1600&h=900&fit=crop&q=80&auto=format

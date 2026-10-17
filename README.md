@@ -16,7 +16,8 @@ Live site: https://calcupine.com (hosted on Cloudflare from the `docs/` folder)
 | `src/assets/js/tools.js` | Turns the maths into results and shopping lists |
 | `src/assets/js/app.js` | Page behaviour: room-shape builder, share links, print, copy |
 | `src/assets/css/site.css` | Design |
-| `tests/` | Checks every formula against hand-worked examples |
+| `tests/` | Checks every formula against hand-worked examples, plus an SEO check of every built page (titles, descriptions, canonicals, links, sitemap) |
+| `scripts/indexnow.py` | Tells Bing about new and changed pages after each push (run by a GitHub workflow) |
 | `build.py` | Builds the finished website into `docs/` |
 | `docs/` | The finished website that Cloudflare serves. Don't edit by hand; it is rebuilt each time |
 

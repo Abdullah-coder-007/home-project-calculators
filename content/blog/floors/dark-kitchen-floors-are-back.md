@@ -1,6 +1,8 @@
 ---
 title: "Kelly Ripa's glossy black kitchen floor has everyone asking: are dark floors back?"
 description: A celebrity kitchen just sent searches for dark kitchen flooring through the roof. What's trending underfoot for 2026–27, the honest pros and cons of dark floors, and how much flooring a kitchen really needs.
+seo_title: "Are Dark Kitchen Floors Back? The Pros and Cons"
+seo_description: "Dark kitchen floors are trending again. The honest pros and cons of dark floors, what's popular for 2026–27, and how much flooring a kitchen needs."
 date: 2026-10-15
 author: Noah Scott
 image: https://images.unsplash.com/photo-1560185127-2d06c6d08d3d?w=1600&h=900&fit=crop&q=80&auto=format

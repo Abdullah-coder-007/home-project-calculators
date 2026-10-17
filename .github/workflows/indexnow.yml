@@ -1,0 +1,30 @@
+# After the live site changes, tell Bing (and other IndexNow engines) which pages
+# are new or updated. Cloudflare deploys main in about a minute, so wait first.
+name: IndexNow ping
+on:
+  push:
+    branches: [main]
+    paths: [docs/sitemap.xml]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Submit every page, not just changed ones
+        type: boolean
+        default: false
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Wait for Cloudflare to deploy
+        run: sleep 120
+      - name: Submit new and changed pages
+        run: |
+          if [ "${{ inputs.all }}" = "true" ]; then
+            python3 scripts/indexnow.py --all docs/sitemap.xml
+          else
+            git show HEAD~1:docs/sitemap.xml > /tmp/old-sitemap.xml 2>/dev/null || true
+            python3 scripts/indexnow.py /tmp/old-sitemap.xml docs/sitemap.xml
+          fi

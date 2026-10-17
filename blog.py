@@ -80,6 +80,9 @@ def load_posts(cfg, base, accents_for_category):
         posts.append({
             "file": f, "category": cat, "category_label": labels[cat], "slug": slug, "path": path,
             "title": meta["title"], "description": meta["description"],
+            # Optional shorter versions for search results (titles ~60, descriptions ~155 characters).
+            "seo_title": meta.get("seo_title") or meta["title"],
+            "seo_description": meta.get("seo_description") or meta["description"],
             "date": date, "updated": upd, "date_human": _human(date), "updated_human": _human(upd),
             "author": meta.get("author") or cfg["owner_name"],
             "calculators": meta.get("calculators") or [],
@@ -121,8 +124,9 @@ def build(out_dir, tools, ctx):
     if src_imgs.exists():
         shutil.copytree(src_imgs, out_dir / "assets/blog", dirs_exist_ok=True)
 
-    publisher = {"@type": "Organization", "name": cfg["name"], "url": base + "/",
-                 "logo": {"@type": "ImageObject", "url": f"{base}/assets/og/home.jpg"}}
+    publisher = ctx.get("org_ref") or {"@type": "Organization", "name": cfg["name"], "url": base + "/"}
+    author_path = ctx.get("author_path")
+    hubs = ctx.get("hubs") or {}
     default_bio = cfg.get("owner_bio") or (f"{cfg['owner_name']} runs {cfg['name']} and checks every calculator "
                                            "against worked examples before it goes live.")
     authors = cfg.get("authors") or {}
@@ -136,6 +140,9 @@ def build(out_dir, tools, ctx):
             items.append(f'<li data-accent="{t["tool"]}"><a href="{prefix}{s}/"><span class="mini-art">{iso.tool_icon(t["tool"])}</span>'
                          f'<span><strong>{esc(t["short"])}</strong><span class="t-what">{esc(t["what"])}</span></span></a></li>')
         return "".join(items)
+
+    def author_url(name):
+        return author_path(name) if author_path and name in authors else "about/"
 
     # ---- Posts ----
     for p in posts:
@@ -164,7 +171,7 @@ def build(out_dir, tools, ctx):
 <p class="crumbs"><a href="{prefix}">Home</a> / <a href="{prefix}blog/">Guides</a> / <a href="../">{esc(p['category_label'])}</a></p>
 <h1>{esc(p['title'])}</h1>
 <p class="lede">{esc(p['description'])}</p>
-<p class="post-meta">By <a href="{prefix}about/">{esc(p['author'])}</a> · {p['date_human']}{updated} · {p['minutes']} min read</p>
+<p class="post-meta">By <a href="{prefix}{author_url(p['author'])}">{esc(p['author'])}</a> · {p['date_human']}{updated} · {p['minutes']} min read</p>
 </div>
 <div class="tool-head-art">{iso.tool_icon(first_tool['tool']) if first_tool else ''}</div>
 </section>
@@ -187,7 +194,7 @@ def build(out_dir, tools, ctx):
             {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["title"],
              "description": p["description"], "image": [p["image_url"]],
              "datePublished": p["date"].isoformat(), "dateModified": p["updated"].isoformat(),
-             "author": {"@type": "Person", "name": p["author"], "url": f"{base}/about/"},
+             "author": {"@type": "Person", "name": p["author"], "url": f"{base}/{author_url(p['author'])}"},
              "publisher": publisher, "mainEntityOfPage": f"{base}/{p['path']}"},
             {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "Guides", "item": f"{base}/blog/"},
@@ -200,7 +207,7 @@ def build(out_dir, tools, ctx):
                  f'<link rel="alternate" type="application/rss+xml" title="{esc(cfg["name"])} guides" href="{base}/blog/feed.xml">\n')
         d = out_dir / p["path"]
         d.mkdir(parents=True, exist_ok=True)
-        (d / "index.html").write_text(page(path=p["path"], title=f"{p['title']} | {cfg['name']}", description=p["description"],
+        (d / "index.html").write_text(page(path=p["path"], title=f"{p['seo_title']} | {cfg['name']}", description=p["seo_description"],
                                            body=body, schema=schema, accent=p["accent"], image=p["image_url"],
                                            og_type="article", extra_head=extra, current="blog/"))
         urls.append((p["path"], "0.7", p["updated"].isoformat()))
@@ -213,6 +220,7 @@ def build(out_dir, tools, ctx):
         prefix = "../../"
         cat_tools = [t["slug"] for t in tools if t.get("category") == key]
         accent = by_slug[cat_tools[0]]["tool"] if cat_tools else "violet"
+        hub_link = (f'<p class="more-link"><a href="{prefix}{hubs[key]["slug"]}/">All {esc(hubs[key]["h1"].lower())}</a></p>' if key in hubs else "")
         body = f"""<section class="tool-head">
 <div class="tool-head-text">
 <p class="crumbs"><a href="{prefix}">Home</a> / <a href="../">Guides</a> / {esc(label)}</p>
@@ -222,7 +230,7 @@ def build(out_dir, tools, ctx):
 <div class="tool-head-art">{iso.tool_icon(accent)}</div>
 </section>
 <ul class="post-cards">{''.join(post_card(p, prefix) for p in cat_posts)}</ul>
-<section class="related"><h2>{esc(label)} calculators</h2><ul class="related-list">{calc_cards(cat_tools, prefix)}</ul></section>"""
+<section class="related"><h2>{esc(label)} calculators</h2><ul class="related-list">{calc_cards(cat_tools, prefix)}</ul>{hub_link}</section>"""
         d = out_dir / "blog" / key
         d.mkdir(parents=True, exist_ok=True)
         (d / "index.html").write_text(page(path=f"blog/{key}/", title=f"{label} Guides | {cfg['name']}",
