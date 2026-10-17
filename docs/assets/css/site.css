@@ -799,3 +799,22 @@ html.embed .viz { display: none; }
 .viz-combo { font: inherit; text-align: left; display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 14px; border: 2px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; font-size: 0.88rem; }
 .viz-pair { display: flex; flex: none; border-radius: 10px; overflow: hidden; border: 1px solid rgba(0, 0, 0, 0.12); }
 .viz-pair span { width: 22px; height: 40px; }
+/* Calculator pages: compact guide with folding sections */
+.guide-compact { margin-top: 40px; }
+.guide-compact > h2:first-child { margin-top: 0; }
+.fold { margin: 12px 0; padding: 0 18px; border: 2px solid var(--line); border-radius: 18px; background: var(--surface); }
+.fold > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary h3 { margin: 0; font-size: 1.08rem; }
+.fold > summary::after { content: "+"; flex: none; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; font-weight: 800; color: #fff; background: var(--accent-deep); transition: transform 0.2s; }
+.fold[open] > summary::after { transform: rotate(45deg); }
+.fold-body { padding-bottom: 14px; }
+.fold-body > :first-child { margin-top: 0; }
+.guide-compact .faq, .guide-compact .related { margin-top: 32px; }
+.embed-box.fold { margin-top: 28px; padding: 0 18px; box-shadow: none; }
+.measure-note { margin: -4px 0 14px; padding: 10px 14px; border-radius: 12px; background: var(--accent-soft); font-size: 0.88rem; color: var(--ink); }
+.author-line { margin: 28px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--muted); }
+.guide-links { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.guide-links li { margin: 0; padding: 12px 14px; border: 2px solid var(--line); border-radius: 14px; background: var(--surface); }
+.guide-links a { font-weight: 700; color: var(--ink); }
+.guide-links .post-date { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 2px; }

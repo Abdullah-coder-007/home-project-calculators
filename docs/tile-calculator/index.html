@@ -25,8 +25,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
-<link rel="stylesheet" href="../assets/css/site.css?v=e0590cdc41">
-<link rel="stylesheet" href="../assets/css/accents.css?v=e0590cdc41">
+<link rel="stylesheet" href="../assets/css/site.css?v=a1da2993ec">
+<link rel="stylesheet" href="../assets/css/accents.css?v=a1da2993ec">
 <meta name="p:domain_verify" content="03e7d80eba3690c97cff51a2a311b37b">
 <script>(function(){if(document.documentElement.classList.contains('embed'))return;window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;var no={ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};gtag('consent','default',Object.assign({region:["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH"],wait_for_update:500},no));gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});var c=null;try{c=localStorage.getItem('pm:consent');}catch(e){}if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});else if(c==='denied')gtag('consent','update',no);gtag('js',new Date());gtag('config','G-2QN7238191');var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-2QN7238191';document.head.appendChild(s);})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Tile calculator", "url": "https://calcupine.com/tile-calculator/", "description": "Calculate how many tiles and boxes to buy for a floor, shower or backsplash, with waste for straight, diagonal or herringbone layouts, plus thinset and grout.", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}}</script>
@@ -52,7 +52,7 @@
 <div class="tool-grid">
 <form id="calc" class="calc" data-tool="tile" novalidate>
 <div class="units-toggle" role="group" aria-label="Units"><span class="units-label">Units</span><button type="button" data-units="imperial" aria-pressed="true">ft &amp; in</button><button type="button" data-units="metric" aria-pressed="false">m &amp; cm</button></div><h2>Your project</h2>
-<div class="group">
+<p class="measure-note">Need help measuring? Try your phone’s AR measure app, then type the numbers in.</p><div class="group">
   <p class="group-title">Area to tile</p>
   <div data-area-builder></div>
 </div>
@@ -139,8 +139,7 @@
 </div>
 
 <p class="embed-credit"><a href="https://calcupine.com/tile-calculator/" target="_blank" rel="noopener">Tile calculator</a> by Calcupine</p>
-<article class="guide">
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol><li><a href="#how-the-tile-calculator-works">How the tile calculator works</a></li><li><a href="#waste-allowance-by-layout">Waste allowance by layout</a></li><li><a href="#measuring-an-area-to-tile">Measuring an area to tile</a></li><li><a href="#grout-and-thinset-estimates">Grout and thinset estimates</a></li><li><a href="#before-you-buy">Before you buy</a></li><li><a href="#sources">Sources</a></li><li><a href="#questions">Common questions</a></li></ol></nav>
+<article class="guide guide-compact">
 <h2 id="how-the-tile-calculator-works">How the tile calculator works</h2>
 <p>The calculator adds up your area, adds a waste allowance for cuts and breakage, and divides by the space one tile covers including its grout joint.</p>
 <p class="formula">Area to buy = area &times; (1 + waste %)<br>
@@ -148,10 +147,10 @@ Space per tile (sq ft) = (tile length + joint) &times; (tile width + joint) &div
 Tiles = area to buy &divide; space per tile, rounded up<br>
 Boxes = area to buy &divide; square feet per box, rounded up</p>
 
-<h3>Worked example</h3>
+<details class="fold"><summary><h3>Worked example</h3></summary><div class="fold-body">
 <p>A 10 by 10 foot bathroom floor is 100 sq ft. With a straight layout, 10% extra makes 110 sq ft. A 12 by 12 inch tile with a 1/8 inch joint covers 1.02 sq ft, so you need <strong>108 tiles</strong>, or 8 boxes of 15 sq ft.</p>
 
-<h2 id="waste-allowance-by-layout">Waste allowance by layout</h2>
+</div></details><details class="fold" id="waste-allowance-by-layout"><summary><h3>Waste allowance by layout</h3></summary><div class="fold-body">
 <table>
 <thead><tr><th>Layout</th><th>Typical extra</th><th>Why</th></tr></thead>
 <tbody>
@@ -162,7 +161,7 @@ Boxes = area to buy &divide; square feet per box, rounded up</p>
 </tbody>
 </table>
 
-<h2 id="measuring-an-area-to-tile">Measuring an area to tile</h2>
+</div></details><details class="fold" id="measuring-an-area-to-tile"><summary><h3>Measuring an area to tile</h3></summary><div class="fold-body">
 <ol>
 <li>Measure wall to wall. For floors, tile usually runs under the toilet but not under the vanity cabinet or built-in tub.</li>
 <li>Split L-shaped rooms into rectangles with <em>Add a section</em>.</li>
@@ -170,33 +169,35 @@ Boxes = area to buy &divide; square feet per box, rounded up</p>
 <li>For a backsplash, measure the width of each wall run and the height from countertop to the bottom of the upper cabinets, then subtract windows and outlets larger than a tile.</li>
 </ol>
 
-<h2 id="grout-and-thinset-estimates">Grout and thinset estimates</h2>
+</div></details><details class="fold" id="grout-and-thinset-estimates"><summary><h3>Grout and thinset estimates</h3></summary><div class="fold-body">
 <p>Grout fills the joints between tiles, so the amount depends on the joint volume. The calculator works out the joint volume per square foot and converts it to pounds, then adds 10%. Small mosaic tiles with wide joints can need several times more grout than large tiles.</p>
 <p class="formula">Grout (cubic inches per sq ft) = 144 &times; (tile length + tile width) &times; joint &times; thickness &divide; (tile length &times; tile width)</p>
 <p>Thinset coverage depends on the trowel. The calculator uses approximate coverage per 50 lb bag of 95 sq ft for a 1/4 by 1/4 inch notch, 63 sq ft for 1/4 by 3/8 inch and 45 sq ft for 1/2 by 1/2 inch. Back-buttering large tiles uses more. Check the chart on your mortar bag before buying.</p>
 
-<h2 id="before-you-buy">Before you buy</h2>
+</div></details><details class="fold" id="before-you-buy"><summary><h3>Before you buy</h3></summary><div class="fold-body">
 <ul>
 <li>Check that every box shows the same lot or batch number; shades vary between lots.</li>
 <li>Lay out a few rows dry before setting any tile to see where cuts will fall.</li>
 <li>Unused full boxes can often be returned. Keep the receipt and do not open boxes until you need them.</li>
 </ul>
-<h2 id="sources">Sources</h2>
+</div></details><details class="fold" id="sources"><summary><h3>Sources</h3></summary><div class="fold-body">
 <p>Thin-set bags are worked out from the middle of the manufacturer's coverage range for each trowel size: about 95, 63 and 45 sq ft per 50 lb bag.</p>
 <ul><li><a href="https://www.custombuildingproducts.com/products/setting-materials/polymer-modified-thin-set-mortars/versabond/versabond.aspx" rel="noopener">Custom Building Products: VersaBond thin-set coverage by trowel size</a></li></ul>
-
+</div></details>
 <section class="faq"><h2 id="questions">Common questions</h2><details><summary>How much extra tile should I buy?</summary><p>Add about 10% for a straight layout, 15% for diagonal, and 15 to 20% for herringbone or large tiles that break easily. Rooms with lots of corners and cuts need the higher end.</p></details><details><summary>How many 12x12 tiles do I need for 100 square feet?</summary><p>Each 12 by 12 inch tile covers 1 sq ft, slightly more with a grout joint. For 100 sq ft with 10% extra you need about 108 tiles at a 1/8 inch joint.</p></details><details><summary>How much grout do I need?</summary><p>It depends on tile size, joint width and tile thickness. Small tiles with wide joints use far more grout than large tiles with thin joints. The calculator estimates the pounds and you should confirm with the coverage chart on the grout bag.</p></details><details><summary>Which trowel size should I use?</summary><p>As a rough guide: 1/4 by 1/4 inch square notch for tiles up to about 8 inches, 1/4 by 3/8 inch for 8 to 16 inch tiles, and 1/2 by 1/2 inch for larger tiles. Always follow the tile and mortar maker's instructions.</p></details><details><summary>Should I keep spare tiles?</summary><p>Yes. Keep at least a few tiles, ideally a full box, from the same lot. Matching a discontinued tile years later for a repair can be impossible.</p></details></section>
-<section class="author-box"><span class="author-mark" aria-hidden="true"></span><div><p class="author-name">Guide by Noah Scott · Updated October 16, 2026</p><p>Noah Scott writes Calcupine&#x27;s project guides. Every guide starts from what homeowners are searching for right now, is researched from manufacturer data, university extension advice and building standards, and is checked against our calculators before it goes live.</p><p>Every formula on this page is tested against hand-worked examples before it goes live. <a href="../how-we-calculate/">How we calculate</a> · <a href="../contact/">Report a mistake</a></p></div></section>
-<section class="related"><h2>Guides for this project</h2><ul class="post-cards"><li class="post-card" data-accent="flooring"><a href="../blog/floors/dark-kitchen-floors-are-back/"><span class="post-img"><img src="https://images.unsplash.com/photo-1560185127-2d06c6d08d3d?w=640&amp;h=360&amp;fit=crop&amp;q=80&amp;auto=format" alt="" width="1200" height="630" loading="lazy"></span><span class="post-body"><span class="post-cat">Floors</span><span class="post-title">Kelly Ripa&#x27;s glossy black kitchen floor has everyone asking: are dark floors back?</span><span class="post-desc">A celebrity kitchen just sent searches for dark kitchen flooring through the roof. What&#x27;s trending underfoot for 2026–27, the honest pros and cons of dark floors, and how much flooring a kitchen really needs.</span><span class="post-date">October 15, 2026</span></span></a></li></ul></section>
+<section class="related"><h2>Guides for this project</h2><ul class="guide-links"><li><a href="../blog/floors/dark-kitchen-floors-are-back/">Kelly Ripa&#x27;s glossy black kitchen floor has everyone asking: are dark floors back?</a> <span class="post-date">October 15, 2026</span></li></ul></section>
 <section class="related"><h2>Related calculators</h2><ul class="related-list"><li data-accent="paint"><a href="../paint-calculator/"><span class="mini-art"><svg class="iso-icon" viewBox="0 0 96 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><ellipse cx="48.0" cy="56.5" rx="26.5" ry="15.3" fill="#a1a1b6"/><rect x="21.5" y="16.9" width="52.9" height="39.6" fill="#d4d7e4"/><rect x="21.5" y="16.9" width="14.5" height="39.6" fill="#edeff8"/><rect x="59.9" y="16.9" width="14.5" height="39.6" fill="#abacbf"/><path d="M21.5 16.9 h52.9 v12.7 q-6.6 13.7 -13.2 0 q-6.6 27.5 -13.2 0 q-6.6 10.7 -13.2 0 q-6.6 19.9 -13.2 0 z" fill="#ff4d8d"/><ellipse cx="48.0" cy="16.9" rx="26.5" ry="15.3" fill="#ff689e"/><ellipse cx="48.0" cy="16.9" rx="20.6" ry="11.9" fill="none" stroke="#b6b6c8" stroke-width="1.4"/></svg></span><span><strong>Paint calculator</strong><span class="t-what">Gallons of wall and ceiling paint, primer and tape for a room</span></span></a></li><li data-accent="flooring"><a href="../flooring-calculator/"><span class="mini-art"><svg class="iso-icon" viewBox="0 0 96 96" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><polygon points="30.1,40.8 78.4,68.7 78.4,62.4 30.1,34.5" fill="#e48f20"/><polygon points="90.1,61.9 78.4,68.7 78.4,62.4 90.1,55.6" fill="#b67328"/><polygon points="41.8,27.7 90.1,55.6 78.4,62.4 30.1,34.5" fill="#ffba5c"/><polyline points="30.1,34.5 78.4,62.4 90.1,55.6" fill="none" stroke="#ffd9a4" stroke-width="1" stroke-opacity=".7"/><polygon points="28.1,34.7 76.4,62.6 76.4,56.3 28.1,28.4" fill="#e4952e"/><polygon points="88.1,55.8 76.4,62.6 76.4,56.3 88.1,49.5" fill="#b67832"/><polygon points="39.8,21.6 88.1,49.5 76.4,56.3 28.1,28.4" fill="#ffbf67"/><polyline points="28.1,28.4 76.4,56.3 88.1,49.5" fill="none" stroke="#ffdbab" stroke-width="1" stroke-opacity=".7"/><polygon points="30.1,26.4 78.4,54.3 78.4,48.0 30.1,20.1" fill="#e48f20"/><polygon points="90.1,47.5 78.4,54.3 78.4,48.0 90.1,41.2" fill="#b67328"/><polygon points="41.8,13.3 90.1,41.2 78.4,48.0 30.1,20.1" fill="#ffba5c"/><polyline points="30.1,20.1 78.4,48.0 90.1,41.2" fill="none" stroke="#ffd9a4" stroke-width="1" stroke-opacity=".7"/><polygon points="28.1,20.3 76.4,48.2 76.4,41.9 28.1,14.0" fill="#e4952e"/><polygon points="88.1,41.4 76.4,48.2 76.4,41.9 88.1,35.1" fill="#b67832"/><polygon points="39.8,7.2 88.1,35.1 76.4,41.9 28.1,14.0" fill="#ffbf67"/><polyline points="28.1,14.0 76.4,41.9 88.1,35.1" fill="none" stroke="#ffdbab" stroke-width="1" stroke-opacity=".7"/><polygon points="16.0,48.9 64.4,76.8 64.4,70.5 16.0,42.6" fill="#d48523"/><polygon points="76.1,70.0 64.4,76.8 64.4,70.5 76.1,63.7" fill="#aa6c2a"/><polygon points="27.7,35.8 76.1,63.7 64.4,70.5 16.0,42.6" fill="#f2b25e"/><polyline points="16.0,42.6 64.4,70.5 76.1,63.7" fill="none" stroke="#f8d4a5" stroke-width="1" stroke-opacity=".7"/></svg></span><span><strong>Flooring calculator</strong><span class="t-what">Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim</span></span></a></li></ul></section>
+<p class="author-line">Guide by <strong>Noah Scott</strong> · Updated October 17, 2026 · Formulas tested against worked examples · <a href="../how-we-calculate/">How we calculate</a> · <a href="../contact/">Report a mistake</a></p>
 </article>
-<section class="embed-box">
-<h2>Add this calculator to your site</h2>
+<details class="embed-box fold">
+<summary><h3>Add this calculator to your site</h3></summary>
+<div class="fold-body">
 <p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
 <label class="field"><span>Embed code</span><textarea id="embed-code" readonly>&lt;iframe src=&quot;https://calcupine.com/tile-calculator/?embed=1&quot; title=&quot;Tile calculator&quot; width=&quot;100%&quot; height=&quot;900&quot; style=&quot;border:0;max-width:720px&quot; loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
 &lt;p&gt;&lt;a href=&quot;https://calcupine.com/tile-calculator/&quot;&gt;Tile calculator&lt;/a&gt; by Calcupine&lt;/p&gt;</textarea></label>
 <button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
-</section>
+</div>
+</details>
 </main>
 <footer class="site-foot"><div class="wrap">
 <nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a><button type="button" class="cookie-link" data-cookie-settings>Cookie choices</button></nav>
@@ -206,6 +207,5 @@ Boxes = area to buy &divide; square feet per box, rounded up</p>
 <script src="../assets/js/formulas.js?v=f6c827c0cf" defer></script>
 <script src="../assets/js/tools.js?v=f6c827c0cf" defer></script>
 <script src="../assets/js/app.js?v=f6c827c0cf" defer></script>
-<script src="../assets/js/measure.js?v=f6c827c0cf" defer></script>
 </body>
 </html>

@@ -44,6 +44,7 @@ warnings = []
 # STAGING=1 python3 build.py -> a private preview: hidden from search engines,
 # no analytics or ads, and a banner on every page.
 STAGING = os.environ.get("STAGING") == "1"
+LAB = STAGING   # features still being tested (camera measuring, color visualizer) show on staging only
 # While the app is in testing, staging links to the latest test build on GitHub.
 APP_TEST_URL = "https://github.com/Abdullah-coder-007/home-project-calculators/releases/tag/app-latest"
 if STAGING:
@@ -120,6 +121,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
     canonical = f"{BASE}/{path}"
     css_v = asset_hash(SRC / "assets/css/site.css")
     js_v = "".join(asset_hash(SRC / f"assets/js/{n}.js") for n in ("formulas", "tools", "app", "measure"))[:10]
+    measure_script = f'<script src="{prefix}assets/js/measure.js?v={js_v}" defer></script>\n' if LAB else ""
 
     verif = ""
     if CFG.get("google_site_verification"):
@@ -201,8 +203,7 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
 <script src="{prefix}assets/js/formulas.js?v={js_v}" defer></script>
 <script src="{prefix}assets/js/tools.js?v={js_v}" defer></script>
 <script src="{prefix}assets/js/app.js?v={js_v}" defer></script>
-<script src="{prefix}assets/js/measure.js?v={js_v}" defer></script>
-</body>
+{measure_script}</body>
 </html>
 """
 
@@ -259,52 +260,67 @@ def tool_page(t, all_tools):
                   f'style="border:0;max-width:720px" loading="lazy"></iframe>\n'
                   f'<p><a href="{url}">{esc(t["h1"])}</a> by {esc(CFG["name"])}</p>')
 
-    # "On this page" links built from the guide's h2 headings
-    toc, used = [], set()
+    # Guide: the first section shows; the rest fold away (still on the page for search engines).
+    used = set()
 
-    def add_id(m):
-        text = re.sub(r"<[^>]+>", "", m.group(1))
-        slug = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")[:48]
+    def heading_id(text):
+        slug = re.sub(r"[^a-z0-9]+", "-", re.sub(r"<[^>]+>", "", text).lower()).strip("-")[:48]
         while slug in used:
             slug += "-2"
         used.add(slug)
-        toc.append((slug, text))
-        return f'<h2 id="{slug}">{m.group(1)}</h2>'
-    guide_html = re.sub(r"<h2>(.*?)</h2>", add_id, t["guide"])
-    toc.append(("questions", "Common questions"))
-    toc_html = "".join(f'<li><a href="#{a}">{x}</a></li>' for a, x in toc)
+        return slug
+    parts = re.split(r"<h2>(.*?)</h2>", t["guide"])
+    guide_html = parts[0]
+    for n in range(1, len(parts), 2):
+        h, content = parts[n], parts[n + 1]
+        if n == 1:
+            # keep the short intro and formula; fold sub-parts like "Worked example"
+            sub = re.split(r"<h3>(.*?)</h3>", content)
+            content = sub[0] + "".join(
+                f'<details class="fold"><summary><h3>{sub[k]}</h3></summary><div class="fold-body">{sub[k + 1]}</div></details>'
+                for k in range(1, len(sub), 2))
+            guide_html += f'<h2 id="{heading_id(h)}">{h}</h2>{content}'
+        else:
+            guide_html += (f'<details class="fold" id="{heading_id(h)}"><summary><h3>{h}</h3></summary>'
+                           f'<div class="fold-body">{content}</div></details>')
+    lede = re.sub(r"\s*The example[^.;]*[.;][^.]*\.?$", "", t["lede"]).strip()
+    has_lengths = re.search(r'class="unit">(ft|in|sq ft)<', t['form'])
+    measure_note = ('' if LAB or not has_lengths else
+                    '<p class="measure-note">Need help measuring? Try your phone\u2019s AR measure app, then type the numbers in.</p>')
+    extra = t.get("extra", "").replace("{{v}}", asset_hash(SRC / "assets/js/visualizer.js") if (SRC / "assets/js/visualizer.js").exists() else "") if LAB else ""
 
     body = f"""<section class="tool-head">
 <div class="tool-head-text">
 <p class="crumbs"><a href="../">All calculators</a> / {esc(t['short'])}</p>
 <h1>{esc(t['h1'])}</h1>
-<p class="lede">{t['lede']}</p>
+<p class="lede">{lede}</p>
 </div>
 <div class="tool-head-art">{iso.tool_icon(t['tool'])}</div>
 </section>
 <div class="tool-grid">
 <form id="calc" class="calc" data-tool="{esc(t['tool'])}" novalidate>
-{UNITS_TOGGLE if re.search(r'class="unit">(ft|in|sq ft)<', t['form']) else ''}<h2>Your project</h2>
-{t['form']}
+{UNITS_TOGGLE if has_lengths else ''}<h2>Your project</h2>
+{measure_note}{t['form']}
 </form>
 {RESULT_PANEL}
 </div>
-{t.get("extra", "").replace("{{v}}", asset_hash(SRC / "assets/js/visualizer.js") if (SRC / "assets/js/visualizer.js").exists() else "")}
+{extra}
 <p class="embed-credit"><a href="{url}" target="_blank" rel="noopener">{esc(t['h1'])}</a> by {esc(CFG['name'])}</p>
-<article class="guide">
-<nav class="toc" aria-label="On this page"><p class="toc-title">On this page</p><ol>{toc_html}</ol></nav>
+<article class="guide guide-compact">
 {guide_html}
 <section class="faq"><h2 id="questions">Common questions</h2>{faq_html}</section>
-{author_box("../")}
 {guides_for(t["slug"], "../")}
 <section class="related"><h2>Related calculators</h2><ul class="related-list">{related_html}</ul></section>
+{author_line("../")}
 </article>
-<section class="embed-box">
-<h2>Add this calculator to your site</h2>
+<details class="embed-box fold">
+<summary><h3>Add this calculator to your site</h3></summary>
+<div class="fold-body">
 <p>Free for blogs and contractors. Copy the code into any page that accepts HTML.</p>
 <label class="field"><span>Embed code</span><textarea id="embed-code" readonly>{esc(embed_code)}</textarea></label>
 <button type="button" class="btn btn-quiet" data-action="copy-embed">Copy embed code</button>
-</section>"""
+</div>
+</details>"""
 
     schema = [
         {"@context": "https://schema.org", "@type": "WebApplication", "name": t["h1"], "url": url,
@@ -426,6 +442,14 @@ def with_diagrams(html_text):
         return f'<ul class="measure-tips" aria-label="What to measure">{items}</ul>'
     return re.sub(r"<!--\s*diagram:\s*([\w-]+)\s*-->", repl, html_text)
 
+def author_line(prefix):
+    """One short line on calculator pages: who wrote it, when, and how to check it."""
+    name = CFG.get("guide_author") or CFG["owner_name"]
+    return (f'<p class="author-line">Guide by <strong>{esc(name)}</strong> \u00b7 Updated {datetime.date.today().strftime("%B %-d, %Y")} \u00b7 '
+            f'Formulas tested against worked examples \u00b7 <a href="{prefix}how-we-calculate/">How we calculate</a> \u00b7 '
+            f'<a href="{prefix}contact/">Report a mistake</a></p>')
+
+
 def post_card(post, prefix):
     thumb = post["image_url"].replace("w=1600&h=900", "w=640&h=360")
     return (f'<li class="post-card" data-accent="{post["accent"]}"><a href="{prefix}{post["path"]}">'
@@ -448,7 +472,8 @@ def guides_for(tool_slug, prefix):
     posts = [p for p in BLOG_POSTS if tool_slug in p["calculators"]][:3]
     if not posts:
         return ""
-    return f'<section class="related"><h2>Guides for this project</h2><ul class="post-cards">{"".join(post_card(p, prefix) for p in posts)}</ul></section>'
+    items = "".join(f'<li><a href="{prefix}{p["path"]}">{esc(p["title"])}</a> <span class="post-date">{p["date_human"]}</span></li>' for p in posts)
+    return f'<section class="related"><h2>Guides for this project</h2><ul class="guide-links">{items}</ul></section>'
 
 
 import blog  # noqa: E402
