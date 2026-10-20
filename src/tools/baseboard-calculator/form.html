@@ -1,0 +1,72 @@
+<div class="group">
+  <fieldset class="choices">
+    <legend>How will you measure?</legend>
+    <label><input type="radio" name="mode" value="room" checked><span>Rectangular room</span></label>
+    <label><input type="radio" name="mode" value="walls"><span>Wall by wall</span></label>
+  </fieldset>
+</div>
+
+<div class="group" data-mode="room">
+  <!-- diagram: baseboard -->
+  <div class="row">
+    <div class="field ftin"><span>Length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="14"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Width</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_ft" value="12"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="width_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="group" data-mode="walls" hidden>
+  <div class="field ftin"><span>Total length of all walls</span>
+    <div class="ftin-pair">
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="totalLength_ft" value="100"><span class="unit">ft</span></label>
+      <label><input type="number" inputmode="decimal" min="0" step="any" name="totalLength_in" value=""><span class="unit">in</span></label>
+    </div>
+    <span class="hint">Measure along the floor, corner to corner, and add every wall that gets baseboard</span>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Doorways</p>
+  <div class="row">
+    <label class="field"><span>Door openings</span><input type="number" inputmode="numeric" min="0" step="1" name="openings" value="1"><span class="hint">Doors and open doorways</span></label>
+    <label class="field"><span>Width of each opening</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="openingIn" value="36"><span class="unit">in</span></span>
+      <span class="hint">Where the baseboard stops</span>
+    </label>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Baseboard</p>
+  <div class="row">
+    <label class="field"><span>Piece length</span>
+      <select name="pieceFt">
+        <option value="8">8 ft</option>
+        <option value="12">12 ft</option>
+        <option value="16" selected>16 ft</option>
+      </select>
+      <span class="hint">Longer pieces mean fewer seams</span>
+    </label>
+    <label class="field"><span>Extra for cuts</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="wastePct" value="10"><span class="unit">%</span></span>
+      <span class="hint">10% is usual; 15% for many corners</span>
+    </label>
+  </div>
+  <label class="check"><input type="checkbox" name="shoe"> <span>Add shoe molding or quarter round along the floor</span></label>
+  <label class="check"><input type="checkbox" name="casing"> <span>Also trim doors and windows with casing</span></label>
+  <div data-casing="on" hidden>
+  <div class="row">
+    <label class="field"><span>Door sides to case</span><input type="number" inputmode="numeric" min="0" step="1" name="doorSides" value="2"><span class="hint">A door between two rooms has 2 sides</span></label>
+    <label class="field"><span>Windows to case</span><input type="number" inputmode="numeric" min="0" step="1" name="casedWindows" value="2"><span class="hint">Up to about 3 by 5 ft</span></label>
+  </div>
+  </div>
+</div>

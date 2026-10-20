@@ -1,0 +1,48 @@
+<div class="group">
+  <p class="group-title">Tiled area</p>
+  <div data-area-builder></div>
+</div>
+
+<div class="group">
+  <p class="group-title">Tile and joints</p>
+  <div class="row">
+    <label class="field"><span>Tile length</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="tileL" value="12"><span class="unit">in</span></span></label>
+    <label class="field"><span>Tile width</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="tileW" value="12"><span class="unit">in</span></span></label>
+  </div>
+  <div class="row">
+    <label class="field"><span>Joint width</span>
+      <select name="jointIn">
+        <option value="0.0625">1/16 in</option>
+        <option value="0.125" selected>1/8 in</option>
+        <option value="0.1875">3/16 in</option>
+        <option value="0.25">1/4 in</option>
+        <option value="0.375">3/8 in</option>
+        <option value="0.5">1/2 in</option>
+      </select>
+      <span class="hint">The spacer size</span>
+    </label>
+    <label class="field"><span>Tile thickness</span>
+      <select name="thicknessIn">
+        <option value="0.1875">3/16 in</option>
+        <option value="0.25">1/4 in (wall and mosaic tile)</option>
+        <option value="0.3125">5/16 in</option>
+        <option value="0.375" selected>3/8 in (most floor tile)</option>
+        <option value="0.5">1/2 in</option>
+        <option value="0.75">3/4 in (stone, pavers)</option>
+      </select>
+      <span class="hint">Grout fills the joint to this depth</span>
+    </label>
+  </div>
+</div>
+
+<div class="group">
+  <fieldset class="choices">
+    <legend>Grout</legend>
+    <label><input type="radio" name="type" value="sanded" checked><span>Sanded (joints 1/8 in and up)</span></label>
+    <label><input type="radio" name="type" value="unsanded"><span>Non-sanded (joints to 1/8 in)</span></label>
+    <label><input type="radio" name="type" value="premixed"><span>Pre-mixed pail</span></label>
+  </fieldset>
+  <label class="field"><span>Extra for mixing and cleanup</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="wastePct" value="10"><span class="unit">%</span></span>
+  </label>
+</div>

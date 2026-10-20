@@ -1,0 +1,37 @@
+{
+  "tool": "grout",
+  "category": "floors",
+  "short": "Grout calculator",
+  "what": "Pounds and bags of sanded, non-sanded or pre-mixed grout",
+  "title": "Grout Calculator: How Much Grout Do I Need for My Tile? | Calcupine",
+  "description": "Free grout calculator: pounds and bags of sanded or non-sanded grout, or gallons of pre-mixed grout, from your tile size, joint width and tile thickness.",
+  "h1": "Grout calculator",
+  "lede": "Enter your floor or wall area, tile size, joint width and tile thickness. See how many pounds of grout to mix and which bags or pails to buy.",
+  "related": [
+    "tile-calculator",
+    "flooring-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How much grout do I need for 100 square feet?",
+      "a": "For 12 by 12 inch tile, 3/8 inch thick, with 1/8 inch joints, about 7 lb of sanded grout plus 10% extra, so 8 lb. One 25 lb bag covers about 348 sq ft of that tile on Custom Building Products' chart. Smaller tiles and wider joints need much more."
+    },
+    {
+      "q": "Why do small tiles need so much more grout?",
+      "a": "Grout fills the joints, and small tiles have many more joints per square foot. On Custom Building Products' chart, a 25 lb bag covers 96 sq ft of 2 by 2 inch mosaic with 1/8 inch joints but 348 sq ft of 12 by 12 inch tile with the same joint: more than three and a half times as much grout for the mosaic."
+    },
+    {
+      "q": "Should I use sanded or non-sanded grout?",
+      "a": "Use sanded grout for joints 1/8 inch and wider and non-sanded grout for joints of 1/8 inch or less. Non-sanded grout is also safer on polished marble and glass tile, which sand can scratch. Check the tile maker's advice."
+    },
+    {
+      "q": "How deep does grout go?",
+      "a": "The full depth of the tile, down to the thinset. Scrape out any thinset that squeezes up into the joints before it sets so the grout can fill them."
+    },
+    {
+      "q": "How many square feet does a 25 lb bag of grout cover?",
+      "a": "Anywhere from about 25 to 700 sq ft depending on tile size and joint width. Custom Building Products lists 348 sq ft for 12 by 12 inch tile with 1/8 inch joints and 54 sq ft for 1 by 1 inch mosaic with the same joint."
+    }
+  ]
+}

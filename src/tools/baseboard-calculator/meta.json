@@ -1,0 +1,37 @@
+{
+  "tool": "baseboard",
+  "category": "walls",
+  "short": "Baseboard calculator",
+  "what": "Baseboard pieces, shoe molding, casing, nails and caulk",
+  "title": "Baseboard Calculator: How Much Baseboard and Trim Do I Need? | Calcupine",
+  "description": "Free baseboard calculator: linear feet and 8, 12 or 16 ft pieces of baseboard for a room, plus shoe molding, door and window casing, finish nails and caulk.",
+  "h1": "Baseboard and trim calculator",
+  "lede": "Enter your room size or the total length of your walls and your door openings. See how many pieces of baseboard, shoe molding and casing to buy, with nails and caulk.",
+  "related": [
+    "paint-calculator",
+    "flooring-calculator",
+    "drywall-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How do I calculate how much baseboard I need?",
+      "a": "Add up the length of every wall, take off the width of each door opening, then add about 10% for cuts. A 12 by 14 foot room with one 36 inch door needs 49 feet, or about 54 feet with extra. That is 4 pieces of 16 ft baseboard."
+    },
+    {
+      "q": "How much extra baseboard should I buy?",
+      "a": "About 10% for a simple room. Add more, around 15%, for rooms with many short walls and corners, or if you are learning to cope inside corners."
+    },
+    {
+      "q": "Should I buy 8, 12 or 16 foot baseboard?",
+      "a": "Buy pieces at least as long as your longest wall when you can carry them, so the wall has no seam. 16 ft pieces cover most bedroom walls in one length. Shorter pieces are easier to transport but need more scarf joints."
+    },
+    {
+      "q": "Do I subtract doorways from baseboard?",
+      "a": "Yes. Baseboard stops at the door casing, so take off the width of each opening, usually about 36 inches for an interior door. Open doorways without doors are subtracted the same way."
+    },
+    {
+      "q": "How many nails do I need for baseboard?",
+      "a": "Plan on two finish nails at every stud, one into the stud and one lower into the bottom plate. Studs are usually 16 inches apart, so 100 feet of baseboard takes about 150 nails."
+    }
+  ]
+}

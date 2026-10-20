@@ -14,8 +14,11 @@
     "paint-calculator",
     "drywall-calculator",
     "wallpaper-calculator",
+    "insulation-calculator",
+    "baseboard-calculator",
     "flooring-calculator",
     "tile-calculator",
+    "grout-calculator",
     "square-footage-calculator",
     "concrete-calculator",
     "paver-calculator",
@@ -69,16 +72,16 @@
     "walls": {
       "slug": "wall-and-ceiling-calculators",
       "h1": "Wall and ceiling calculators",
-      "title": "Wall and Ceiling Calculators: Paint, Drywall, Wallpaper",
-      "description": "Free calculators for wall and ceiling projects: gallons of paint, sheets of drywall with screws and mud, and rolls of wallpaper with pattern repeat.",
-      "intro": "Planning to paint, hang drywall or wallpaper a room? Each calculator takes your room size in feet and inches, subtracts doors and windows, adds the waste the trades plan for and tells you what to buy in store units: gallons and quarts, 4 by 8 or 4 by 12 sheets, or double rolls."
+      "title": "Wall and Ceiling Calculators: Paint, Drywall, Insulation",
+      "description": "Free wall and ceiling calculators: gallons of paint, drywall sheets, wallpaper rolls, bags of insulation, and baseboard and trim pieces with nails and caulk.",
+      "intro": "Planning to paint, hang drywall or wallpaper a room? Each calculator takes your room size in feet and inches, subtracts doors and windows, adds the waste the trades plan for and tells you what to buy in store units: gallons and quarts, 4 by 8 or 4 by 12 sheets, or double rolls. Insulation is worked out in bags of batts or blown-in fill for the R-value you want, and baseboard and casing in 8, 12 or 16 ft pieces."
     },
     "floors": {
       "slug": "floor-calculators",
       "h1": "Floor calculators",
-      "title": "Floor Calculators: Flooring, Tile and Square Footage",
-      "description": "Free floor calculators: boxes of flooring with waste, tiles with thinset and grout, and square footage for L-shaped and odd-shaped rooms.",
-      "intro": "Measure once and get the square footage, the number of boxes or tiles and the extras you need for a floor. The calculators handle L-shaped rooms and cut-outs, add extra waste for diagonal and herringbone tile layouts, and round up to full boxes after the waste is added."
+      "title": "Floor Calculators: Flooring, Tile, Grout, Square Footage",
+      "description": "Free floor calculators: boxes of flooring with waste, tiles with thinset, bags of grout for any joint size, and square footage for odd-shaped rooms.",
+      "intro": "Measure once and get the square footage, the number of boxes or tiles and the extras you need for a floor. The calculators handle L-shaped rooms and cut-outs, add extra waste for diagonal and herringbone tile layouts, and round up to full boxes after the waste is added. The grout calculator turns your tile size, joint width and tile thickness into pounds and bags of sanded or non-sanded grout, or pails of pre-mixed."
     },
     "concrete": {
       "slug": "concrete-and-paver-calculators",

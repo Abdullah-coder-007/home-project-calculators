@@ -567,6 +567,8 @@ MEASURE_TIPS = {
     "steps": [("\u2195", "Rise", "height of one step"), ("\u2194", "Run", "depth of one step, front to back"), ("\u2194", "Width", "side to side")],
     "curb": [("\u2194", "Length", "along the curb"), ("\u2195", "Curb", "width and height of the raised part"), ("\u2194", "Gutter", "width and thickness of the flat pan")],
     "stairs": [("\u2195", "Total rise", "floor to the finished floor above"), ("\u2194", "Tread", "depth of each step"), ("\u2194", "Width", "side to side")],
+    "baseboard": [("\u2194", "Length", "along the floor, wall to wall"), ("\u2194", "Width", "the other wall, wall to wall"), ("#", "Doorways", "where the baseboard will stop")],
+    "walls": [("\u2194", "Wall length", "add up every wall you will insulate"), ("\u2195", "Height", "floor to ceiling"), ("#", "Openings", "doors and windows to take off")],
     "roof": [("\u2194", "Length and width", "outside walls of the house"), ("\u2194", "Overhang", "how far the roof sticks out past the walls"), ("\u2197", "Pitch", "inches of rise per 12 inches across")],
 }
 

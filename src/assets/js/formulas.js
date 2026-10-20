@@ -382,6 +382,137 @@
     };
   }
 
+  /* ---------- Insulation ---------- */
+  // Blown-in attic coverage: R-value -> [minimum bags per 1,000 sq ft, minimum settled inches].
+  // Fiberglass: Owens Corning AttiCat (28.5 lb bag). Cellulose: Greenfiber SANCTUARY (25 lb bag).
+  var BLOWN_CHART = {
+    fiberglass: [[13, 6.6, 4.5], [19, 9.4, 6.5], [22, 11.1, 7.5], [25, 13.3, 8.75], [30, 15.3, 10.25],
+      [38, 19.5, 13], [44, 23.0, 14.75], [49, 25.8, 16.5], [60, 32.1, 20]],
+    cellulose: [[13, 15.2, 3.6], [19, 22.6, 5.3], [22, 26.3, 6.1], [30, 38.6, 8.3], [38, 52.6, 10.4],
+      [44, 63.5, 12], [49, 70.8, 13.3], [60, 86.0, 16.1]]
+  };
+  // Square feet per bag of Owens Corning EcoTouch batts, by R-value (label figures).
+  var BATT_SQFT = { 13: 106.56, 19: 78.79, 21: 67.81, 30: 58.67, 38: 42.67 };
+  var BATT_INCHES = { 13: 3.5, 19: 6.25, 21: 5.5, 30: 9.5, 38: 12 };
+  // ENERGY STAR: R-value per inch of existing insulation, by type.
+  var R_PER_INCH = { fiberglass: 2.5, rockwool: 2.8, cellulose: 3.7, batts: 3.2 };
+
+  // Straight-line reading of a coverage chart, starting from zero at R-0 and
+  // continuing the last step past the top row.
+  function blownFor(material, r) {
+    var rows = [[0, 0, 0]].concat(BLOWN_CHART[material] || BLOWN_CHART.fiberglass);
+    if (r <= 0) return { bagsPer1000: 0, inches: 0 };
+    for (var k = 1; k < rows.length; k++) {
+      if (r <= rows[k][0] + 1e-9 || k === rows.length - 1) {
+        var a = rows[k - 1], b = rows[k], t = (r - a[0]) / (b[0] - a[0]);
+        return { bagsPer1000: a[1] + t * (b[1] - a[1]), inches: a[2] + t * (b[2] - a[2]) };
+      }
+    }
+  }
+
+  function insulation(i) {
+    var walls = i.mode !== 'attic';
+    var doors = Math.max(0, Math.round(num(i.doors))), windows = Math.max(0, Math.round(num(i.windows)));
+    var area = walls ? Math.max(0, pos(i.wallLength) * pos(i.wallHeight) - doors * DOOR_SQFT - windows * WINDOW_SQFT)
+      : pos(i.area);
+    var material = walls ? 'batts' : (BLOWN_CHART[i.material] ? i.material : 'batts');
+    var out = { mode: walls ? 'walls' : 'attic', material: material, area: area };
+    if (material === 'batts') {
+      var r = Math.round(num(walls ? i.wallR : i.battR, walls ? 13 : 30));
+      if (!BATT_SQFT[r]) r = walls ? 13 : 30;
+      var bagSqFt = pos(i.bagSqFt) > 0 ? pos(i.bagSqFt) : BATT_SQFT[r];
+      var existingR = walls ? 0 : pos(i.existingIn) * (R_PER_INCH[i.existingType] || R_PER_INCH.fiberglass);
+      out.rValue = r; out.bagSqFt = bagSqFt; out.inches = BATT_INCHES[r];
+      out.bags = area > 0 ? ceil(area / bagSqFt) : 0;
+      out.existingR = existingR; out.totalR = existingR + r;
+      return out;
+    }
+    var target = pos(i.targetR) || 49;
+    var existing = pos(i.existingIn) * (R_PER_INCH[i.existingType] || R_PER_INCH.fiberglass);
+    var addR = Math.max(0, target - existing);
+    var chart = blownFor(material, addR);
+    var perK = pos(i.bagsPer1000) > 0 ? pos(i.bagsPer1000) : chart.bagsPer1000;
+    out.targetR = target; out.existingR = existing; out.addR = addR;
+    out.bagsPer1000 = perK; out.inches = chart.inches;
+    out.bags = area > 0 && addR > 0 ? ceil(area * perK / 1000) : 0;
+    return out;
+  }
+
+  /* ---------- Baseboard and trim ---------- */
+  var CAULK_FT_PER_TUBE = 55;   // DAP: 10.1 oz tube, 3/16 in bead
+  var CASING_PIECES = 3;        // two legs and a head from 7 ft pieces, per door side or window
+  var DOOR_CASING_FT = 17, WINDOW_CASING_FT = 16;
+  function baseboard(i) {
+    var perimeter = i.mode === 'walls' ? pos(i.totalLength) : 2 * (pos(i.length) + pos(i.width));
+    var openings = Math.max(0, Math.round(num(i.openings)));
+    var openingFt = pos(i.openingIn) / 12;
+    var lf = Math.max(0, perimeter - openings * openingFt);
+    var waste = num(i.wastePct, 10) / 100;
+    var pieceFt = pos(i.pieceFt) || 16;
+    var pieces = lf > 0 ? ceil(lf * (1 + waste) / pieceFt) : 0;
+    var shoe = i.shoe ? (lf > 0 ? ceil(lf * (1 + waste) / 8) : 0) : 0;
+    var doorSides = i.casing ? Math.max(0, Math.round(num(i.doorSides))) : 0;
+    var casedWindows = i.casing ? Math.max(0, Math.round(num(i.casedWindows))) : 0;
+    var casingFt = doorSides * DOOR_CASING_FT + casedWindows * WINDOW_CASING_FT;
+    var studSpots = function (ft) { return ft > 0 ? ceil(ft * 12 / 16) : 0; };
+    var nails = 2 * studSpots(lf) + (i.shoe ? studSpots(lf) : 0) + 2 * studSpots(casingFt);
+    var caulkFt = lf + casingFt;
+    return {
+      perimeter: perimeter, openingsFt: openings * openingFt, linearFt: lf, waste: waste,
+      pieceFt: pieceFt, pieces: pieces, boughtFt: pieces * pieceFt, shoePieces: shoe,
+      casingFt: casingFt, casingPieces: (doorSides + casedWindows) * CASING_PIECES,
+      nails: nails, nailBoxes: nails > 0 ? ceil(nails / 1000) : 0,
+      caulkFt: caulkFt, caulkTubes: caulkFt > 0 ? ceil(caulkFt / CAULK_FT_PER_TUBE) : 0
+    };
+  }
+
+  /* ---------- Grout ---------- */
+  // Weight per cubic inch of joint, matched to Custom Building Products' coverage charts:
+  // Polyblend Plus sanded about 0.065 lb, non-sanded about 0.062 lb. SimpleGrout pre-mixed:
+  // a gallon fills about 220 cubic inches of joint.
+  var GROUT = {
+    sanded:   { lbPerCuIn: 0.065, minJoint: 0.125, maxJoint: 0.5 },
+    unsanded: { lbPerCuIn: 0.062, minJoint: 0, maxJoint: 0.125 },
+    premixed: { cuInPerGal: 220, minJoint: 0.0625, maxJoint: 0.5 }
+  };
+  // Joint volume per square foot: each tile plus one joint is a repeating block.
+  function groutCuInPerSqFt(tl, tw, joint, depth) {
+    if (!(tl > 0 && tw > 0)) return 0;
+    var block = (tl + joint) * (tw + joint);
+    return 144 * (block - tl * tw) * depth / block;
+  }
+  function grout(i) {
+    var area = pos(i.area), tl = pos(i.tileL), tw = pos(i.tileW);
+    var joint = pos(i.jointIn), depth = pos(i.thicknessIn);
+    var type = GROUT[i.type] ? i.type : 'sanded', g = GROUT[type];
+    var extra = num(i.wastePct, 10) / 100;
+    var perSqFt = groutCuInPerSqFt(tl, tw, joint, depth);
+    var cuIn = area * perSqFt * (1 + extra);
+    var out = { type: type, area: area, cuInPerSqFt: perSqFt, cuIn: cuIn, extra: extra,
+      jointOk: joint >= g.minJoint - 1e-9 && joint <= g.maxJoint + 1e-9 };
+    if (type === 'premixed') {
+      var gal = cuIn / g.cuInPerGal;
+      var whole = Math.floor(gal + 1e-9), rem = gal - whole, quarts = 0;
+      if (rem > 1e-9) { if (rem <= 0.25 + 1e-9) quarts = 1; else if (rem <= 0.5 + 1e-9) quarts = 2; else whole += 1; }
+      out.gallons = gal; out.buyGallons = whole; out.buyQuarts = quarts;
+      out.sqFtPerGal = perSqFt > 0 ? g.cuInPerGal / perSqFt : 0;
+      return out;
+    }
+    var lb = cuIn * g.lbPerCuIn;
+    out.lb = lb;
+    if (type === 'sanded') {
+      // 25 lb bags, with a 7 lb bag for a small remainder.
+      var big = Math.floor(lb / 25 + 1e-9), left = lb - big * 25, small = 0;
+      if (left > 1e-9) { if (left <= 7 + 1e-9) small = 1; else big += 1; }
+      out.bags25 = big; out.bags7 = small;
+      out.sqFtPer25 = perSqFt > 0 ? 25 / (perSqFt * g.lbPerCuIn) : 0;
+    } else {
+      out.boxes10 = lb > 0 ? ceil(lb / 10) : 0;
+      out.sqFtPer10 = perSqFt > 0 ? 10 / (perSqFt * g.lbPerCuIn) : 0;
+    }
+    return out;
+  }
+
   /* ---------- Reading a pasted measurement ---------- */
   // Turns text like 4' 3", 4 ft 3 in, 51 in, 4.25 ft, 1.3 m or 130 cm
   // (as copied from Apple's Measure app or typed) into feet + inches.
@@ -420,6 +551,8 @@
     tile: tile, PATTERN_WASTE: PATTERN_WASTE, THINSET_COVERAGE: THINSET_COVERAGE,
     bulk: bulk, MATERIALS: MATERIALS,
     flooring: flooring, FLOOR_WASTE: FLOOR_WASTE,
+    insulation: insulation, blownFor: blownFor, BLOWN_CHART: BLOWN_CHART, BATT_SQFT: BATT_SQFT, R_PER_INCH: R_PER_INCH,
+    baseboard: baseboard, grout: grout, groutCuInPerSqFt: groutCuInPerSqFt, GROUT: GROUT,
     constants: { DOOR_SQFT: DOOR_SQFT, WINDOW_SQFT: WINDOW_SQFT, TAPE_ROLL_FT: TAPE_ROLL_FT, GROUT_LB_PER_CU_IN: GROUT_LB_PER_CU_IN }
   };
 });

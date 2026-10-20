@@ -1,6 +1,6 @@
 # Calcupine — home project calculators
 
-15 free calculators that tell homeowners exactly what to buy: paint, drywall, wallpaper, flooring, tile, square footage, concrete, pavers, cubic yards, mulch/soil/gravel, sod and seed, fences, decks, roofing and stairs. Each page gives quantities, a printable shopping list with editable prices, a how-to guide and an embeddable version for other sites.
+18 free calculators that tell homeowners exactly what to buy: paint, drywall, wallpaper, insulation, baseboard and trim, flooring, tile, grout, square footage, concrete, pavers, cubic yards, mulch/soil/gravel, sod and seed, fences, decks, roofing and stairs. Each page gives quantities, a printable shopping list with editable prices, a how-to guide and an embeddable version for other sites.
 
 Live site: https://calcupine.com (hosted on Cloudflare from the `docs/` folder)
 

@@ -1,0 +1,37 @@
+{
+  "tool": "insulation",
+  "category": "walls",
+  "short": "Insulation calculator",
+  "what": "Batts for walls, or blown-in bags and depth for an attic",
+  "title": "Insulation Calculator: Wall Batts and Blown-In Attic Bags | Calcupine",
+  "description": "Free insulation calculator: bags of R-13 to R-21 batts for walls, or bags of blown-in fiberglass or cellulose to bring an attic up to R-38, R-49 or R-60.",
+  "h1": "Insulation calculator",
+  "lede": "Enter your wall size, or your attic area and how much insulation is already there. See how many bags of batts or blown-in insulation to buy, and how deep to blow it.",
+  "related": [
+    "drywall-calculator",
+    "roofing-calculator",
+    "square-footage-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many bags of blown-in insulation do I need for 1,000 square feet?",
+      "a": "It depends on the R-value and the product. On Owens Corning's AttiCat chart, R-38 takes 19.5 bags per 1,000 sq ft and R-49 takes 25.8. Cellulose bags are smaller and denser: Greenfiber's chart needs 52.6 bags for R-38 and 70.8 for R-49. Always use the chart printed on the bag you buy."
+    },
+    {
+      "q": "What R-value should my attic have?",
+      "a": "ENERGY STAR recommends R-30 in zone 1, R-49 in zones 2 and 3, and R-60 in zones 4 to 8 for an attic with little or no insulation. If you already have 3 to 4 inches, it suggests adding R-25 in zone 1, R-38 in zones 2 and 3, and R-49 in zones 4 to 8."
+    },
+    {
+      "q": "How do I work out the R-value of the insulation I already have?",
+      "a": "Measure its depth in inches and multiply. ENERGY STAR uses about R-2.5 per inch for loose fiberglass, R-2.8 for rock wool, R-3.7 for cellulose and R-3.2 for fiberglass batts. Six inches of old loose fiberglass is roughly R-15."
+    },
+    {
+      "q": "What insulation goes in a 2x4 wall?",
+      "a": "R-13 or R-15 batts, which are 3 1/2 inches thick and fill the cavity without squashing. A 2x6 wall takes R-19 or R-21 batts."
+    },
+    {
+      "q": "Can I put new insulation on top of old insulation?",
+      "a": "Usually, yes, as long as the old insulation is dry and not moldy. Use unfaced batts or loose fill on top so you do not trap a vapor barrier between layers. Have vermiculite tested for asbestos before you disturb it."
+    }
+  ]
+}

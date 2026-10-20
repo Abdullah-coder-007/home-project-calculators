@@ -6,10 +6,13 @@
 - [Paint calculator](https://calcupine.com/paint-calculator/): Gallons of wall and ceiling paint, primer and tape for a room
 - [Drywall calculator](https://calcupine.com/drywall-calculator/): Sheets, joint compound, tape and screws for a room
 - [Wallpaper calculator](https://calcupine.com/wallpaper-calculator/): Rolls of wallpaper with pattern repeat built in
+- [Insulation calculator](https://calcupine.com/insulation-calculator/): Batts for walls, or blown-in bags and depth for an attic
+- [Baseboard calculator](https://calcupine.com/baseboard-calculator/): Baseboard pieces, shoe molding, casing, nails and caulk
 
 ## Floors
 - [Flooring calculator](https://calcupine.com/flooring-calculator/): Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim
 - [Tile calculator](https://calcupine.com/tile-calculator/): Tiles, boxes, thinset and grout for floors, walls and backsplashes
+- [Grout calculator](https://calcupine.com/grout-calculator/): Pounds and bags of sanded, non-sanded or pre-mixed grout
 - [Square footage calculator](https://calcupine.com/square-footage-calculator/): Area of any room or yard in sq ft, sq yd and m²
 
 ## Concrete, pavers and fill

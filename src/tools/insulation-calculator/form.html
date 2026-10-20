@@ -1,0 +1,92 @@
+<div class="group">
+  <fieldset class="choices">
+    <legend>What are you insulating?</legend>
+    <label><input type="radio" name="mode" value="walls" checked><span>Walls</span></label>
+    <label><input type="radio" name="mode" value="attic"><span>Attic floor</span></label>
+  </fieldset>
+</div>
+
+<div class="group" data-mode="walls">
+  <!-- diagram: walls -->
+  <div class="field ftin"><span>Total wall length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallLength_ft" value="120"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallLength_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Wall height</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallHeight_ft" value="8"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallHeight_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  <div class="row">
+    <label class="field"><span>Doors</span><input type="number" inputmode="numeric" min="0" step="1" name="doors" value="2"><span class="hint">Counted as 3 by 7 ft</span></label>
+    <label class="field"><span>Windows</span><input type="number" inputmode="numeric" min="0" step="1" name="windows" value="10"><span class="hint">Counted as 3 by 5 ft</span></label>
+  </div>
+  <label class="field"><span>Batts</span>
+    <select name="wallR">
+      <option value="13" selected>R-13, 3 1/2 in (2x4 walls)</option>
+      <option value="19">R-19, 6 1/4 in (2x6 walls)</option>
+      <option value="21">R-21 high density, 5 1/2 in (2x6 walls)</option>
+    </select>
+  </label>
+</div>
+
+<div class="group" data-mode="attic" hidden>
+  <p class="group-title">Attic floor area</p>
+  <div data-area-builder></div>
+  <fieldset class="choices">
+    <legend>Insulation</legend>
+    <label><input type="radio" name="material" value="fiberglass" checked><span>Blown-in fiberglass</span></label>
+    <label><input type="radio" name="material" value="cellulose"><span>Blown-in cellulose</span></label>
+    <label><input type="radio" name="material" value="batts"><span>Batts or rolls</span></label>
+  </fieldset>
+  <div class="row">
+    <label class="field"><span>Existing insulation depth</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="existingIn" value="0"><span class="unit">in</span></span>
+      <span class="hint">0 if the attic is bare</span>
+    </label>
+    <label class="field"><span>Existing insulation type</span>
+      <select name="existingType">
+        <option value="fiberglass" selected>Loose fiberglass (R-2.5 per in)</option>
+        <option value="rockwool">Rock wool (R-2.8 per in)</option>
+        <option value="cellulose">Cellulose (R-3.7 per in)</option>
+        <option value="batts">Fiberglass batts (R-3.2 per in)</option>
+      </select>
+    </label>
+  </div>
+  <div data-mat="blown">
+  <div class="row">
+    <label class="field"><span>Target total R-value</span>
+      <select name="targetR">
+        <option value="30">R-30 (zone 1)</option>
+        <option value="38">R-38</option>
+        <option value="49" selected>R-49 (zones 2 and 3)</option>
+        <option value="60">R-60 (zones 4 to 8)</option>
+      </select>
+      <span class="hint">ENERGY STAR level for an attic with little or no insulation</span>
+    </label>
+    <label class="field"><span>Bags per 1,000 sq ft</span>
+      <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="bagsPer1000" value="" placeholder="Auto"><span class="unit">bags</span></span>
+      <span class="hint">Leave empty to use our chart, or copy the row from your bag</span>
+    </label>
+  </div>
+  </div>
+  <div data-mat="batts" hidden>
+  <label class="field"><span>Batts to add</span>
+    <select name="battR">
+      <option value="19">R-19, 6 1/4 in</option>
+      <option value="30" selected>R-30, 9 1/2 in</option>
+      <option value="38">R-38, 12 in</option>
+    </select>
+  </label>
+  </div>
+</div>
+
+<div class="group" data-mat="batts">
+  <label class="field"><span>Bag coverage</span>
+    <span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="bagSqFt" value="" placeholder="Auto"><span class="unit">sq ft</span></span>
+    <span class="hint">On the package label. Leave empty for typical bag sizes.</span>
+  </label>
+</div>

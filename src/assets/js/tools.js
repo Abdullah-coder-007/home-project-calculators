@@ -552,5 +552,144 @@
     }
   };
 
+  /* ---------- Insulation ---------- */
+  var BATT_PRICE = { 13: 58, 19: 55, 21: 58, 30: 50, 38: 45 };
+  var BLOWN = {
+    fiberglass: { name: 'Blown-in fiberglass, 28.5 lb bag', price: 42 },
+    cellulose: { name: 'Blown-in cellulose, 25 lb bag', price: 16 }
+  };
+  function showFor(form, attr, value) {
+    Array.prototype.forEach.call(form.querySelectorAll('[' + attr + ']'), function (g) {
+      g.hidden = g.getAttribute(attr).split(' ').indexOf(value) < 0;
+    });
+  }
+  T.insulation = {
+    defaultShapes: [{ type: 'rect', l: 40, w: 25 }],
+    prepare: function (form, v) {
+      var mode = v.mode === 'attic' ? 'attic' : 'walls';
+      showFor(form, 'data-mode', mode);
+      showFor(form, 'data-mat', mode === 'walls' ? 'batts' : (v.material === 'batts' ? 'batts' : 'blown'));
+    },
+    calc: function (v, F) {
+      var r = F.insulation(v), ready = r.area > 0;
+      var items = [], notes = [], headline;
+      if (r.material === 'batts') {
+        var label = 'R-' + r.rValue + ' fiberglass batts, ' + fmt(r.bagSqFt, 2) + ' sq ft bag';
+        items.push({ key: 'batt-' + r.rValue, name: label, qty: r.bags, unit: plural(r.bags, 'bag', 'bags'), unitSingle: 'bag',
+          price: BATT_PRICE[r.rValue] || 55, note: r.inches + ' in thick' });
+        if (r.mode === 'walls') items.push({ key: 'staples', name: 'Staples for kraft facing, box', qty: ready ? 1 : 0, unit: 'box', price: 7 });
+        items.push({ key: 'ppe', name: 'Respirator, goggles and gloves', qty: ready ? 1 : 0, unit: 'kit', price: 30 });
+        headline = { value: ready ? fmt(r.bags) : '0', unit: ready ? plural(r.bags, 'bag', 'bags') + ' of R-' + r.rValue + ' batts' : (r.mode === 'walls' ? 'Enter your wall size' : 'Enter your attic area'),
+          sub: ready ? fmt(r.area) + ' sq ft at ' + fmt(r.bagSqFt, 2) + ' sq ft per bag' : '' };
+        if (ready) {
+          if (r.mode === 'walls') {
+            notes.push('Wall area: ' + fmt(r.area) + ' sq ft after taking off ' + Math.round(F.num(v.doors)) + ' doors (21 sq ft each) and ' + Math.round(F.num(v.windows)) + ' windows (15 sq ft each).');
+            notes.push('Use 15 in wide batts for studs 16 in apart and 23 in wide for 24 in. Cut batts to fit around wires and boxes; squashing them lowers the R-value.');
+            if (r.rValue === 19) notes.push('R-19 batts are 6 1/4 in thick and squeeze slightly into a 5 1/2 in 2x6 wall. R-21 high-density batts are made for that depth.');
+          } else {
+            notes.push('Lay batts across the joists over the old insulation, unfaced, so no vapor barrier is trapped in the middle. That gives about R-' + fmt(r.totalR, 0) + ' in total.');
+          }
+          notes.push('Package sizes vary. If yours lists a different square footage, enter it under bag coverage.');
+        }
+      } else {
+        var b = BLOWN[r.material];
+        items.push({ key: 'blown-' + r.material, name: b.name, qty: r.bags, unit: plural(r.bags, 'bag', 'bags'), unitSingle: 'bag', price: b.price,
+          note: fmt(r.bagsPer1000, 1) + ' bags per 1,000 sq ft' });
+        items.push({ key: 'rulers', name: 'Attic depth rulers, pack', qty: r.bags ? 1 : 0, unit: 'pack', price: 12, note: 'Staple to joists to check depth' });
+        items.push({ key: 'ppe', name: 'Respirator, goggles and gloves', qty: r.bags ? 1 : 0, unit: 'kit', price: 30 });
+        var none = ready && r.addR <= 0;
+        headline = {
+          value: ready ? fmt(r.bags) : '0',
+          unit: !ready ? 'Enter your attic area' : (none ? 'bags: you already have about R-' + fmt(r.existingR, 0) : plural(r.bags, 'bag', 'bags') + ' of blown-in ' + r.material),
+          sub: ready && !none ? 'Adds about R-' + fmt(r.addR, 0) + ' at ' + fmt(r.inches, 1) + ' in deep over ' + fmt(r.area) + ' sq ft' : ''
+        };
+        if (ready && !none) {
+          if (r.existingR > 0) notes.push('Your ' + fmt(F.num(v.existingIn), 1) + ' in of old insulation is worth about R-' + fmt(r.existingR, 1) + ', so the new layer only needs R-' + fmt(r.addR, 1) + ' to reach R-' + r.targetR + '.');
+          notes.push('Blow it at least ' + fmt(r.inches, 1) + ' in deep everywhere' + (r.existingR > 0 ? ' (about ' + fmt(r.inches + F.num(v.existingIn), 1) + ' in in total)' : '') + '. The bag count and the depth both matter; check the chart on your bag.');
+          notes.push('Seal gaps around lights, pipes and the attic hatch first, and fit baffles at the eaves so the soffit vents stay open.');
+          notes.push('Many stores lend the blowing machine when you buy enough bags; ask when you order.');
+        }
+        if (none) notes.push('Your current insulation already reaches R-' + r.targetR + '. Check the depth in several spots: thin areas near the eaves are common.');
+      }
+      return { ready: ready && r.bags > 0, headline: headline, items: items, notes: notes };
+    }
+  };
+
+  /* ---------- Baseboard and trim ---------- */
+  var BASE_PRICE = { 8: 9, 12: 13, 16: 17 };
+  T.baseboard = {
+    prepare: function (form, v) {
+      showFor(form, 'data-mode', v.mode === 'walls' ? 'walls' : 'room');
+      showFor(form, 'data-casing', v.casing ? 'on' : 'off');
+    },
+    calc: function (v, F) {
+      var r = F.baseboard(v), ready = r.pieces > 0;
+      var items = [
+        { key: 'base-' + r.pieceFt, name: 'Baseboard, ' + r.pieceFt + ' ft pieces', qty: r.pieces, unit: plural(r.pieces, 'piece', 'pieces'), unitSingle: 'piece',
+          price: BASE_PRICE[r.pieceFt] || r.pieceFt * 1.1, note: fmt(r.linearFt, 1) + ' ft plus ' + Math.round(r.waste * 100) + '% extra' }
+      ];
+      if (r.shoePieces) items.push({ key: 'shoe', name: 'Shoe molding or quarter round, 8 ft', qty: r.shoePieces, unit: plural(r.shoePieces, 'piece', 'pieces'), unitSingle: 'piece', price: 5 });
+      if (r.casingPieces) items.push({ key: 'casing', name: 'Door and window casing, 7 ft pieces', qty: r.casingPieces, unit: plural(r.casingPieces, 'piece', 'pieces'), unitSingle: 'piece', price: 8, note: '3 per door side or window' });
+      items.push({ key: 'nails', name: 'Finish nails, 2 in, box of 1,000', qty: r.nailBoxes, unit: plural(r.nailBoxes, 'box', 'boxes'), unitSingle: 'box', price: 10, note: fmt(r.nails) + ' nails, 2 at each stud' });
+      items.push({ key: 'caulk', name: 'Paintable trim caulk, 10.1 oz tube', qty: r.caulkTubes, unit: plural(r.caulkTubes, 'tube', 'tubes'), unitSingle: 'tube', price: 4.5, note: 'About 55 ft per tube' });
+      var notes = [];
+      if (ready) {
+        notes.push((v.mode === 'walls' ? 'Walls: ' : 'Room perimeter: ') + fmt(r.perimeter, 1) + ' ft, minus ' + fmt(r.openingsFt, 1) + ' ft of door openings = ' + fmt(r.linearFt, 1) + ' ft of baseboard.');
+        notes.push('Pick pieces at least as long as your longest wall if you can, so that wall has no seam. Where you must join two pieces, use a 45° scarf joint over a stud.');
+        notes.push('Buy one or two extra pieces if you are new to coping inside corners; practice cuts use up trim fast.');
+      }
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.pieces) : '0', unit: ready ? plural(r.pieces, 'piece', 'pieces') + ' of ' + r.pieceFt + ' ft baseboard' : 'Enter your room size',
+          sub: ready ? fmt(r.linearFt, 1) + ' ft of wall to cover; ' + fmt(r.boughtFt) + ' ft bought' : '' },
+        items: items, notes: notes
+      };
+    }
+  };
+
+  /* ---------- Grout ---------- */
+  T.grout = {
+    defaultShapes: [{ type: 'rect', l: 10, w: 10 }],
+    calc: function (v, F) {
+      var r = F.grout(v), ready = r.cuIn > 0;
+      var items = [], headline, cover;
+      if (r.type === 'premixed') {
+        var parts = [];
+        if (r.buyGallons) parts.push(r.buyGallons + ' ' + plural(r.buyGallons, 'gallon', 'gallons'));
+        if (r.buyQuarts) parts.push(r.buyQuarts + ' ' + plural(r.buyQuarts, 'quart', 'quarts'));
+        items.push({ key: 'pre-gal', name: 'Pre-mixed grout, 1 gallon pail', qty: r.buyGallons, unit: plural(r.buyGallons, 'pail', 'pails'), unitSingle: 'pail', price: 60 });
+        items.push({ key: 'pre-qt', name: 'Pre-mixed grout, 1 quart pail', qty: r.buyQuarts, unit: plural(r.buyQuarts, 'pail', 'pails'), unitSingle: 'pail', price: 24 });
+        cover = fmt(r.sqFtPerGal) + ' sq ft per gallon';
+        headline = { value: ready ? fmt(r.gallons, 2) : '0', unit: ready ? 'gallons of pre-mixed grout' : 'Enter your area and tile size',
+          sub: ready ? 'Buy ' + parts.join(' + ') + ', including ' + Math.round(r.extra * 100) + '% extra' : '' };
+      } else if (r.type === 'sanded') {
+        items.push({ key: 'sand-25', name: 'Sanded grout, 25 lb bag', qty: r.bags25, unit: plural(r.bags25, 'bag', 'bags'), unitSingle: 'bag', price: 25 });
+        items.push({ key: 'sand-7', name: 'Sanded grout, 7 lb bag', qty: r.bags7, unit: plural(r.bags7, 'bag', 'bags'), unitSingle: 'bag', price: 14 });
+        var bag = [];
+        if (r.bags25) bag.push(r.bags25 + ' ' + plural(r.bags25, 'bag', 'bags') + ' of 25 lb');
+        if (r.bags7) bag.push(r.bags7 + ' ' + plural(r.bags7, 'bag', 'bags') + ' of 7 lb');
+        cover = fmt(r.sqFtPer25) + ' sq ft per 25 lb bag';
+        headline = { value: ready ? fmt(r.lb, 1) : '0', unit: ready ? 'lb of sanded grout' : 'Enter your area and tile size',
+          sub: ready ? 'Buy ' + bag.join(' + ') + ', including ' + Math.round(r.extra * 100) + '% extra' : '' };
+      } else {
+        items.push({ key: 'unsand-10', name: 'Non-sanded grout, 10 lb box', qty: r.boxes10, unit: plural(r.boxes10, 'box', 'boxes'), unitSingle: 'box', price: 16 });
+        cover = fmt(r.sqFtPer10) + ' sq ft per 10 lb box';
+        headline = { value: ready ? fmt(r.lb, 1) : '0', unit: ready ? 'lb of non-sanded grout' : 'Enter your area and tile size',
+          sub: ready ? 'Buy ' + r.boxes10 + ' ' + plural(r.boxes10, 'box', 'boxes') + ' of 10 lb, including ' + Math.round(r.extra * 100) + '% extra' : '' };
+      }
+      items.push({ key: 'float', name: 'Grout float, sponge and bucket', qty: ready ? 1 : 0, unit: 'kit', price: 18 });
+      items.push({ key: 'sealer', name: 'Grout sealer (skip for epoxy or urethane grout)', qty: ready && r.type !== 'premixed' ? 1 : 0, unit: 'bottle', price: 15 });
+      var notes = [];
+      if (ready) {
+        notes.push('Joint volume: ' + fmt(r.cuInPerSqFt, 2) + ' cubic inches per sq ft, so this grout covers about ' + cover + ' with your tile and joint.');
+        if (!r.jointOk) notes.push(r.type === 'unsanded' ? 'Non-sanded grout is for joints up to 1/8 in. Wider joints can crack and shrink; use sanded or pre-mixed grout.'
+          : r.type === 'sanded' ? 'Sanded grout is for joints 1/8 in and wider. Sand can scratch polished stone and will not pack into a 1/16 in joint; use non-sanded grout.'
+          : 'Check the pail: this pre-mixed grout is rated for joints from 1/16 to 1/2 in.');
+        notes.push('Mix only what you can use in about 30 minutes, and buy all bags in one color batch.');
+      }
+      return { ready: ready, headline: headline, items: items, notes: notes };
+    }
+  };
+
   window.PMTools = T;
 })();

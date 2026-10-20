@@ -14,3 +14,6 @@
 [data-accent="pavers"] { --accent: #78716c; --accent-2: #f59e0b; --accent-deep: #44403c; --accent-soft: #f3efe9; }
 [data-accent="stairs"] { --accent: #65a30d; --accent-2: #a3e635; --accent-deep: #3f6212; --accent-soft: #eef8dc; }
 [data-accent="lawn"] { --accent: #059669; --accent-2: #84cc16; --accent-deep: #065f46; --accent-soft: #dcfce7; }
+[data-accent="insulation"] { --accent: #0284c7; --accent-2: #f58fb0; --accent-deep: #075985; --accent-soft: #e0f2fe; }
+[data-accent="baseboard"] { --accent: #8b5a3c; --accent-2: #d9a273; --accent-deep: #5c3a24; --accent-soft: #f6ece3; }
+[data-accent="grout"] { --accent: #475569; --accent-2: #94a3b8; --accent-deep: #1e293b; --accent-soft: #e8edf3; }

@@ -98,6 +98,7 @@ COLORS = {
     "area": "#8b5cf6", "volume": "#06b6d4", "drywall": "#6366f1", "wallpaper": "#d946ef",
     "fence": "#f97316", "deck": "#d4a039", "roofing": "#ef4444", "pavers": "#a8a29e",
     "stairs": "#84cc16", "lawn": "#10b981",
+    "insulation": "#f58fb0", "baseboard": "#8b5a3c", "grout": "#64748b",
 }
 
 # Per-calculator page colors: accent, second gradient color, deep edge, soft tint.
@@ -118,6 +119,9 @@ ACCENTS = {
     "pavers":    ("#78716c", "#f59e0b", "#44403c", "#f3efe9"),
     "stairs":    ("#65a30d", "#a3e635", "#3f6212", "#eef8dc"),
     "lawn":      ("#059669", "#84cc16", "#065f46", "#dcfce7"),
+    "insulation": ("#0284c7", "#f58fb0", "#075985", "#e0f2fe"),
+    "baseboard": ("#8b5a3c", "#d9a273", "#5c3a24", "#f6ece3"),
+    "grout":     ("#475569", "#94a3b8", "#1e293b", "#e8edf3"),
 }
 
 
@@ -205,6 +209,33 @@ def tool_icon(kind, size=96):
         sc.box(0.2, 0.2, 0.7, 5.2, 2.5, 0.35, c, depth=1)
         sc.box(0.2, 2.75, 0.7, 5.2, 2.5, 0.35, shade(c, 0.12), depth=2)
         sc.cylinder(1.4, 4.6, 1.05, 0.55, 0.9, COLORS["lawn"], lid=shade(COLORS["lawn"], 0.4), depth=3)
+    elif kind == "insulation":
+        # A stud wall with pink batts in both bays and a roll in front
+        stud = "#e7c79a"
+        for k, x in enumerate((0.0, 2.55, 5.1)):
+            sc.box(x, 1.4, 0, 0.45, 0.9, 3.6, stud, depth=k * 2)
+        for k, x in enumerate((0.45, 3.0)):
+            sc.box(x, 1.5, 0, 2.1, 0.75, 1.75, c, depth=k * 2 + 1)
+            sc.box(x, 1.5, 1.8, 2.1, 0.75, 1.8, shade(c, 0.12), depth=k * 2 + 1.1)
+        sc.box(-0.1, 1.35, 3.6, 5.75, 1.0, 0.35, shade(stud, -0.08), depth=6)
+        sc.cylinder(4.2, 4.4, 0, 1.15, 2.0, c, lid=shade(c, 0.35), depth=10)
+    elif kind == "baseboard":
+        # A wall corner with a baseboard running along both walls
+        sc.box(0.2, 0.2, 0, 5.4, 0.35, 4.6, "#f1f2f8", depth=0)
+        sc.box(0.2, 0.2, 0, 0.35, 5.4, 4.6, "#e3e6f3", depth=0.1)
+        sc.box(0.55, 0.55, 0, 5.05, 0.3, 1.0, c, depth=2)
+        sc.box(0.55, 0.85, 0, 0.3, 4.75, 1.0, shade(c, -0.08), depth=2.1)
+        sc.box(0.55, 0.55, 1.0, 5.05, 0.15, 0.2, shade(c, 0.25), depth=2.2)
+        sc.box(0.55, 0.7, 1.0, 0.15, 4.9, 0.2, shade(c, 0.2), depth=2.3)
+        sc.box(2.8, 3.0, 0, 0.6, 2.8, 0.6, COLORS["tape"], depth=8)
+    elif kind == "grout":
+        # Light tiles set in dark grout, with a grout float on top
+        sc.box(0.0, 0.0, 0, 5.6, 5.6, 0.45, shade(c, -0.1), depth=0)
+        for gx in range(3):
+            for gy in range(3):
+                sc.box(0.2 + gx * 1.8, 0.2 + gy * 1.8, 0.45, 1.6, 1.6, 0.25, "#eef2f7" if (gx + gy) % 2 else "#dfe6ee", depth=1 + gx + gy)
+        sc.box(2.4, 1.4, 0.7, 2.6, 1.3, 0.35, COLORS["tile"], depth=20)
+        sc.box(3.3, 1.85, 1.05, 0.8, 0.4, 0.8, shade(COLORS["tape"], -0.1), depth=21)
     return sc.svg(size, size, cls="iso-icon")
 
 
