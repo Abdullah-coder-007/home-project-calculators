@@ -168,10 +168,10 @@ def page(*, path, title, description, body, schema=None, current=None, noindex=F
     ads = ""
     if CFG.get("adsense_client"):
         client = esc(CFG["adsense_client"])
+        # Google's own snippet, as given, so AdSense's checker finds it in the page source.
         ads = (f'<meta name="google-adsense-account" content="{client}">\n'
-               "<script>if(!document.documentElement.classList.contains('embed')){var s=document.createElement('script');"
-               f"s.async=true;s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={client}';"
-               "s.crossOrigin='anonymous';document.head.appendChild(s);}</script>\n")
+               f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={client}" '
+               'crossorigin="anonymous"></script>\n')
 
     analytics = ga4_head()
     app_url = CFG.get("measure_app_url") or (APP_TEST_URL if STAGING else "")
