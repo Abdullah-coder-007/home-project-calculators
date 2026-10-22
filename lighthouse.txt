@@ -1,0 +1,89 @@
+LH / 73 100 96 69
+  FIX largest-contentful-paint - Largest Contentful Paint (3.2 s)
+  FIX total-blocking-time - Total Blocking Time (820 ms)
+  FIX max-potential-fid - Max Potential First Input Delay (850 ms)
+  FIX errors-in-console - Browser errors were logged to the console
+  FIX interactive - Time to Interactive (3.8 s)
+  FIX mainthread-work-breakdown - Minimize main-thread work (2.5 s)
+  FIX largest-contentful-paint-element - Largest Contentful Paint element (3,200 ms)
+  FIX uses-long-cache-ttl - Serve static assets with an efficient cache policy (6 resources found)
+  FIX render-blocking-resources - Eliminate render-blocking resources (Est savings of 0 ms)
+  FIX unminified-css - Minify CSS (Est savings of 9 KiB)
+  FIX unminified-javascript - Minify JavaScript (Est savings of 36 KiB)
+  FIX unused-css-rules - Reduce unused CSS (Est savings of 41 KiB)
+LH /paint-calculator/ 98 91 96 66
+  FIX errors-in-console - Browser errors were logged to the console
+  FIX aria-allowed-attr - `[aria-*]` attributes do not match their roles
+  FIX aria-allowed-role - Uses ARIA roles on incompatible elements
+  FIX color-contrast - Background and foreground colors do not have a sufficient contrast ratio.
+      div.shop > p.shop-country > label > span :: <span> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 11.0pt (14.72px), font w
+      div.shop > p.shop-country > label > select :: <select data-country=""> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 11.0pt (14.72px), font w
+      div.result-body > div.shop > p.shop-country > span.shop-country-note :: <span class="shop-country-note"> ::   Element has insufficient color contrast of 2.43 (foreground color: #a6a4b6, background color: #ffffff, font size: 10.2pt (13.6px), font we
+      tbody > tr > th > span.item-name :: <span class="item-name"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tbody > tr > td.qty > span.item-unit :: <span class="item-unit"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tr > td.price > label > input :: <input type="number" inputmode="decimal" min="0" step="0.01" value="40" data-key="wall-gal"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.6pt (16.8px), font we
+      table.shop-list > tbody > tr > td.sub :: <td class="sub"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tbody > tr > th > span.item-name :: <span class="item-name"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+  FIX uses-long-cache-ttl - Serve static assets with an efficient cache policy (7 resources found)
+  FIX render-blocking-resources - Eliminate render-blocking resources (Est savings of 0 ms)
+  FIX unminified-css - Minify CSS (Est savings of 9 KiB)
+  FIX unminified-javascript - Minify JavaScript (Est savings of 44 KiB)
+  FIX unused-css-rules - Reduce unused CSS (Est savings of 26 KiB)
+  FIX unused-javascript - Reduce unused JavaScript (Est savings of 38 KiB)
+  FIX uses-text-compression - Enable text compression (Est savings of 178 KiB)
+  FIX is-crawlable - Page is blocked from indexing
+LH /concrete-calculator/ 98 96 96 66
+  FIX errors-in-console - Browser errors were logged to the console
+  FIX color-contrast - Background and foreground colors do not have a sufficient contrast ratio.
+      div.shop > p.shop-country > label > span :: <span> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 11.0pt (14.72px), font w
+      div.shop > p.shop-country > label > select :: <select data-country=""> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 11.0pt (14.72px), font w
+      div.result-body > div.shop > p.shop-country > span.shop-country-note :: <span class="shop-country-note"> ::   Element has insufficient color contrast of 2.43 (foreground color: #a6a4b6, background color: #ffffff, font size: 10.2pt (13.6px), font we
+      tbody > tr > th > span.item-name :: <span class="item-name"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tbody > tr > th > span.item-note :: <span class="item-note"> ::   Element has insufficient color contrast of 2.43 (foreground color: #a6a4b6, background color: #ffffff, font size: 9.8pt (13.12px), font we
+      table.shop-list > tbody > tr > td.qty :: <td class="qty"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tbody > tr > td.qty > span.item-unit :: <span class="item-unit"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tr > td.price > label > input :: <input type="number" inputmode="decimal" min="0" step="0.01" value="6.5" data-key="bag-80"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.6pt (16.8px), font we
+  FIX uses-long-cache-ttl - Serve static assets with an efficient cache policy (6 resources found)
+  FIX render-blocking-resources - Eliminate render-blocking resources (Est savings of 390 ms)
+  FIX unminified-css - Minify CSS (Est savings of 9 KiB)
+  FIX unminified-javascript - Minify JavaScript (Est savings of 36 KiB)
+  FIX unused-css-rules - Reduce unused CSS (Est savings of 32 KiB)
+  FIX unused-javascript - Reduce unused JavaScript (Est savings of 37 KiB)
+  FIX uses-text-compression - Enable text compression (Est savings of 161 KiB)
+  FIX is-crawlable - Page is blocked from indexing
+  FIX bf-cache - Page prevented back/forward cache restoration (1 failure reason)
+  FIX cache-insight - Use efficient cache lifetimes (Est savings of 188 KiB)
+LH /flooring-calculator/ 97 96 96 66
+  FIX first-contentful-paint - First Contentful Paint (1.8 s)
+  FIX errors-in-console - Browser errors were logged to the console
+  FIX color-contrast - Background and foreground colors do not have a sufficient contrast ratio.
+      div.shop > p.shop-country > label > span :: <span> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 11.0pt (14.72px), font w
+      div.shop > p.shop-country > label > select :: <select data-country=""> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 11.0pt (14.72px), font w
+      div.result-body > div.shop > p.shop-country > span.shop-country-note :: <span class="shop-country-note"> ::   Element has insufficient color contrast of 2.43 (foreground color: #a6a4b6, background color: #ffffff, font size: 10.2pt (13.6px), font we
+      tbody > tr > th > span.item-name :: <span class="item-name"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tbody > tr > th > span.item-note :: <span class="item-note"> ::   Element has insufficient color contrast of 2.43 (foreground color: #a6a4b6, background color: #ffffff, font size: 9.8pt (13.12px), font we
+      table.shop-list > tbody > tr > td.qty :: <td class="qty"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tbody > tr > td.qty > span.item-unit :: <span class="item-unit"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.0pt (16px), font weig
+      tr > td.price > label > input :: <input type="number" inputmode="decimal" min="0" step="0.01" value="50" data-key="box"> ::   Element has insufficient color contrast of 3.87 (foreground color: #827f96, background color: #ffffff, font size: 12.6pt (16.8px), font we
+  FIX uses-long-cache-ttl - Serve static assets with an efficient cache policy (6 resources found)
+  FIX render-blocking-resources - Eliminate render-blocking resources (Est savings of 90 ms)
+  FIX unminified-css - Minify CSS (Est savings of 9 KiB)
+  FIX unminified-javascript - Minify JavaScript (Est savings of 36 KiB)
+  FIX unused-css-rules - Reduce unused CSS (Est savings of 31 KiB)
+  FIX unused-javascript - Reduce unused JavaScript (Est savings of 39 KiB)
+  FIX uses-text-compression - Enable text compression (Est savings of 153 KiB)
+  FIX is-crawlable - Page is blocked from indexing
+  FIX bf-cache - Page prevented back/forward cache restoration (1 failure reason)
+LH /blog/walls/celery-2027-color-of-the-year-paint/ 90 100 96 69
+  FIX largest-contentful-paint - Largest Contentful Paint (3.7 s)
+  FIX errors-in-console - Browser errors were logged to the console
+  FIX largest-contentful-paint-element - Largest Contentful Paint element (3,680 ms)
+  FIX uses-long-cache-ttl - Serve static assets with an efficient cache policy (6 resources found)
+  FIX render-blocking-resources - Eliminate render-blocking resources (Est savings of 560 ms)
+  FIX unminified-css - Minify CSS (Est savings of 9 KiB)
+  FIX unminified-javascript - Minify JavaScript (Est savings of 36 KiB)
+  FIX unused-css-rules - Reduce unused CSS (Est savings of 42 KiB)
+  FIX unused-javascript - Reduce unused JavaScript (Est savings of 90 KiB)
+  FIX uses-text-compression - Enable text compression (Est savings of 151 KiB)
+  FIX uses-responsive-images - Properly size images (Est savings of 38 KiB)
+  FIX is-crawlable - Page is blocked from indexing
