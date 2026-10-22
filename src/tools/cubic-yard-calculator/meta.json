@@ -28,6 +28,18 @@
     {
       "q": "How do I convert cubic yards to tons?",
       "a": "Multiply by the material's weight per cubic yard. Gravel is roughly 1.4 tons per yard and topsoil about 1.1, but it varies with moisture and stone type, so ask your supplier."
+    },
+    {
+      "q": "How many bags of mulch or soil make a cubic yard?",
+      "a": "A cubic yard is 27 cubic feet, so it takes 13.5 bags of 2 cu ft, 9 bags of 3 cu ft or 18 bags of 1.5 cu ft. Round up, and check the volume printed on the bag, since some brands sell by weight."
+    },
+    {
+      "q": "How many cubic yards do I need for a round area?",
+      "a": "Find the area first: 3.1416 × radius × radius, with the radius in feet. A circle 10 feet across has a radius of 5 feet, so 3.1416 × 25 = 78.5 sq ft. At 3 inches (0.25 ft) deep that is 19.6 cubic feet, or 0.73 cubic yards."
+    },
+    {
+      "q": "How do I figure cubic yards for an irregular or sloped area?",
+      "a": "Split the area into rectangles, triangles and circles, work out each one, and add the results. For depth that varies, measure it at several spots and use the average. Round up a little so you do not run short."
     }
   ]
 }

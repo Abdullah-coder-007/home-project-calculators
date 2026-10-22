@@ -28,6 +28,14 @@
     {
       "q": "How much extra sod should I order?",
       "a": "About 5% for straight edges and more for curved beds, which the calculator adds automatically."
+    },
+    {
+      "q": "How soon should sod be laid after it is delivered?",
+      "a": "Lay it the day it arrives, or at the latest within a day. University of Minnesota Extension says sod should be cut no more than 24 hours before delivery and laid within one day after, so prepare and level the soil before the truck comes."
+    },
+    {
+      "q": "How do I know when new sod has rooted?",
+      "a": "After about 10 to 14 days, gently tug the sod in several spots. If it resists, the roots have taken hold and you can treat it like an established lawn. Until then keep it moist but not saturated, according to University of Minnesota Extension."
     }
   ]
 }
