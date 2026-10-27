@@ -9,7 +9,7 @@ image: https://images.unsplash.com/photo-1783125127143-d4e18726bab3?w=1600&h=900
 image_alt: A modern white house with large windows and a wide concrete driveway
 image_credit: Salvo Media LLC on Unsplash
 image_credit_url: https://unsplash.com/photos/modern-white-house-with-large-windows-and-a-concrete-driveway-W7XqqixNnII
-calculators: [concrete-calculator, cubic-yard-calculator, square-footage-calculator]
+calculators: [concrete-calculator, cubic-yard-calculator, square-footage-calculator, gravel-driveway-calculator]
 ---
 
 A driveway story has been making the rounds this month. Atlanta News First reported on October 6 that Skip and Maria Mason paid **$52,000** for a colored concrete driveway meant to be **terracotta**, to match the roof of their Mediterranean-style home. Five months after the pour, it's a light pink.
@@ -68,7 +68,7 @@ Here's a common two-car driveway, **20 × 24 ft (480 sq ft)**, run through our [
 
 Ready-mix is usually ordered in quarter-yard steps, so we rounded up. The jump from 4 to 5 inches adds 25% more concrete, about 1.6 cubic yards, which is the main reason it costs more. A single-car driveway 12 ft wide and 40 ft long is also 480 sq ft, so it needs the same amounts.
 
-Most driveways sit on a compacted gravel base. If your contractor calls for **4 inches of gravel** under that same 480 sq ft, the [cubic yard calculator](/cubic-yard-calculator/) gives **5.93 cu yd, or about 6 yards in bulk**. At the calculator's 1.4 tons per yard, that's roughly **8.3 tons**.
+Most driveways sit on a compacted gravel base. If your contractor calls for **4 inches of gravel** under that same 480 sq ft, the [cubic yard calculator](/cubic-yard-calculator/) gives **5.93 cu yd, or about 6 yards in bulk**. At the calculator's 1.4 tons per yard, that's roughly **8.3 tons**. Planning a gravel driveway instead of concrete? The [gravel driveway calculator](/gravel-driveway-calculator/) splits the stone into base, middle and surface layers and gives tons for each.
 
 > **Fun fact:** You could pour that 4-inch, 20 × 24 ft driveway from bags, but you'd need **294 bags of 80-lb mix**. That's 23,520 lb, or almost 12 tons of bags to lift, haul and mix by hand. It's why the [concrete calculator](/concrete-calculator/) suggests ready-mix once a job reaches about a cubic yard.
 
