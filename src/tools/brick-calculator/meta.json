@@ -1,0 +1,37 @@
+{
+  "tool": "brick",
+  "category": "walls",
+  "short": "Brick calculator",
+  "what": "Bricks, bags of mortar mix and wall ties for a brick wall",
+  "title": "Brick Calculator: Bricks, Mortar and Wall Ties | Calcupine",
+  "description": "Free brick calculator: how many modular, queen, king, Norman or utility bricks you need for a wall, plus 80 lb bags of mortar mix and brick veneer ties.",
+  "h1": "Brick calculator",
+  "lede": "Enter your wall's length and height, doors and windows, and the brick size. Get the bricks to order, the bags of mortar mix to lay them and the ties that hold veneer to the wall.",
+  "related": [
+    "concrete-calculator",
+    "retaining-wall-calculator",
+    "paint-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many bricks are in a square foot?",
+      "a": "6.75 modular bricks with 3/8 inch mortar joints, according to the Brick Industry Association. Queen brick is 5.5 per sq ft, king 4.55, Norman 4.5 and utility 3."
+    },
+    {
+      "q": "How many bricks do I need for a 10 by 8 foot wall?",
+      "a": "80 sq ft x 6.75 = 540 modular bricks, or 567 with 5% extra for cuts and breakage."
+    },
+    {
+      "q": "How many bags of mortar do I need for 1,000 bricks?",
+      "a": "About 27 bags of 80 lb mortar mix. QUIKRETE rates a bag at up to 37 standard bricks. By volume, the Brick Industry Association puts the joints at 8.1 cu ft per 1,000 modular bricks."
+    },
+    {
+      "q": "How many brick ties do I need?",
+      "a": "One corrugated tie for every 2.67 sq ft of wall, at most 32 inches apart across and 24 inches up, plus extra ties around openings, according to the Brick Industry Association. That is one tie on every stud, 16 inches apart, every 24 inches up."
+    },
+    {
+      "q": "How much extra brick should I order?",
+      "a": "At least 5%, says the Brick Industry Association. Order more for lots of cuts, corners or a decorative pattern, and buy it all at once so the color matches."
+    }
+  ]
+}

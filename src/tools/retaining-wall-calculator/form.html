@@ -1,0 +1,41 @@
+<div class="group">
+  <!-- diagram: retaining -->
+  <div class="row">
+    <div class="field ftin"><span>Wall length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_ft" value="20"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="length_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Height above ground</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="height_ft" value="2"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="height_in" value=""><span class="unit">in</span></label>
+      </div>
+      <span class="hint">Not counting the cap or the buried course</span>
+    </div>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Block (from the label)</p>
+  <div class="row">
+    <label class="field"><span>Face length</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="blockL" value="12"><span class="unit">in</span></span></label>
+    <label class="field"><span>Height</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="blockH" value="4"><span class="unit">in</span></span></label>
+    <label class="field"><span>Depth</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="blockD" value="7"><span class="unit">in</span></span><span class="hint">Front to back</span></label>
+  </div>
+  <div class="row">
+    <label class="field"><span>Extra for cuts and breakage</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="wastePct" value="5"><span class="unit">%</span></span><span class="hint">10% for curves and corners</span></label>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Top and drainage</p>
+  <label class="check"><input type="checkbox" name="caps" checked> <span>Finish the top with wall caps</span></label>
+  <div data-caps="on">
+    <div class="row">
+      <label class="field"><span>Cap length</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="capL" value="12"><span class="unit">in</span></span></label>
+    </div>
+  </div>
+  <label class="check"><input type="checkbox" name="pipe" checked> <span>Run a perforated drain pipe behind the bottom course</span></label>
+</div>

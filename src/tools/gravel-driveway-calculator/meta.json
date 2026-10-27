@@ -1,0 +1,37 @@
+{
+  "tool": "driveway",
+  "category": "concrete",
+  "short": "Gravel driveway calculator",
+  "what": "Tons of base, middle and surface stone for a gravel driveway",
+  "title": "Gravel Driveway Calculator: Tons of Stone per Layer | Calcupine",
+  "description": "Free gravel driveway calculator: tons of #3 base stone, #57 and #411 or crusher run surface stone, plus geotextile fabric, for any driveway shape.",
+  "h1": "Gravel driveway calculator",
+  "lede": "Enter your driveway's size and the depth of each layer. Get the tons of base, middle and surface stone to order, the fabric to put under it and about how many truckloads that is.",
+  "related": [
+    "paver-calculator",
+    "retaining-wall-calculator",
+    "cubic-yard-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many tons of gravel do I need for a driveway?",
+      "a": "A 60 by 12 foot driveway (720 sq ft) with 4 inches each of #3 base stone, #57 stone and #411 surface stone needs about 14 + 14 + 21.5 tons, or 49.5 tons, including 10% extra. Dense surface stone weighs more per inch because it packs down."
+    },
+    {
+      "q": "How deep should a gravel driveway be?",
+      "a": "A new driveway on soil is usually built 8 to 12 inches deep in two or three layers: large base stone, a middle layer of #57 and a surface of stone with fines. Refreshing an old driveway may need only 2 to 4 inches on top."
+    },
+    {
+      "q": "What is the best top layer for a gravel driveway?",
+      "a": "Crushed stone with fines, such as #411, crusher run or driving surface aggregate. The fines fill the gaps so the stone packs hard. Kansas LTAP recommends surface gravel with 8 to 15% fines, and rounded pea gravel stays loose and rolls underfoot."
+    },
+    {
+      "q": "How much does a ton of gravel cover?",
+      "a": "One ton of clean #57 stone covers about 115 sq ft at 2 inches deep. One ton of compacted surface stone with fines covers about 75 sq ft at 2 inches, using Penn State's 0.04 tons per sq ft for 6 inches compacted."
+    },
+    {
+      "q": "Do I need fabric under a gravel driveway?",
+      "a": "On soft or clay soil, a woven geotextile stops the base stone from sinking into the mud and saves stone over time. On firm, well-drained ground it is optional."
+    }
+  ]
+}

@@ -16,15 +16,18 @@
     "wallpaper-calculator",
     "insulation-calculator",
     "baseboard-calculator",
+    "brick-calculator",
     "flooring-calculator",
     "tile-calculator",
     "grout-calculator",
     "square-footage-calculator",
     "concrete-calculator",
     "paver-calculator",
+    "gravel-driveway-calculator",
     "cubic-yard-calculator",
     "mulch-calculator",
     "sod-calculator",
+    "retaining-wall-calculator",
     "fence-calculator",
     "deck-calculator",
     "roofing-calculator",
@@ -73,8 +76,8 @@
       "slug": "wall-and-ceiling-calculators",
       "h1": "Wall and ceiling calculators",
       "title": "Wall and Ceiling Calculators: Paint, Drywall, Insulation",
-      "description": "Free wall and ceiling calculators: gallons of paint, drywall sheets, wallpaper rolls, bags of insulation, and baseboard and trim pieces with nails and caulk.",
-      "intro": "Planning to paint, hang drywall or wallpaper a room? Each calculator takes your room size in feet and inches, subtracts doors and windows, adds the waste the trades plan for and tells you what to buy in store units: gallons and quarts, 4 by 8 or 4 by 12 sheets, or double rolls. Insulation is worked out in bags of batts or blown-in fill for the R-value you want, and baseboard and casing in 8, 12 or 16 ft pieces."
+      "description": "Free wall calculators: gallons of paint, drywall sheets, wallpaper rolls, bags of insulation, baseboard and trim, and bricks with mortar and ties.",
+      "intro": "Planning to paint, hang drywall or wallpaper a room? Each calculator takes your room size in feet and inches, subtracts doors and windows, adds the waste the trades plan for and tells you what to buy in store units: gallons and quarts, 4 by 8 or 4 by 12 sheets, or double rolls. Insulation is worked out in bags of batts or blown-in fill for the R-value you want, and baseboard and casing in 8, 12 or 16 ft pieces. The brick calculator counts modular, queen, king, Norman or utility brick for a wall, with bags of mortar mix and veneer ties."
     },
     "floors": {
       "slug": "floor-calculators",
@@ -87,15 +90,15 @@
       "slug": "concrete-and-paver-calculators",
       "h1": "Concrete, paver and fill calculators",
       "title": "Concrete, Paver and Fill Calculators: Bags and Yards",
-      "description": "Free calculators for concrete bags or cubic yards, patio pavers with base gravel and sand, and cubic yards of fill for slabs, footings and holes.",
-      "intro": "Work out concrete for slabs, footings, post holes, steps and curbs in 40, 60 or 80 lb bags or ready-mix yards, pavers with the gravel base and bedding sand under them, and cubic yards of any fill from length, width and depth."
+      "description": "Free calculators for concrete bags or yards, patio pavers with base and sand, tons of gravel for a driveway, and cubic yards of fill.",
+      "intro": "Work out concrete for slabs, footings, post holes, steps and curbs in 40, 60 or 80 lb bags or ready-mix yards, pavers with the gravel base and bedding sand under them, and cubic yards of any fill from length, width and depth. The gravel driveway calculator gives the tons of base, middle and surface stone for each layer."
     },
     "outdoor": {
       "slug": "yard-and-garden-calculators",
       "h1": "Yard, garden and outdoor calculators",
-      "title": "Yard and Garden Calculators: Mulch, Sod, Fence, Deck",
-      "description": "Free yard and garden calculators: bags or yards of mulch, soil and gravel, sod pallets and grass seed, fence posts and pickets, and deck boards.",
-      "intro": "Outdoor projects are bought by the bag, the pallet, the post and the board. These calculators turn your yard measurements into those units: bags or bulk yards of mulch, soil and gravel, pallets of sod or pounds of seed, every fence post, rail and picket, and deck boards with joists and screws."
+      "title": "Yard and Garden Calculators: Mulch, Walls, Fence, Deck",
+      "description": "Free yard and garden calculators: mulch, soil and gravel, sod and seed, retaining wall blocks with drainage stone, fence posts and pickets, and deck boards.",
+      "intro": "Outdoor projects are bought by the bag, the pallet, the post and the board. These calculators turn your yard measurements into those units: bags or bulk yards of mulch, soil and gravel, pallets of sod or pounds of seed, retaining wall blocks with the base and drainage stone behind them, every fence post, rail and picket, and deck boards with joists and screws."
     },
     "structure": {
       "slug": "roof-and-stair-calculators",

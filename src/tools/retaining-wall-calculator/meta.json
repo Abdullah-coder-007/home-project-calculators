@@ -1,0 +1,37 @@
+{
+  "tool": "retaining",
+  "category": "outdoor",
+  "short": "Retaining wall calculator",
+  "what": "Blocks, caps, base gravel and drainage stone for a block wall",
+  "title": "Retaining Wall Calculator: Blocks, Caps and Gravel | Calcupine",
+  "description": "Free retaining wall block calculator: blocks and courses including the buried row, wall caps and adhesive, base gravel, drainage stone and drain pipe.",
+  "h1": "Retaining wall calculator",
+  "lede": "Enter your wall's length and height and the size of your block. Get the blocks and caps to buy, the buried course, and the base gravel, drainage stone and pipe that keep the wall standing.",
+  "related": [
+    "paver-calculator",
+    "gravel-driveway-calculator",
+    "fence-calculator"
+  ],
+  "faq": [
+    {
+      "q": "How many retaining wall blocks do I need?",
+      "a": "Divide the wall length by the block's face length for blocks per course, and the height by the block height for courses, then add one buried course. A 20 ft wall 2 ft tall in 12 by 4 inch blocks is 20 blocks by 7 courses, or 147 blocks with 5% extra."
+    },
+    {
+      "q": "How deep should the first course of a retaining wall be buried?",
+      "a": "Allan Block recommends burying 1 inch of block for every foot of wall height, on top of at least 6 inches of compacted base. In practice, most small walls bury the whole first course."
+    },
+    {
+      "q": "How much gravel do I need behind a retaining wall?",
+      "a": "Allan Block fills 12 inches behind the block with clean drainage stone for the full height. For a 20 ft wall with 28 inches of block, that is about 1.7 cubic yards, or 2.4 tons."
+    },
+    {
+      "q": "How tall can I build a retaining wall without an engineer?",
+      "a": "The International Residential Code requires an engineered design for walls holding back more than 4 ft of soil, and many small DIY blocks are rated only to about 3 ft without geogrid. A slope, driveway or building above the wall lowers that limit. Check your block's chart and local rules."
+    },
+    {
+      "q": "Do retaining wall caps need glue?",
+      "a": "Yes. Glue caps down with a landscape block adhesive. Loctite recommends a 3/8 inch bead outdoors, about 2 inches in from the front and back of each cap, and a 10 oz tube runs about 13.6 ft."
+    }
+  ]
+}

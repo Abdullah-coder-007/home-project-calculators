@@ -17,3 +17,6 @@
 [data-accent="insulation"] { --accent: #0284c7; --accent-2: #f58fb0; --accent-deep: #075985; --accent-soft: #e0f2fe; }
 [data-accent="baseboard"] { --accent: #8b5a3c; --accent-2: #d9a273; --accent-deep: #5c3a24; --accent-soft: #f6ece3; }
 [data-accent="grout"] { --accent: #475569; --accent-2: #94a3b8; --accent-deep: #1e293b; --accent-soft: #e8edf3; }
+[data-accent="driveway"] { --accent: #57534e; --accent-2: #d6a35c; --accent-deep: #292524; --accent-soft: #f1eee9; }
+[data-accent="retaining"] { --accent: #7c6a4f; --accent-2: #a3b86c; --accent-deep: #4a3f2e; --accent-soft: #f2eee4; }
+[data-accent="brick"] { --accent: #c2410c; --accent-2: #f59e0b; --accent-deep: #7c2d12; --accent-soft: #fdeee4; }

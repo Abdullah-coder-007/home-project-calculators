@@ -8,6 +8,7 @@
 - [Wallpaper calculator](https://calcupine.com/wallpaper-calculator/): Rolls of wallpaper with pattern repeat built in
 - [Insulation calculator](https://calcupine.com/insulation-calculator/): Batts for walls, or blown-in bags and depth for an attic
 - [Baseboard calculator](https://calcupine.com/baseboard-calculator/): Baseboard pieces, shoe molding, casing, nails and caulk
+- [Brick calculator](https://calcupine.com/brick-calculator/): Bricks, bags of mortar mix and wall ties for a brick wall
 
 ## Floors
 - [Flooring calculator](https://calcupine.com/flooring-calculator/): Boxes of laminate, vinyl plank or hardwood, plus underlayment and trim
@@ -18,11 +19,13 @@
 ## Concrete, pavers and fill
 - [Concrete calculator](https://calcupine.com/concrete-calculator/): Bags or cubic yards for slabs, footings and post holes
 - [Paver calculator](https://calcupine.com/paver-calculator/): Pavers, base gravel, sand and edging for a patio or path
+- [Gravel driveway calculator](https://calcupine.com/gravel-driveway-calculator/): Tons of base, middle and surface stone for a gravel driveway
 - [Cubic yard calculator](https://calcupine.com/cubic-yard-calculator/): Cubic yards, cubic feet and m³ for any fill or dig
 
 ## Yard, garden and outdoor
 - [Mulch, soil and gravel calculator](https://calcupine.com/mulch-calculator/): Bags, cubic yards or tons of mulch, topsoil, gravel and sand
 - [Sod and grass seed calculator](https://calcupine.com/sod-calculator/): Sod pieces and pallets, or pounds of grass seed
+- [Retaining wall calculator](https://calcupine.com/retaining-wall-calculator/): Blocks, caps, base gravel and drainage stone for a block wall
 - [Fence calculator](https://calcupine.com/fence-calculator/): Posts, rails, pickets and concrete for a wood fence
 - [Deck calculator](https://calcupine.com/deck-calculator/): Deck boards, joists and screws for a rectangular deck
 

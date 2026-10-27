@@ -1,0 +1,39 @@
+<div class="group">
+  <!-- diagram: brick -->
+  <div class="row">
+    <div class="field ftin"><span>Wall length</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallLength_ft" value="30"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallLength_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+    <div class="field ftin"><span>Wall height</span>
+      <div class="ftin-pair">
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallHeight_ft" value="8"><span class="unit">ft</span></label>
+        <label><input type="number" inputmode="decimal" min="0" step="any" name="wallHeight_in" value=""><span class="unit">in</span></label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <label class="field"><span>Doors</span><input type="number" inputmode="numeric" min="0" step="1" name="doors" value="1"><span class="hint">Counted as 3 by 7 ft</span></label>
+    <label class="field"><span>Windows</span><input type="number" inputmode="numeric" min="0" step="1" name="windows" value="2"><span class="hint">Counted as 3 by 5 ft</span></label>
+  </div>
+</div>
+
+<div class="group">
+  <p class="group-title">Brick</p>
+  <div class="row">
+    <label class="field"><span>Brick size</span>
+      <select name="size">
+        <option value="modular" selected>Modular, 7 5/8 x 2 1/4 in face</option>
+        <option value="queen">Queen, 7 5/8 x 2 3/4 in face</option>
+        <option value="king">King, 9 5/8 x 2 5/8 in face</option>
+        <option value="norman">Norman, 11 5/8 x 2 1/4 in face</option>
+        <option value="utility">Utility, 11 5/8 x 3 5/8 in face</option>
+      </select>
+      <span class="hint">With 3/8 in mortar joints</span>
+    </label>
+    <label class="field"><span>Extra for cuts and breakage</span><span class="with-unit"><input type="number" inputmode="decimal" min="0" step="any" name="wastePct" value="5"><span class="unit">%</span></span><span class="hint">At least 5%</span></label>
+  </div>
+  <label class="check"><input type="checkbox" name="veneer" checked> <span>Brick veneer over a framed wall (add wall ties)</span></label>
+</div>

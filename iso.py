@@ -99,6 +99,7 @@ COLORS = {
     "fence": "#f97316", "deck": "#d4a039", "roofing": "#ef4444", "pavers": "#a8a29e",
     "stairs": "#84cc16", "lawn": "#10b981",
     "insulation": "#f58fb0", "baseboard": "#8b5a3c", "grout": "#64748b",
+    "driveway": "#a8a29e", "retaining": "#b4a48c", "brick": "#c2410c",
 }
 
 # Per-calculator page colors: accent, second gradient color, deep edge, soft tint.
@@ -122,6 +123,9 @@ ACCENTS = {
     "insulation": ("#0284c7", "#f58fb0", "#075985", "#e0f2fe"),
     "baseboard": ("#8b5a3c", "#d9a273", "#5c3a24", "#f6ece3"),
     "grout":     ("#475569", "#94a3b8", "#1e293b", "#e8edf3"),
+    "driveway":  ("#57534e", "#d6a35c", "#292524", "#f1eee9"),
+    "retaining": ("#7c6a4f", "#a3b86c", "#4a3f2e", "#f2eee4"),
+    "brick":     ("#c2410c", "#f59e0b", "#7c2d12", "#fdeee4"),
 }
 
 
@@ -236,6 +240,42 @@ def tool_icon(kind, size=96):
                 sc.box(0.2 + gx * 1.8, 0.2 + gy * 1.8, 0.45, 1.6, 1.6, 0.25, "#eef2f7" if (gx + gy) % 2 else "#dfe6ee", depth=1 + gx + gy)
         sc.box(2.4, 1.4, 0.7, 2.6, 1.3, 0.35, COLORS["tile"], depth=20)
         sc.box(3.3, 1.85, 1.05, 0.8, 0.4, 0.8, shade(COLORS["tape"], -0.1), depth=21)
+    elif kind == "driveway":
+        # A cut-away slab of three stone layers with loose gravel on top
+        sc.box(0.0, 0.6, 0, 5.6, 4.4, 0.9, "#6b5b4b", depth=0)
+        sc.box(0.0, 0.6, 0.9, 5.6, 4.4, 0.8, c, depth=1)
+        sc.box(0.0, 0.6, 1.7, 5.6, 4.4, 0.6, "#d6c7a8", depth=2)
+        import random
+        rnd = random.Random(11)
+        for k in range(14):
+            x, y = rnd.uniform(0.3, 5.0), rnd.uniform(0.9, 4.6)
+            sc.box(x, y, 2.3, 0.5, 0.45, 0.3, shade(c, rnd.choice([-0.35, -0.15, 0.1])), depth=3 + x + y)
+    elif kind == "retaining":
+        # Three staggered courses of block with a cap and soil behind
+        sc.box(0.0, 0.0, 0, 5.8, 1.6, 2.5, "#7a5c3e", depth=0)
+        sc.box(0.0, 0.0, 2.5, 5.8, 1.6, 0.3, COLORS["lawn"], depth=0.5)
+        for row in range(3):
+            off = 0.0 if row % 2 == 0 else -0.95
+            for k in range(4):
+                x = off + k * 1.9
+                x0, w = max(0.0, x), min(x + 1.8, 5.8) - max(0.0, x)
+                if w <= 0.2:
+                    continue
+                sc.box(x0, 1.6, row * 0.85, w, 1.4, 0.8, shade(c, 0.06 if (row + k) % 2 else -0.04), depth=1 + row + k * 0.01)
+        sc.box(-0.1, 1.45, 2.55, 6.0, 1.7, 0.4, shade(c, 0.22), depth=5)
+    elif kind == "brick":
+        # A short run of brick in running bond with a trowel resting on it
+        sc.box(0.0, 1.8, 0, 5.8, 1.4, 0.15, "#cbd5e1", depth=0)
+        for row in range(5):
+            off = 0.0 if row % 2 == 0 else -0.85
+            for k in range(4):
+                x = off + k * 1.7
+                x0, w = max(0.0, x), min(x + 1.6, 5.8) - max(0.0, x)
+                if w <= 0.2:
+                    continue
+                sc.box(x0, 1.8, 0.15 + row * 0.62, w, 1.4, 0.55, shade(c, 0.08 if (row + k) % 2 else -0.06), depth=1 + row + k * 0.01)
+        sc.box(1.6, 2.1, 3.25, 2.4, 0.9, 0.08, "#cfd6e4", depth=8)
+        sc.box(3.9, 2.4, 3.25, 1.4, 0.3, 0.3, COLORS["tape"], depth=9)
     return sc.svg(size, size, cls="iso-icon")
 
 

@@ -30,7 +30,7 @@
   };
   var TOOL_CAT = { paint: 'paint', drywall: 'drywall', wallpaper: 'wallpaper', flooring: 'flooring', tile: 'tile',
     concrete: 'concrete', mulch: 'bulk', volume: 'bulk', pavers: 'paver', lawn: 'lawn', fence: 'lumber',
-    deck: 'lumber', roofing: 'roofing', stairs: 'lumber', area: 'none' };
+    deck: 'lumber', roofing: 'roofing', stairs: 'lumber', area: 'none', driveway: 'bulk' };
   var KEY_CAT = { roller: 'tools', brush: 'tools', tape: 'tools', spacers: 'tools', kit: 'tools', screws: 'tools',
     screw: 'tools', nails: 'tools', edge: 'tools', concrete: 'concrete', base: 'bulk', sand: 'bulk', material: 'none' };
 

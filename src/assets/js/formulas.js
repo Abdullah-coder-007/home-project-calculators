@@ -513,6 +513,111 @@
     return out;
   }
 
+  /* ---------- Gravel driveway ---------- */
+  // Clean crushed stone (#3, #57) weighs about 1.4 tons per cubic yard (Select Sand & Gravel:
+  // 1.35 to 1.4). Dense-graded surface stone with fines (#411, crusher run, DSA) is ordered by
+  // compacted depth: Penn State's Center for Dirt and Gravel Roads estimates 0.04 tons per
+  // square foot for a 6 in compacted lift, which is 2.16 tons per compacted cubic yard.
+  var CLEAN_STONE_TONS_PER_YD = 1.4;
+  var DENSE_TONS_PER_YD = 0.04 / (6 / 12) * CU_FT_PER_CU_YD; // 2.16
+  var DRIVEWAY_LAYERS = [
+    { key: 'base', input: 'baseIn', tonsPerYd: CLEAN_STONE_TONS_PER_YD },
+    { key: 'middle', input: 'middleIn', tonsPerYd: CLEAN_STONE_TONS_PER_YD },
+    { key: 'top', input: 'topIn', tonsPerYd: DENSE_TONS_PER_YD }
+  ];
+  // Bulk stone is sold by the ton; most yards load in half-ton steps.
+  function halfTons(t) { return t > 0 ? ceil(t * 2) / 2 : 0; }
+  function driveway(i) {
+    var a = i.shapes ? totalArea(i.shapes) : pos(i.area);
+    var extra = Math.max(0, num(i.wastePct, 10)) / 100;
+    var layers = DRIVEWAY_LAYERS.map(function (L) {
+      var inches = pos(i[L.input]);
+      var cuYd = a * inches / 12 / CU_FT_PER_CU_YD;
+      var tons = cuYd * L.tonsPerYd * (1 + extra);
+      return { key: L.key, inches: inches, cuYd: cuYd, tons: tons, buyTons: halfTons(tons) };
+    });
+    var depth = 0, tons = 0, buy = 0;
+    layers.forEach(function (L) { depth += L.inches; tons += L.tons; buy += L.buyTons; });
+    // Fabric: the area plus 10% for 1 ft overlaps at the seams and turned-up edges.
+    var fabric = a > 0 ? ceil(a * 1.1) : 0;
+    return {
+      area: a, extra: extra, layers: layers, base: layers[0], middle: layers[1], top: layers[2],
+      depthIn: depth, tons: tons, buyTons: buy, fabricSqFt: fabric,
+      truckloads: buy > 0 ? ceil(buy / 14) : 0
+    };
+  }
+
+  /* ---------- Retaining wall blocks ---------- */
+  // Allan Block (walls under 4 ft): trench 18 in wide, 24 in from 4 ft up; at least 6 in of
+  // compacted base; bury 1 in per foot of wall height; 12 in of drainage stone behind the
+  // block. Basalite: base pad at least 6 in in front of and behind the block. Loctite PL 500:
+  // a 10 oz tube runs about 13.6 ft at a 3/8 in bead; caps get two beads.
+  var ADHESIVE_FT_PER_TUBE = 13.6;
+  function retainingWall(i) {
+    var L = pos(i.length), H = pos(i.height);           // feet
+    var bl = pos(i.blockL) || 12, bh = pos(i.blockH) || 4, bd = pos(i.blockD) || 7; // inches
+    var waste = Math.max(0, num(i.wastePct, 5)) / 100;
+    var exposedCourses = H > 0 ? ceil(H * 12 / bh) : 0;
+    var buriedIn = H;                                   // 1 in per ft of wall height
+    var buriedCourses = H > 0 ? Math.max(1, ceil(buriedIn / bh)) : 0;
+    var courses = exposedCourses + buriedCourses;
+    var perCourse = L > 0 ? ceil(L * 12 / bl) : 0;
+    var blocks = courses && perCourse ? ceil(perCourse * courses * (1 + waste)) : 0;
+    var wallIn = courses * bh;                         // block height from the base up
+    var tall = exposedCourses * bh >= 48 - 1e-9;
+    var trenchIn = Math.max(bd + 12, tall ? 24 : 18);
+    var baseIn = 6;
+    var baseCuYd = L * (trenchIn / 12) * (baseIn / 12) / CU_FT_PER_CU_YD;
+    var drainCuYd = L * 1 * (wallIn / 12) / CU_FT_PER_CU_YD;
+    var capL = pos(i.capL) || 12;
+    var caps = i.caps && L > 0 ? ceil(L * 12 / capL * (1 + waste)) : 0;
+    return {
+      length: L, height: H, exposedCourses: exposedCourses, buriedCourses: buriedCourses, courses: courses,
+      perCourse: perCourse, blocks: blocks, waste: waste, wallIn: wallIn, faceSqFt: L * H,
+      trenchIn: trenchIn, baseIn: baseIn, trenchDepthIn: baseIn + buriedCourses * bh,
+      baseCuYd: baseCuYd, baseTons: baseCuYd * DENSE_TONS_PER_YD,
+      drainCuYd: drainCuYd, drainTons: drainCuYd * CLEAN_STONE_TONS_PER_YD,
+      pipePieces: i.pipe && L > 0 ? ceil(L / 10) : 0,
+      caps: caps, adhesiveTubes: caps ? ceil(2 * L / ADHESIVE_FT_PER_TUBE) : 0,
+      needsEngineer: H * 12 > 48 + 1e-9, overSmallBlockLimit: H * 12 > 36 + 1e-9
+    };
+  }
+
+  /* ---------- Brick ---------- */
+  // Brick Industry Association Technical Note 10, Table 4 (3/8 in joints, running bond):
+  // brick per sq ft and cubic feet of mortar per 1,000 brick.
+  var BRICK_SIZES = {
+    modular: { perSqFt: 6.75, mortarPer1000: 8.1 },
+    queen:   { perSqFt: 5.5,  mortarPer1000: 12.2 },
+    king:    { perSqFt: 4.55, mortarPer1000: 14.2 },
+    norman:  { perSqFt: 4.5,  mortarPer1000: 11.2 },
+    utility: { perSqFt: 3.0,  mortarPer1000: 12.3 }
+  };
+  // QUIKRETE Mortar Mix: an 80 lb bag lays up to 37 standard bricks. At BIA's 8.1 cu ft per
+  // 1,000 modular brick, that is about 0.30 cu ft of joint per bag.
+  var MORTAR_BAG_CU_FT = 37 * 8.1 / 1000;
+  // BIA Technical Note 28: one corrugated tie per 2.67 sq ft, and extra ties within 12 in of
+  // openings at most 3 ft apart (a 3 x 7 ft door has 20 ft of edge, a 3 x 5 ft window 16 ft).
+  var SQFT_PER_TIE = 2.67;
+  function brick(i) {
+    var doors = Math.max(0, Math.round(num(i.doors))), windows = Math.max(0, Math.round(num(i.windows)));
+    var gross = pos(i.wallLength) * pos(i.wallHeight);
+    var area = Math.max(0, gross - doors * DOOR_SQFT - windows * WINDOW_SQFT);
+    var size = BRICK_SIZES[i.size] ? i.size : 'modular', b = BRICK_SIZES[size];
+    var waste = Math.max(0, num(i.wastePct, 5)) / 100;
+    var net = area * b.perSqFt;
+    var bricks = net > 0 ? ceil(net * (1 + waste)) : 0;
+    var mortarCuFt = net * b.mortarPer1000 / 1000;
+    var bags = mortarCuFt > 0 ? ceil(mortarCuFt / MORTAR_BAG_CU_FT) : 0;
+    var ties = 0;
+    if (i.veneer && area > 0) ties = ceil(area / SQFT_PER_TIE) + doors * ceil(20 / 3) + windows * ceil(16 / 3);
+    return {
+      size: size, perSqFt: b.perSqFt, gross: gross, area: area, waste: waste,
+      netBricks: net, bricks: bricks, mortarCuFt: mortarCuFt, mortarBags: bags,
+      ties: ties, tieBoxes: ties ? ceil(ties / 100) : 0
+    };
+  }
+
   /* ---------- Reading a pasted measurement ---------- */
   // Turns text like 4' 3", 4 ft 3 in, 51 in, 4.25 ft, 1.3 m or 130 cm
   // (as copied from Apple's Measure app or typed) into feet + inches.
@@ -553,6 +658,8 @@
     flooring: flooring, FLOOR_WASTE: FLOOR_WASTE,
     insulation: insulation, blownFor: blownFor, BLOWN_CHART: BLOWN_CHART, BATT_SQFT: BATT_SQFT, R_PER_INCH: R_PER_INCH,
     baseboard: baseboard, grout: grout, groutCuInPerSqFt: groutCuInPerSqFt, GROUT: GROUT,
+    driveway: driveway, DENSE_TONS_PER_YD: DENSE_TONS_PER_YD, CLEAN_STONE_TONS_PER_YD: CLEAN_STONE_TONS_PER_YD,
+    retainingWall: retainingWall, brick: brick, BRICK_SIZES: BRICK_SIZES, MORTAR_BAG_CU_FT: MORTAR_BAG_CU_FT,
     constants: { DOOR_SQFT: DOOR_SQFT, WINDOW_SQFT: WINDOW_SQFT, TAPE_ROLL_FT: TAPE_ROLL_FT, GROUT_LB_PER_CU_IN: GROUT_LB_PER_CU_IN }
   };
 });

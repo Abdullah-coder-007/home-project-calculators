@@ -691,5 +691,111 @@
     }
   };
 
+  /* ---------- Gravel driveway ---------- */
+  var DRIVE_STONE = {
+    base: { name: 'Base stone, #3 (1 1/2 to 2 1/2 in), bulk', price: 45 },
+    middle: { name: 'Middle stone, #57 (3/4 to 1 in), bulk', price: 48 },
+    top: { name: 'Surface stone with fines (#411 or crusher run), bulk', price: 40 }
+  };
+  T.driveway = {
+    defaultShapes: [{ type: 'rect', l: 60, w: 12 }],
+    calc: function (v, F) {
+      var r = F.driveway(v), ready = r.area > 0 && r.buyTons > 0;
+      var items = r.layers.map(function (L) {
+        var s = DRIVE_STONE[L.key];
+        return { key: 'stone-' + L.key, name: s.name, qty: L.buyTons, dp: 1, unit: 'tons', unitSingle: 'ton', price: s.price,
+          note: L.inches ? fmt(L.inches, L.inches % 1 ? 1 : 0) + ' in deep, ' + fmt(L.cuYd, 1) + ' cu yd' : 'Layer skipped' };
+      });
+      items.push({ key: 'fabric', name: 'Woven geotextile driveway fabric', qty: v.fabric === false ? 0 : r.fabricSqFt, unit: 'sq ft', unitSingle: 'sq ft', price: 0.2,
+        note: 'Area plus 10% for overlaps' });
+      var notes = [];
+      if (ready) {
+        notes.push('Order each layer separately and spread and compact it before the next one arrives. Ask the yard to dump the base stone first, at the far end.');
+        notes.push('Surface stone with fines packs hard, so it is ordered by finished depth: Penn State\'s gravel road center estimates 0.04 tons per sq ft for a 6 in compacted layer. Clean #3 and #57 stone barely compacts; the ' + Math.round(r.extra * 100) + '% extra covers spreading and soft spots.');
+        notes.push('Shape the surface with a crown or a cross slope of about 1/2 in per foot so water runs off instead of making potholes.');
+        notes.push('That is ' + fmt(r.buyTons, r.buyTons % 1 ? 1 : 0) + ' tons in all. Tandem dump trucks often carry around 13 to 15 tons, so plan on roughly ' + r.truckloads + ' ' + plural(r.truckloads, 'load', 'loads') + '; ask your supplier about delivery fees per load.');
+        if (r.depthIn < 6) notes.push('Less than 6 in of stone in total is fine for refreshing an old driveway, but a new one on soil usually needs 8 to 12 in.');
+      }
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.buyTons, r.buyTons % 1 ? 1 : 0) : '0', unit: ready ? 'tons of gravel' : 'Enter your driveway size and layer depths',
+          sub: ready ? fmt(r.area) + ' sq ft, ' + fmt(r.depthIn, r.depthIn % 1 ? 1 : 0) + ' in of stone in ' + r.layers.filter(function (L) { return L.inches > 0; }).length + ' layers' : '' },
+        items: items, notes: notes
+      };
+    }
+  };
+
+  /* ---------- Retaining wall ---------- */
+  T.retaining = {
+    prepare: function (form, v) {
+      showFor(form, 'data-caps', v.caps ? 'on' : 'off');
+    },
+    calc: function (v, F) {
+      var r = F.retainingWall(v), ready = r.blocks > 0;
+      var size = fmt(F.num(v.blockL), 2) + ' x ' + fmt(F.num(v.blockH), 2) + ' x ' + fmt(F.num(v.blockD), 2) + ' in';
+      var items = [
+        { key: 'block', name: 'Retaining wall block, ' + size.replace(/\.00/g, ''), qty: r.blocks, unit: plural(r.blocks, 'block', 'blocks'), unitSingle: 'block',
+          price: F.num(v.blockH) >= 6 ? 7 : 3.5, note: r.courses + ' courses of ' + r.perCourse + ', plus ' + Math.round(r.waste * 100) + '%' }
+      ];
+      if (r.caps) items.push({ key: 'cap', name: 'Wall cap, ' + fmt(F.num(v.capL) || 12, 2).replace(/\.00$/, '') + ' in', qty: r.caps, unit: plural(r.caps, 'cap', 'caps'), unitSingle: 'cap', price: 5 });
+      if (r.adhesiveTubes) items.push({ key: 'adhesive', name: 'Landscape block adhesive, 10 oz tube', qty: r.adhesiveTubes, unit: plural(r.adhesiveTubes, 'tube', 'tubes'), unitSingle: 'tube', price: 7, note: 'Two 3/8 in beads under the caps' });
+      items.push({ key: 'base', name: 'Base gravel, 3/4 in minus with fines, bulk', qty: Math.ceil(r.baseTons * 2) / 2, dp: 1, unit: 'tons', unitSingle: 'ton', price: 40,
+        note: fmt(r.trenchIn) + ' in wide x 6 in deep, compacted' });
+      items.push({ key: 'drain', name: 'Drainage stone, clean 3/4 in, bulk', qty: Math.ceil(r.drainTons * 2) / 2, dp: 1, unit: 'tons', unitSingle: 'ton', price: 48,
+        note: '12 in behind the wall, full height' });
+      if (r.pipePieces) items.push({ key: 'pipe', name: '4 in perforated drain pipe, 10 ft', qty: r.pipePieces, unit: plural(r.pipePieces, 'piece', 'pieces'), unitSingle: 'piece', price: 12, note: 'Add enough to reach daylight' });
+      var notes = [];
+      if (ready) {
+        notes.push(r.exposedCourses + ' courses show above ground and ' + r.buriedCourses + ' ' + plural(r.buriedCourses, 'is', 'are') + ' buried, so the first course sits below grade. Dig the trench ' + fmt(r.trenchIn) + ' in wide and about ' + fmt(r.trenchDepthIn) + ' in deep.');
+        notes.push('Compact the base in two passes with a plate compactor, and level the first course carefully; every error there shows at the top.');
+        notes.push('Backfill the 12 in behind the block with clean stone as you go, compacting every course or two. Native soil goes only behind the stone.');
+        if (r.needsEngineer) notes.push('Walls holding back more than 4 ft of soil must be designed by an engineer under the International Residential Code, and most towns need a permit. Shorter walls with a slope, a driveway or a building above them may need one too.');
+        else if (r.overSmallBlockLimit) notes.push('Over 3 ft tall: many small DIY blocks are rated only to about 3 ft without geogrid. Check the maximum height for your block on the maker\'s chart.');
+        notes.push('Call 811 before digging so buried lines are marked.');
+      }
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.blocks) : '0', unit: ready ? plural(r.blocks, 'block', 'blocks') : 'Enter your wall length and height',
+          sub: ready ? r.courses + ' courses, ' + fmt(r.baseTons + r.drainTons, 1) + ' tons of gravel' + (r.caps ? ', ' + r.caps + ' caps' : '') : '' },
+        items: items, notes: notes
+      };
+    }
+  };
+
+  /* ---------- Brick ---------- */
+  var BRICK_NAME = {
+    modular: 'Modular brick, 3 5/8 x 2 1/4 x 7 5/8 in', queen: 'Queen brick, 2 3/4 x 2 3/4 x 7 5/8 in',
+    king: 'King brick, 2 3/4 x 2 5/8 x 9 5/8 in', norman: 'Norman brick, 3 5/8 x 2 1/4 x 11 5/8 in',
+    utility: 'Utility brick, 3 5/8 x 3 5/8 x 11 5/8 in'
+  };
+  var BRICK_PRICE = { modular: 0.75, queen: 0.85, king: 1, norman: 1.2, utility: 1.8 };
+  T.brick = {
+    calc: function (v, F) {
+      var r = F.brick(v), ready = r.bricks > 0;
+      var items = [
+        { key: 'brick-' + r.size, name: BRICK_NAME[r.size], qty: r.bricks, unit: plural(r.bricks, 'brick', 'bricks'), unitSingle: 'brick', price: BRICK_PRICE[r.size],
+          note: fmt(r.perSqFt, 2) + ' per sq ft plus ' + Math.round(r.waste * 100) + '%' },
+        { key: 'mortar', name: 'Type N mortar mix, 80 lb bag', qty: r.mortarBags, unit: plural(r.mortarBags, 'bag', 'bags'), unitSingle: 'bag', price: 10,
+          note: 'About 37 modular bricks per bag' }
+      ];
+      if (r.ties) items.push({ key: 'ties', name: 'Corrugated brick ties, box of 100', qty: r.tieBoxes, unit: plural(r.tieBoxes, 'box', 'boxes'), unitSingle: 'box', price: 25, note: fmt(r.ties) + ' ties' });
+      items.push({ key: 'kit', name: 'Trowel, jointer and mortar board', qty: ready ? 1 : 0, unit: 'kit', price: 35 });
+      var notes = [];
+      if (ready) {
+        notes.push('Wall area: ' + fmt(r.area) + ' sq ft after taking off ' + Math.round(F.num(v.doors)) + ' doors (21 sq ft each) and ' + Math.round(F.num(v.windows)) + ' windows (15 sq ft each). Counts are for one wythe (a single layer of brick) in running bond with 3/8 in joints.');
+        notes.push('Mortar: about ' + fmt(r.mortarCuFt, 1) + ' cu ft of joints. QUIKRETE rates an 80 lb bag of mortar mix at up to 37 standard bricks, which allows for more than the joints alone.');
+        if (r.ties) notes.push('Ties: one per 2.67 sq ft of wall (one at each stud every 24 in up, with studs 16 in apart), plus ties within 12 in of each door and window. Windy and seismic areas need more; check your local code.');
+        notes.push('Buy all the brick at once, from one production run if you can, and mix bricks from several cubes as you lay so color varies evenly.');
+        notes.push('A freestanding wall two bricks thick needs twice the brick and mortar, and a footing below the frost line.');
+      }
+      return {
+        ready: ready,
+        headline: { value: ready ? fmt(r.bricks) : '0', unit: ready ? plural(r.bricks, 'brick', 'bricks') : 'Enter your wall size',
+          sub: ready ? fmt(r.area) + ' sq ft of wall, ' + fmt(r.mortarBags) + ' ' + plural(r.mortarBags, 'bag', 'bags') + ' of mortar mix' : '' },
+        items: items, notes: notes
+      };
+    }
+  };
+
   window.PMTools = T;
 })();
