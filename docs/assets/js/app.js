@@ -530,6 +530,13 @@
     var form = $('#calc');
     if (!form) return;
     var toolName = form.getAttribute('data-tool');
+    // Google Analytics events (no-op when the tag is off, e.g. on embeds).
+    function track(name, extra) {
+      if (typeof window.gtag !== 'function') return;
+      var p = { calculator: toolName };
+      for (var k in extra || {}) p[k] = extra[k];
+      try { window.gtag('event', name, p); } catch (e) { /* never break the page */ }
+    }
     var tool = TOOLS[toolName];
     var panel = $('#result');
     if (!tool || !panel) return;
@@ -618,6 +625,10 @@
       recalc(true);
     });
 
+    // One "calculator_use" per page view, the first time the visitor types or picks something.
+    var used = false;
+    function markUse() { if (used) return; used = true; track('calculator_use'); }
+    [form, builderRoot].forEach(function (n) { if (n) { n.addEventListener('input', markUse); n.addEventListener('change', markUse); } });
     form.addEventListener('input', function () { recalc(); });
     form.addEventListener('change', function () { recalc(); });
     form.addEventListener('submit', function (e) { e.preventDefault(); recalc(); });
@@ -642,9 +653,10 @@
     });
 
     var printBtn = $('[data-action=print]', panel);
-    if (printBtn) printBtn.addEventListener('click', function () { window.print(); });
+    if (printBtn) printBtn.addEventListener('click', function () { track('print_list'); window.print(); });
     var copyBtn = $('[data-action=copy]', panel);
     if (copyBtn) copyBtn.addEventListener('click', function () {
+      track('copy_list');
       var text = listAsText(panel, document.querySelector('h1').textContent + ' shopping list');
       var done = function () { copyBtn.textContent = 'Copied'; setTimeout(function () { copyBtn.textContent = 'Copy list'; }, 1800); };
       if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
@@ -653,6 +665,7 @@
     var shareBtn = $('[data-action=share]', panel);
     if (shareBtn) shareBtn.addEventListener('click', function () {
       var url = location.href.replace(/([?&])embed=1&?/, '$1');
+      track('share_result', { method: navigator.share ? 'share_sheet' : 'copy_link' });
       if (navigator.share) { navigator.share({ title: document.title, url: url }).catch(function () {}); return; }
       fallbackCopy(url);
       shareBtn.textContent = 'Link copied';
@@ -765,6 +778,7 @@
     var b = $('[data-action=copy-embed]');
     if (!b) return;
     b.addEventListener('click', function () {
+      if (typeof window.gtag === 'function') { try { window.gtag('event', 'copy_embed', { page_path: location.pathname }); } catch (e) {} }
       var code = $('#embed-code').value;
       if (navigator.clipboard) navigator.clipboard.writeText(code).catch(function () { fallbackCopy(code); });
       else fallbackCopy(code);

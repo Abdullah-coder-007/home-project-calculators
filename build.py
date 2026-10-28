@@ -141,7 +141,12 @@ def ga4_head():
             "var c=null;try{c=localStorage.getItem('pm:consent');}catch(e){}"
             "if(c==='granted')gtag('consent','update',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});"
             "else if(c==='denied')gtag('consent','update',no);"
-            f"gtag('js',new Date());gtag('config','{gid}');"
+            # Owner's own browsers: visit any page once with ?internal=1 (undo with ?internal=0).
+            # GA4's "Internal Traffic" data filter then drops these visits from reports.
+            "var t=null;try{var q=new URLSearchParams(location.search).get('internal');"
+            "if(q==='1')localStorage.setItem('pm:internal','1');else if(q==='0')localStorage.removeItem('pm:internal');"
+            "t=localStorage.getItem('pm:internal');}catch(e){}"
+            f"gtag('js',new Date());gtag('config','{gid}',t?{{traffic_type:'internal'}}:{{}});"
             f"var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id={gid}';"
             "document.head.appendChild(s);})();</script>\n")
 
