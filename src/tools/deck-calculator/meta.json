@@ -27,7 +27,15 @@
     },
     {
       "q": "What gap should I leave between deck boards?",
-      "a": "About 1/8 inch for dry or composite boards. Wet pressure-treated boards shrink, so they are often laid tight. Follow the product's guide."
+      "a": "Wet pressure-treated boards shrink, so they are often laid tight. Composite boards need a set gap: Trex recommends 3/16 inch side to side, and TimberTech allows 1/8 to 3/16 inch. Follow the product's guide."
+    },
+    {
+      "q": "Do composite deck boards need a gap at the ends?",
+      "a": "Yes, because composite boards expand and shrink with temperature. Trex says to leave 1/8 inch end to end when installing above 40°F and 3/16 inch below 40°F, and more where a board meets the house. TimberTech gives its own temperature table, so follow the brand you buy."
+    },
+    {
+      "q": "How many hidden fasteners do I need for a deck?",
+      "a": "Hidden clips go at every joist a board crosses, so plan one clip per board per joist, not two screws. Trex says to install a clip at every joist location. Use the board count and joist count from the calculator, and buy the clips and starter pieces the maker lists for your boards."
     }
   ]
 }
