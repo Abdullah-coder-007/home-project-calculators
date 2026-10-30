@@ -107,5 +107,12 @@
       "description": "Free roof and stair calculators: bundles of shingles, underlayment and drip edge from your house size and pitch, and stair risers, treads and stringers.",
       "intro": "Get roofing squares and bundles of shingles from the outside size of your house, the overhang and the roof pitch, and lay out stairs with the number of risers, tread depth and stringer length, checked against common building code limits."
     }
+  },
+  "blog_intros": {
+    "walls": "Guides for painting, drywall, wallpaper, insulation and trim. We follow the colors, finishes and wall trends people are searching for right now, then turn each one into a plan: how much paint or board a real room takes, what primer or prep it needs, and what it costs before you go to the store.",
+    "floors": "Guides for flooring and tile projects: new looks such as tile and floor trends of the year, how to choose a material for a kitchen, bathroom or basement, and how to measure so you order the right number of boxes, with the waste for cuts and patterns worked out.",
+    "concrete": "Guides for concrete, pavers, gravel and fill: patio and driveway trends, the difference between pouring and paving, and how much base, sand, bags or ready-mix a job really takes. Each guide links to the calculator that does the numbers for your own size.",
+    "outdoor": "Seasonal yard and garden guides: when to seed or lay sod, what to do with fall leaves, mulch and soil depths, fences and decks. We write them for the time of year you are reading, and each one ends with what to buy and how much.",
+    "structure": "Guides for roofs and stairs: replacement costs, ice dams, shingles and underlayment, and stair layouts that meet common code limits. They explain what a contractor will measure, so you can check a quote or plan a repair with real numbers."
   }
 }

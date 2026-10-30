@@ -308,20 +308,8 @@ def tool_page(t, all_tools):
             slug += "-2"
         used.add(slug)
         return slug
-    parts = re.split(r"<h2>(.*?)</h2>", t["guide"])
-    guide_html = parts[0]
-    for n in range(1, len(parts), 2):
-        h, content = parts[n], parts[n + 1]
-        if n == 1:
-            # keep the short intro and formula; fold sub-parts like "Worked example"
-            sub = re.split(r"<h3>(.*?)</h3>", content)
-            content = sub[0] + "".join(
-                f'<details class="fold"><summary><h3>{sub[k]}</h3></summary><div class="fold-body">{sub[k + 1]}</div></details>'
-                for k in range(1, len(sub), 2))
-            guide_html += f'<h2 id="{heading_id(h)}">{h}</h2>{content}'
-        else:
-            guide_html += (f'<details class="fold" id="{heading_id(h)}"><summary><h3>{h}</h3></summary>'
-                           f'<div class="fold-body">{content}</div></details>')
+    # Every guide section is shown in full: it is the substance of the page for readers and reviewers.
+    guide_html = re.sub(r"<h2>(.*?)</h2>", lambda m: f'<h2 id="{heading_id(m.group(1))}">{m.group(1)}</h2>', t["guide"])
     hub = HUBS.get(t.get("category"))
     hub_crumb = f'<a href="../{hub["slug"]}/">{esc(hub["h1"])}</a> / ' if hub else ""
     updated = t["updated"]

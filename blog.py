@@ -225,7 +225,7 @@ def build(out_dir, tools, ctx):
 <div class="tool-head-text">
 <p class="crumbs"><a href="{prefix}">Home</a> / <a href="../">Guides</a> / {esc(label)}</p>
 <h1>{esc(label)} guides</h1>
-<p class="lede">Plans, tips and shopping lists for {esc(label.lower())} projects, with a calculator for every step.</p>
+<p class="lede">{esc((cfg.get("blog_intros") or {}).get(key) or "Plans, tips and shopping lists for " + label.lower() + " projects, with a calculator for every step.")}</p>
 </div>
 <div class="tool-head-art">{iso.tool_icon(accent)}</div>
 </section>
