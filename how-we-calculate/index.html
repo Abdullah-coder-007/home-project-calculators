@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>if(/[?&]embed=1(&|$)/.test(location.search))document.documentElement.classList.add('embed');</script>
+<title>How We Calculate | Calcupine</title>
+<meta name="description" content="The formulas, coverage figures and waste allowances behind every Calcupine calculator, published in full.">
+<link rel="canonical" href="https://calcupine.com/how-we-calculate/">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Calcupine">
+<meta property="og:title" content="How We Calculate | Calcupine">
+<meta property="og:description" content="The formulas, coverage figures and waste allowances behind every Calcupine calculator, published in full.">
+<meta property="og:url" content="https://calcupine.com/how-we-calculate/">
+<meta property="og:image" content="https://calcupine.com/assets/og/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://calcupine.com/assets/og/home.jpg">
+
+<meta name="theme-color" content="#6c4cf5">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
+<link rel="stylesheet" href="../assets/css/site.css?v=a1da2993ec">
+<link rel="stylesheet" href="../assets/css/accents.css?v=a1da2993ec">
+<meta name="p:domain_verify" content="03e7d80eba3690c97cff51a2a311b37b">
+</head>
+<body data-accent="violet" data-measure-app="https://github.com/Abdullah-coder-007/home-project-calculators/releases/tag/app-latest">
+<div class="staging-bar">Staging preview: not the live site</div><a class="skip" href="#main">Skip to content</a>
+<header class="site-head"><div class="wrap">
+<a class="brand" href="../"><span class="brand-mark" aria-hidden="true"></span>Calcupine</a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu"><span class="menu-icon" aria-hidden="true"></span>Menu</button>
+<nav id="site-menu" class="site-nav" aria-label="Main"><a href=".././">All calculators</a><a href="../blog/">Guides</a><a href="../how-we-calculate/" aria-current="page">How we calculate</a><a href="../about/">About</a><span class="menu-tools"><a href="../paint-calculator/" data-accent="paint"><span class="menu-dot" aria-hidden="true"></span>Paint calculator</a><a href="../drywall-calculator/" data-accent="drywall"><span class="menu-dot" aria-hidden="true"></span>Drywall calculator</a><a href="../wallpaper-calculator/" data-accent="wallpaper"><span class="menu-dot" aria-hidden="true"></span>Wallpaper calculator</a><a href="../insulation-calculator/" data-accent="insulation"><span class="menu-dot" aria-hidden="true"></span>Insulation calculator</a><a href="../baseboard-calculator/" data-accent="baseboard"><span class="menu-dot" aria-hidden="true"></span>Baseboard calculator</a><a href="../brick-calculator/" data-accent="brick"><span class="menu-dot" aria-hidden="true"></span>Brick calculator</a><a href="../flooring-calculator/" data-accent="flooring"><span class="menu-dot" aria-hidden="true"></span>Flooring calculator</a><a href="../tile-calculator/" data-accent="tile"><span class="menu-dot" aria-hidden="true"></span>Tile calculator</a><a href="../grout-calculator/" data-accent="grout"><span class="menu-dot" aria-hidden="true"></span>Grout calculator</a><a href="../square-footage-calculator/" data-accent="area"><span class="menu-dot" aria-hidden="true"></span>Square footage calculator</a><a href="../concrete-calculator/" data-accent="concrete"><span class="menu-dot" aria-hidden="true"></span>Concrete calculator</a><a href="../paver-calculator/" data-accent="pavers"><span class="menu-dot" aria-hidden="true"></span>Paver calculator</a><a href="../gravel-driveway-calculator/" data-accent="driveway"><span class="menu-dot" aria-hidden="true"></span>Gravel driveway calculator</a><a href="../cubic-yard-calculator/" data-accent="volume"><span class="menu-dot" aria-hidden="true"></span>Cubic yard calculator</a><a href="../mulch-calculator/" data-accent="mulch"><span class="menu-dot" aria-hidden="true"></span>Mulch, soil and gravel calculator</a><a href="../sod-calculator/" data-accent="lawn"><span class="menu-dot" aria-hidden="true"></span>Sod and grass seed calculator</a><a href="../retaining-wall-calculator/" data-accent="retaining"><span class="menu-dot" aria-hidden="true"></span>Retaining wall calculator</a><a href="../fence-calculator/" data-accent="fence"><span class="menu-dot" aria-hidden="true"></span>Fence calculator</a><a href="../deck-calculator/" data-accent="deck"><span class="menu-dot" aria-hidden="true"></span>Deck calculator</a><a href="../roofing-calculator/" data-accent="roofing"><span class="menu-dot" aria-hidden="true"></span>Roofing calculator</a><a href="../stairs-calculator/" data-accent="stairs"><span class="menu-dot" aria-hidden="true"></span>Stairs calculator</a></span></nav>
+</div></header>
+<main id="main" class="wrap">
+<section class="tool-head page-head"><div class="tool-head-text"><p class="crumbs"><a href="../">All calculators</a> / How we calculate</p><h1>How we calculate</h1></div></section>
+<article class="page">
+<p>Every result on Calcupine comes from the formulas below. We publish them so you can check our work. All lengths are in feet unless marked in inches, and every quantity is rounded up to a whole unit you can buy.</p>
+
+<h2>Areas</h2>
+<p>Rooms and beds are built from sections. Each section is a rectangle (length &times; width), a triangle (&frac12; &times; base &times; height) or a circle (3.1416 &times; radius&sup2;). Cut-out sections are subtracted. Feet and inches are combined as feet + inches &divide; 12.</p>
+
+<h2>Paint</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Wall area</td><td>2 &times; (length + width) &times; height &minus; 21 sq ft per door &minus; 15 sq ft per window</td></tr>
+<tr><td>Gallons</td><td>area &times; coats &divide; coverage (default 350 sq ft per gallon)</td></tr>
+<tr><td>Ceiling</td><td>length &times; width, listed as separate ceiling paint</td></tr>
+<tr><td>Primer</td><td>one coat over walls (and ceiling if chosen)</td></tr>
+<tr><td>Buying</td><td>whole gallons; a leftover of 1/4 gallon or less becomes 1 quart, more becomes another gallon</td></tr>
+<tr><td>Painter's tape</td><td>2 &times; perimeter + 17 ft per door + 16 ft per window, in 180 ft rolls</td></tr>
+</tbody>
+</table>
+
+<h2>Concrete</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Slab</td><td>length &times; width &times; thickness (in) &divide; 12</td></tr>
+<tr><td>Footing</td><td>length &times; width (in) &divide; 12 &times; depth (in) &divide; 12</td></tr>
+<tr><td>Round hole</td><td>3.1416 &times; (diameter (in) &divide; 24)&sup2; &times; depth (in) &divide; 12 &times; count</td></tr>
+<tr><td>Waste</td><td>10% by default</td></tr>
+<tr><td>Bag yields</td><td>80 lb = 0.60 cu ft, 60 lb = 0.45 cu ft, 40 lb = 0.30 cu ft</td></tr>
+<tr><td>Ready-mix</td><td>cubic yards (cubic feet &divide; 27) rounded up to the next 1/4 yard; suggested from 1 cubic yard</td></tr>
+</tbody>
+</table>
+
+<h2>Tile</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Waste</td><td>straight 10%, diagonal 15%, herringbone 20%, or your own figure</td></tr>
+<tr><td>Space per tile</td><td>(length + joint) &times; (width + joint) &divide; 144 sq ft</td></tr>
+<tr><td>Grout</td><td>144 &times; (L + W) &times; joint &times; thickness &divide; (L &times; W) cubic inches per sq ft, at 0.065 lb per cubic inch, plus 10%</td></tr>
+<tr><td>Thinset (50 lb bag)</td><td>95 sq ft (1/4 &times; 1/4 in notch), 63 sq ft (1/4 &times; 3/8 in), 45 sq ft (1/2 &times; 1/2 in)</td></tr>
+</tbody>
+</table>
+
+<h2>Flooring</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Waste</td><td>straight 10%, diagonal 15%, herringbone 20%, or your own figure</td></tr>
+<tr><td>Boxes</td><td>area with waste &divide; square feet per box</td></tr>
+<tr><td>Underlayment</td><td>area &times; 1.05 &divide; square feet per roll</td></tr>
+<tr><td>Trim</td><td>length &times; 1.10 &divide; 8 ft pieces</td></tr>
+</tbody>
+</table>
+
+<h2>Mulch, soil, gravel and sand</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Volume</td><td>area &times; depth (in) &divide; 12 cubic feet; &divide; 27 for cubic yards</td></tr>
+<tr><td>Default bags</td><td>mulch 2 cu ft, topsoil 0.75 cu ft, gravel and sand 0.5 cu ft</td></tr>
+<tr><td>Weight</td><td>topsoil 1.1, gravel 1.4, sand 1.35 tons per cubic yard</td></tr>
+<tr><td>Bulk</td><td>rounded up to the next 1/2 cubic yard or 1/2 ton</td></tr>
+</tbody>
+</table>
+
+<h2>Square footage and cubic yards</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Square yards</td><td>square feet &divide; 9</td></tr>
+<tr><td>Square meters</td><td>square feet &times; 0.0929</td></tr>
+<tr><td>Acres</td><td>square feet &divide; 43,560</td></tr>
+<tr><td>Cubic yards</td><td>area &times; depth (ft) &divide; 27</td></tr>
+<tr><td>Cubic meters</td><td>cubic feet &times; 0.0283</td></tr>
+</tbody>
+</table>
+
+<h2>Drywall</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Board area</td><td>wall area (as for paint) + ceiling if chosen</td></tr>
+<tr><td>Sheets</td><td>board area &times; (1 + waste, default 10%) &divide; 32, 40 or 48 sq ft</td></tr>
+<tr><td>Screws</td><td>about 1 per sq ft of sheets bought</td></tr>
+<tr><td>Joint compound</td><td>about 9 gallons per 1,000 sq ft, in 4.5 gallon buckets</td></tr>
+<tr><td>Tape</td><td>about 380 ft per 1,000 sq ft, in 250 ft rolls</td></tr>
+<tr><td>Corner bead</td><td>outside corners &times; wall height &divide; 8 ft, rounded up</td></tr>
+</tbody>
+</table>
+
+<h2>Wallpaper</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Strips</td><td>perimeter (in) &divide; roll width, rounded up, minus full strips over 36 in doors</td></tr>
+<tr><td>Strip length</td><td>wall height + pattern repeat + 4 in</td></tr>
+<tr><td>Strips per roll</td><td>roll length &divide; strip length, rounded down</td></tr>
+<tr><td>Rolls</td><td>strips &divide; strips per roll, rounded up</td></tr>
+</tbody>
+</table>
+
+<h2>Fence and deck</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Posts</td><td>length &divide; spacing, rounded up, + 1</td></tr>
+<tr><td>Pickets</td><td>length (in) &divide; (picket width + gap), rounded up</td></tr>
+<tr><td>Post concrete</td><td>hole volume minus a 3.5 in square post, + 10%, in 0.6 cu ft bags</td></tr>
+<tr><td>Deck rows</td><td>deck width (in) &divide; (board width + gap), rounded up</td></tr>
+<tr><td>Deck boards</td><td>rows &times; deck length &times; (1 + waste) &divide; board length</td></tr>
+<tr><td>Joists and screws</td><td>length (in) &divide; spacing + 1; 2 screws per board per joist</td></tr>
+</tbody>
+</table>
+
+<h2>Roofing</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Roof area</td><td>(length + 2 &times; overhang) &times; (width + 2 &times; overhang) &times; &radic;(1 + (pitch &divide; 12)&sup2;)</td></tr>
+<tr><td>Waste</td><td>10% gable, 15% hip</td></tr>
+<tr><td>Bundles</td><td>3 per square (100 sq ft)</td></tr>
+<tr><td>Nails</td><td>320 per square</td></tr>
+<tr><td>Underlayment</td><td>roof area &times; 1.1 &divide; roll size</td></tr>
+</tbody>
+</table>
+
+<h2>Pavers, stairs and lawn</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Pavers</td><td>area &times; (1 + waste) &divide; paver area</td></tr>
+<tr><td>Paver base</td><td>(area + edge length &times; depth) &times; depth; 1.4 tons per cubic yard</td></tr>
+<tr><td>Bedding sand</td><td>area &times; depth, in 0.5 cu ft bags</td></tr>
+<tr><td>Stair risers</td><td>total rise &divide; maximum riser (7 3/4 in), rounded up</td></tr>
+<tr><td>Stair treads and run</td><td>risers &minus; 1; treads &times; tread depth</td></tr>
+<tr><td>Stringer</td><td>&radic;(rise&sup2; + run&sup2;)</td></tr>
+<tr><td>Sod</td><td>area &times; 1.05 &divide; piece size (2.67 sq ft slab) or pallet size</td></tr>
+<tr><td>Grass seed</td><td>area &divide; 1,000 &times; seeding rate</td></tr>
+</tbody>
+</table>
+
+<h2>Insulation</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Wall area</td><td>wall length &times; height &minus; 21 sq ft per door &minus; 15 sq ft per window</td></tr>
+<tr><td>Batts</td><td>area &divide; square feet per bag (R-13 106.56, R-19 78.79, R-21 67.81, R-30 58.67, R-38 42.67, or your label)</td></tr>
+<tr><td>Existing insulation</td><td>depth (in) &times; R per inch: loose fiberglass 2.5, rock wool 2.8, cellulose 3.7, batts 3.2</td></tr>
+<tr><td>Blown-in</td><td>area &times; bags per 1,000 sq ft &divide; 1,000 for the R-value still needed, read between chart rows (Owens Corning AttiCat fiberglass, Greenfiber SANCTUARY cellulose)</td></tr>
+</tbody>
+</table>
+
+<h2>Baseboard and trim</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Length</td><td>2 &times; (length + width), or your wall total, minus door openings &times; opening width</td></tr>
+<tr><td>Pieces</td><td>length &times; (1 + waste, 10% by default) &divide; piece length (8, 12 or 16 ft)</td></tr>
+<tr><td>Shoe molding</td><td>the same length with waste, in 8 ft pieces</td></tr>
+<tr><td>Casing</td><td>3 pieces of 7 ft per door side or window; 17 ft of casing per door side and 16 ft per window for nails and caulk</td></tr>
+<tr><td>Nails</td><td>2 per stud, studs 16 in apart (1 per stud for shoe molding), in boxes of 1,000</td></tr>
+<tr><td>Caulk</td><td>baseboard + casing length &divide; 55 ft per 10.1 oz tube</td></tr>
+</tbody>
+</table>
+
+<h2>Grout</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Joint volume</td><td>144 &times; ((L + J) &times; (W + J) &minus; L &times; W) &times; thickness &divide; ((L + J) &times; (W + J)) cubic inches per sq ft</td></tr>
+<tr><td>Extra</td><td>10% by default</td></tr>
+<tr><td>Sanded</td><td>0.065 lb per cubic inch; 25 lb bags, with a 7 lb bag when 7 lb or less is left over</td></tr>
+<tr><td>Non-sanded</td><td>0.062 lb per cubic inch; 10 lb boxes</td></tr>
+<tr><td>Pre-mixed</td><td>220 cubic inches per gallon; whole gallons, with 1 or 2 quarts when half a gallon or less is left over</td></tr>
+</tbody>
+</table>
+
+<h2>Gravel driveway</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Layer volume</td><td>area &times; finished depth (in) &divide; 12 &divide; 27 cubic yards</td></tr>
+<tr><td>Clean stone (#3, #57)</td><td>1.4 tons per cubic yard</td></tr>
+<tr><td>Surface stone with fines (#411, crusher run)</td><td>2.16 tons per compacted cubic yard (Penn State: 0.04 tons per sq ft at 6 in compacted)</td></tr>
+<tr><td>Extra</td><td>10% by default; each layer rounded up to the next half ton</td></tr>
+<tr><td>Fabric</td><td>area &times; 1.1 for overlaps</td></tr>
+</tbody>
+</table>
+
+<h2>Retaining wall</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Blocks</td><td>(length &divide; face length) &times; (height &divide; block height + buried courses) &times; (1 + extra, 5% by default)</td></tr>
+<tr><td>Buried courses</td><td>1 in per ft of wall height, at least one full course (Allan Block)</td></tr>
+<tr><td>Base</td><td>length &times; trench width &times; 6 in; trench = block depth + 12 in, at least 18 in (24 in from 4 ft tall); 2.16 tons per cubic yard</td></tr>
+<tr><td>Drainage stone</td><td>length &times; 12 in &times; block height from the base up; 1.4 tons per cubic yard</td></tr>
+<tr><td>Caps and adhesive</td><td>length &divide; cap length plus extra; 2 beads &times; length &divide; 13.6 ft per 10 oz tube</td></tr>
+<tr><td>Drain pipe</td><td>length &divide; 10 ft pieces</td></tr>
+</tbody>
+</table>
+
+<h2>Brick</h2>
+<table>
+<thead><tr><th>Step</th><th>Formula or figure</th></tr></thead>
+<tbody>
+<tr><td>Wall area</td><td>length &times; height &minus; 21 sq ft per door &minus; 15 sq ft per window</td></tr>
+<tr><td>Bricks per sq ft (3/8 in joints)</td><td>modular 6.75, queen 5.5, king 4.55, Norman 4.5, utility 3 (BIA Technical Note 10)</td></tr>
+<tr><td>Bricks</td><td>area &times; bricks per sq ft &times; (1 + extra, 5% by default)</td></tr>
+<tr><td>Mortar</td><td>8.1 (modular), 12.2, 14.2, 11.2 or 12.3 cu ft per 1,000 bricks; 80 lb bag of mortar mix = 37 modular bricks = 0.30 cu ft</td></tr>
+<tr><td>Veneer ties</td><td>area &divide; 2.67 sq ft, + 7 per door and 6 per window (BIA Technical Note 28)</td></tr>
+</tbody>
+</table>
+
+<h2>Prices</h2>
+<p>Shopping-list prices are rough US starting points so you can see a total. They are not quotes. Type your local prices into the list; your browser remembers them on that device only.</p>
+
+<h2>Limits</h2>
+<p>These are planning estimates. Products differ, so always check the coverage printed on what you buy. For structural concrete, follow local codes and an engineer's or contractor's specification.</p>
+<p>Last reviewed: October 30, 2026.</p>
+
+</article>
+</main>
+<footer class="site-foot"><div class="wrap">
+<nav aria-label="Site"><a href="../about/">About</a><a href="../contact/">Contact</a><a href="../how-we-calculate/">How we calculate</a><a href="../privacy-policy/">Privacy policy</a><a href="../terms/">Terms of use</a></nav>
+<p>Estimates only. Always check quantities with your supplier and the product label before you buy.</p>
+<p>&copy; 2026 Calcupine</p>
+</div></footer>
+<script src="../assets/js/formulas.js?v=1a286e3ac4" defer></script>
+<script src="../assets/js/tools.js?v=1a286e3ac4" defer></script>
+<script src="../assets/js/app.js?v=1a286e3ac4" defer></script>
+<script src="../assets/js/measure.js?v=1a286e3ac4" defer></script>
+</body>
+</html>
